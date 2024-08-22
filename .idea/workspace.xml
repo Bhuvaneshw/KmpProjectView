@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation>
+            <after_sync>
+              <task name="setupDependencies" />
+            </after_sync>
+          </activation>
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="KmpProjectView" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="KmpProjectView" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="KmpProjectView" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="intellij" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Object" />
+        <option value="Class" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2.6/f9a8cbfa07e631d1615cc5096d6f84cf2522e27b/ideaIC-2023.2.6-sources.jar!/com/intellij/ide/projectView/impl/nodes/ProjectViewModuleGroupNode.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2.6/f9a8cbfa07e631d1615cc5096d6f84cf2522e27b/ideaIC-2023.2.6-sources.jar!/com/intellij/ide/projectView/impl/nodes/ProjectViewModuleNode.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2.6/f9a8cbfa07e631d1615cc5096d6f84cf2522e27b/ideaIC-2023.2.6-sources.jar!/com/intellij/ide/projectView/impl/nodes/ProjectViewProjectNode.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2kxg6c0llGSiyPY0tqwRUmcxpHR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.KmpProjectView [buildPlugin].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.KmpProjectView [setupDependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources/META-INF&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\resources\META-INF" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\kotlin\com\acutecoder\kmp\projectview\util" />
+      <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\kotlin\icons" />
+      <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\resources\icons" />
+      <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\kotlin\com\acutecoder\kmp\projectview\test" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Build Plugin">
+    <list>
+      <item itemvalue="Gradle.Run Plugin" />
+      <item itemvalue="Gradle.Build Plugin" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Build Plugin" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="" />
+      <created>1724230468009</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1724230468009</updated>
+    </task>
+    <servers />
+  </component>
+</project>
