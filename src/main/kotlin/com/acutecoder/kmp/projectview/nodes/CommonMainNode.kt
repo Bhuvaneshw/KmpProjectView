@@ -8,7 +8,6 @@ import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
-import com.intellij.ui.SimpleTextAttributes
 
 class CommonMainNode(
     project: Project,
@@ -31,7 +30,9 @@ class CommonMainNode(
 
         if (preference.isTooltipEnabled)
             data.tooltip = "Common Main source set"
-        if (preference.showModuleNameOnly)
-            data.addText(directory.virtualFile.name, SimpleTextAttributes.REGULAR_ATTRIBUTES)
+        if (preference.showModuleNameOnly) {
+            data.clearText()
+            data.presentableText = directory.name
+        }
     }
 }
