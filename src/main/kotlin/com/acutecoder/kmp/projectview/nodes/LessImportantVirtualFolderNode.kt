@@ -11,6 +11,7 @@ class LessImportantVirtualFolderNode(
     icon: Icon,
     viewSettings: ViewSettings,
     private val tooltip: String = folderName,
+    private val isTooltipEnabled: Boolean,
 ) : VirtualFolderNode(project, folderName, icon, viewSettings) {
 
     override fun getWeight(): Int {
@@ -19,7 +20,8 @@ class LessImportantVirtualFolderNode(
 
     override fun update(presentation: PresentationData) {
         super.update(presentation)
-        presentation.tooltip = tooltip
+        if (isTooltipEnabled)
+            presentation.tooltip = tooltip
     }
 
 }

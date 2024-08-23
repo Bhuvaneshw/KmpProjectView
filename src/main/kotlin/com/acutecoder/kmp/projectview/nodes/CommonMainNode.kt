@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.preference.PreferenceState
 import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
@@ -12,15 +13,22 @@ class CommonMainNode(
     project: Project,
     directory: PsiDirectory,
     settings: ViewSettings,
+    private val preference: PreferenceState,
 ) : PsiDirectoryNode(project, directory, settings) {
 
     override fun getWeight(): Int {
-        return 0
+        return if (preference.showCommonMainOnTop) 0 else super.getWeight()
     }
 
     override fun update(data: PresentationData) {
         super.update(data)
-        data.setIcon(AllIcons.Modules.TestRoot.withoutTooltip())
-        data.tooltip = "Common Main source set"
+
+        data.setIcon(
+            (if (preference.differentiateCommonMain) AllIcons.Modules.TestRoot
+            else AllIcons.Modules.SourceRoot).withoutTooltip()
+        )
+
+        if (preference.isTooltipEnabled)
+            data.tooltip = "Common Main source set"
     }
 }

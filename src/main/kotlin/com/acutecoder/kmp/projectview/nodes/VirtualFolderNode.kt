@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.ModuleType
 import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.ide.projectView.PresentationData
@@ -21,14 +22,18 @@ open class VirtualFolderNode(
 ) : ProjectViewNode<String>(project, moduleName, viewSettings) {
 
     val children = mutableListOf<AbstractTreeNode<*>>()
+    private val preferences = PluginPreference.getInstance().state
 
     override fun update(presentation: PresentationData) {
         presentation.setIcon(icon.withoutTooltip())
         presentation.addText(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
         if (moduleType != null) {
-            presentation.addText(" ($moduleType)", SimpleTextAttributes.GRAY_ATTRIBUTES)
-            presentation.tooltip = "${moduleType.displayName} module"
-        } else presentation.tooltip = "Module"
+            if (preferences.showKmpModuleSideText)
+                presentation.addText(" ($moduleType)", SimpleTextAttributes.GRAY_ATTRIBUTES)
+            if (preferences.isTooltipEnabled)
+                presentation.tooltip = "${moduleType.displayName} module"
+        } else if (preferences.isTooltipEnabled)
+            presentation.tooltip = "Module"
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {

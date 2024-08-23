@@ -26,5 +26,14 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <projectViewPane implementation="com.acutecoder.kmp.projectview.KmpProjectPane"/>
+        <applicationService serviceImplementation="com.acutecoder.kmp.projectview.preference.PluginPreference"/>
+
+        <applicationConfigurable
+                instance="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
+                id="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
+                displayName="Kmp Project View"
+                parentId="appearance"
+        />
     </extensions>
+
 </idea-plugin>

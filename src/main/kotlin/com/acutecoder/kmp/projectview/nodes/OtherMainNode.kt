@@ -12,12 +12,14 @@ class OtherMainNode(
     project: Project,
     directory: PsiDirectory,
     settings: ViewSettings,
+    private val isTooltipEnabled: Boolean,
 ) : PsiDirectoryNode(project, directory, settings) {
 
     override fun update(data: PresentationData) {
         super.update(data)
         data.setIcon(AllIcons.Modules.SourceRoot.withoutTooltip())
-        data.tooltip = "Source set"
+        if (isTooltipEnabled)
+            data.tooltip = "Source set"
     }
 
 }

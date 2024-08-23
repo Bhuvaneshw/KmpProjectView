@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.ViewSettings
@@ -111,11 +112,13 @@ private fun appendSubKmpModule(
     subModuleFile: PsiDirectory,
     virtualFolderNode: VirtualFolderNode,
 ) {
+    val preferences = PluginPreference.getInstance().state
+
     for (srcFile in subModuleFile.children) {
         if (srcFile is PsiDirectory) {
             if (srcFile.name == "commonMain")
-                virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings))
-            else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings))
+                virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
+            else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences.isTooltipEnabled))
         } else if (srcFile is PsiFile)
             virtualFolderNode.children.add(PsiFileNode(project, srcFile, settings))
     }
@@ -141,6 +144,7 @@ private inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
         folderName = "Gradle Files",
         icon = AllIcons.Nodes.ConfigFolder.withoutTooltip(),
         viewSettings = settings,
+        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
@@ -150,4 +154,5 @@ private inline fun OtherGroupNode(project: Project, settings: ViewSettings) =
         folderName = "Other Files",
         icon = AllIcons.Nodes.Folder.withoutTooltip(),
         viewSettings = settings,
+        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     )
