@@ -14,7 +14,11 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Project View for Kotlin Multiplatform/Compose Multiplatform Projects.
+    Simplify your project navigation with Kmp Project View!
+    Specifically designed for Kotlin Multiplatform and Compose Multiplatform projects,
+    this plugin streamlines your project tree by removing unnecessary folder layers and presenting a clean, organized view.
+    Say goodbye to the long and cluttered tree structure—access your code faster and with less hassle.
+    Perfect for developers who want a more intuitive and efficient way to manage their project files.
     <a href="https://acutecoder.netlify.app">Website</a>
   ]]></description>
 
