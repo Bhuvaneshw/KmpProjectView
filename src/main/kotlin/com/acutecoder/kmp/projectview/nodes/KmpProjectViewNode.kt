@@ -123,7 +123,7 @@ private fun appendSubKmpModule(
         if (srcFile is PsiDirectory) {
             if (srcFile.name == "commonMain")
                 virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
-            else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences.isTooltipEnabled))
+            else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
         } else if (srcFile is PsiFile)
             virtualFolderNode.children.add(PsiFileNode(project, srcFile, settings))
     }

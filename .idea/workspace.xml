@@ -4,9 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Added Preference">
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Ignored projectFilesBackup and added kotlin-js-store to other files">
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/OtherMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/OtherMainNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,20 +109,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Plugin.executor": "Run",
-    "Gradle.KmpProjectView [buildPlugin].executor": "Run",
-    "Gradle.KmpProjectView [setupDependencies].executor": "Run",
-    "Gradle.Run Plugin.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources/META-INF",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.KmpProjectView [buildPlugin].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.KmpProjectView [setupDependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources/META-INF&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\resources\META-INF" />
@@ -168,13 +178,22 @@
       <option name="project" value="LOCAL" />
       <updated>1724401985722</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ignored projectFilesBackup and added kotlin-js-store to other files">
+      <option name="closed" value="true" />
+      <created>1724402328784</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724402328784</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Visual enhancement" />
     <MESSAGE value="Added Preference" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Preference" />
+    <MESSAGE value="Ignored projectFilesBackup and added kotlin-js-store to other files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ignored projectFilesBackup and added kotlin-js-store to other files" />
   </component>
 </project>

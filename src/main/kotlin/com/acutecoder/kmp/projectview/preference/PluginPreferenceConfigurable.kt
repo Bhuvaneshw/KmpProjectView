@@ -13,6 +13,7 @@ class PluginPreferenceConfigurable : Configurable {
     private var isTooltipEnabledCheckBox: JCheckBox? = null
     private var showCommonMainOnTopCheckBox: JCheckBox? = null
     private var differentiateCommonMainCheckBox: JCheckBox? = null
+    private var showModuleNameOnlyCheckBox: JCheckBox? = null
     private var showKmpSideTextCheckBox: JCheckBox? = null
 
     override fun getDisplayName(): String {
@@ -27,11 +28,13 @@ class PluginPreferenceConfigurable : Configurable {
         showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
         differentiateCommonMainCheckBox = JCheckBox("Differentiate commonMain")
+        showModuleNameOnlyCheckBox = JCheckBox("Hide extra info for kmp/cmp source set (sub module)")
         isTooltipEnabledCheckBox = JCheckBox("Enable Tooltips")
 
         settingsPanel!!.add(showKmpSideTextCheckBox)
         settingsPanel!!.add(showCommonMainOnTopCheckBox)
         settingsPanel!!.add(differentiateCommonMainCheckBox)
+        settingsPanel!!.add(showModuleNameOnlyCheckBox)
         settingsPanel!!.add(isTooltipEnabledCheckBox)
 
         reset()
@@ -45,6 +48,7 @@ class PluginPreferenceConfigurable : Configurable {
         return showKmpSideTextCheckBox?.isSelected != settings.showKmpModuleSideText ||
                 showCommonMainOnTopCheckBox?.isSelected != settings.showCommonMainOnTop ||
                 differentiateCommonMainCheckBox?.isSelected != settings.differentiateCommonMain ||
+                showModuleNameOnlyCheckBox?.isSelected != settings.showModuleNameOnly ||
                 isTooltipEnabledCheckBox?.isSelected != settings.isTooltipEnabled
     }
 
@@ -56,6 +60,7 @@ class PluginPreferenceConfigurable : Configurable {
                 showKmpModuleSideText = showKmpSideTextCheckBox?.isSelected ?: true
                 showCommonMainOnTop = showCommonMainOnTopCheckBox?.isSelected ?: true
                 differentiateCommonMain = differentiateCommonMainCheckBox?.isSelected ?: true
+                showModuleNameOnly = showModuleNameOnlyCheckBox?.isSelected ?: true
                 isTooltipEnabled = isTooltipEnabledCheckBox?.isSelected ?: true
             }
         )
@@ -69,6 +74,7 @@ class PluginPreferenceConfigurable : Configurable {
         showKmpSideTextCheckBox?.isSelected = settings.showKmpModuleSideText
         showCommonMainOnTopCheckBox?.isSelected = settings.showCommonMainOnTop
         differentiateCommonMainCheckBox?.isSelected = settings.differentiateCommonMain
+        showModuleNameOnlyCheckBox?.isSelected = settings.showModuleNameOnly
         isTooltipEnabledCheckBox?.isSelected = settings.isTooltipEnabled
     }
 
