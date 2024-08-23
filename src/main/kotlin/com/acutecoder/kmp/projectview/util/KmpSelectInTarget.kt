@@ -1,6 +1,5 @@
 package com.acutecoder.kmp.projectview.util
 
-import com.acutecoder.kmp.projectview.Constants
 import com.intellij.ide.SelectInContext
 import com.intellij.ide.SelectInManager
 import com.intellij.ide.StandardTargetWeights

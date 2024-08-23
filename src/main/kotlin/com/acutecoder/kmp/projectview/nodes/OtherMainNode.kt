@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ViewSettings
@@ -15,7 +16,8 @@ class OtherMainNode(
 
     override fun update(data: PresentationData) {
         super.update(data)
-        data.setIcon(AllIcons.Modules.SourceRoot)
+        data.setIcon(AllIcons.Modules.SourceRoot.withoutTooltip())
+        data.tooltip = "Source set"
     }
 
 }

@@ -1,4 +1,4 @@
-package com.acutecoder.kmp.projectview
+package com.acutecoder.kmp.projectview.util
 
 object Constants {
 

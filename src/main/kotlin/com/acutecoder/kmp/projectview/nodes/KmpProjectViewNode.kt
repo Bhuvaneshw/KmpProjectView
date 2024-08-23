@@ -1,9 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
-import com.acutecoder.kmp.projectview.util.ModuleType
-import com.acutecoder.kmp.projectview.util.canBeSkipped
-import com.acutecoder.kmp.projectview.util.isGradleFile
-import com.acutecoder.kmp.projectview.util.isKmpSubModule
+import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode
@@ -37,18 +34,8 @@ class KmpProjectViewNode(
         val baseDirPsi = psiManager.findDirectory(baseDir)
 
         baseDirPsi?.let { baseDirectory ->
-            val gradleFiles = LessImportantVirtualFolderNode(
-                project = project,
-                folderName = "Gradle Files",
-                icon = AllIcons.Nodes.ConfigFolder,
-                viewSettings = settings
-            )
-            val otherFiles = LessImportantVirtualFolderNode(
-                project = project,
-                folderName = "Other Files",
-                icon = AllIcons.Nodes.IdeaModule,
-                viewSettings = settings
-            )
+            val gradleFiles = GradleGroupNode(project = project, settings = settings)
+            val otherFiles = OtherGroupNode(project = project, settings = settings)
 
             for (child in baseDirectory.children) {
                 if (child is PsiDirectory && !child.canBeSkipped()) {
@@ -146,3 +133,21 @@ private fun appendModule(
         virtualFolderNode.children.add(PsiFileNode(project, subModuleFile, settings))
     }
 }
+
+@Suppress("NOTHING_TO_INLINE", "functionName")
+private inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
+    LessImportantVirtualFolderNode(
+        project = project,
+        folderName = "Gradle Files",
+        icon = AllIcons.Nodes.ConfigFolder.withoutTooltip(),
+        viewSettings = settings,
+    )
+
+@Suppress("NOTHING_TO_INLINE", "functionName")
+private inline fun OtherGroupNode(project: Project, settings: ViewSettings) =
+    LessImportantVirtualFolderNode(
+        project = project,
+        folderName = "Other Files",
+        icon = AllIcons.Nodes.Folder.withoutTooltip(),
+        viewSettings = settings,
+    )

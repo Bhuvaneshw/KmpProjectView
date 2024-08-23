@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview
 
+import com.acutecoder.kmp.projectview.util.Constants
 import com.acutecoder.kmp.projectview.util.KmpSelectInTarget
 import com.intellij.ide.SelectInTarget
 import com.intellij.ide.projectView.impl.ProjectAbstractTreeStructureBase
@@ -29,5 +30,3 @@ class KmpProjectPane(private val project: Project) : ProjectViewPane(project) {
     }
 
 }
-
-

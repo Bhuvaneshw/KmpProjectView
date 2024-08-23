@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ViewSettings
@@ -19,7 +20,7 @@ class CommonMainNode(
 
     override fun update(data: PresentationData) {
         super.update(data)
-        data.setIcon(AllIcons.Modules.TestRoot)
+        data.setIcon(AllIcons.Modules.TestRoot.withoutTooltip())
         data.tooltip = "Common Main source set"
     }
 }

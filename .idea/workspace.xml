@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="" />
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Initial Commit">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/IconWithoutTooltip.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/KmpProjectPane.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/KmpProjectPane.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/KmpTreeStructure.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/KmpTreeStructure.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/LessImportantVirtualFolderNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/LessImportantVirtualFolderNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/OtherMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/OtherMainNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualFolderNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualFolderNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/KmpSelectInTarget.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/KmpSelectInTarget.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,11 +67,26 @@
       <list>
         <option value="Kotlin Object" />
         <option value="Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Bhuvaneshw&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Bhuvaneshw/KmpProjectView.git&quot;,
+    &quot;accountId&quot;: &quot;05fe6cb2-6f45-4d7b-a756-d0fbb867bd08&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2.6/f9a8cbfa07e631d1615cc5096d6f84cf2522e27b/ideaIC-2023.2.6-sources.jar!/com/intellij/ide/projectView/impl/nodes/ProjectViewModuleGroupNode.java" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2.6/f9a8cbfa07e631d1615cc5096d6f84cf2522e27b/ideaIC-2023.2.6-sources.jar!/com/intellij/ide/projectView/impl/nodes/ProjectViewModuleNode.java" root0="SKIP_INSPECTION" />
@@ -76,21 +103,24 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2kxg6c0llGSiyPY0tqwRUmcxpHR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.KmpProjectView [buildPlugin].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.KmpProjectView [setupDependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources/META-INF&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.KmpProjectView [buildPlugin].executor": "Run",
+    "Gradle.KmpProjectView [setupDependencies].executor": "Run",
+    "Gradle.Run Plugin.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources/META-INF",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\resources\META-INF" />
@@ -102,19 +132,15 @@
       <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\kotlin\com\acutecoder\kmp\projectview\test" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.acutecoder.kmp.projectview.util" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build Plugin">
+  <component name="RunManager" selected="Gradle.Run Plugin">
     <list>
       <item itemvalue="Gradle.Run Plugin" />
       <item itemvalue="Gradle.Build Plugin" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.Build Plugin" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -125,6 +151,19 @@
       <option name="presentableId" value="Default" />
       <updated>1724230468009</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1724322878773</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724322878773</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
   </component>
 </project>
