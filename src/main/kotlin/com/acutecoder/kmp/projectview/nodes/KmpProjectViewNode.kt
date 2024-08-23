@@ -62,6 +62,11 @@ class KmpProjectViewNode(
                             if (file is PsiFile)
                                 gradleFiles.children.add(PsiFileNode(project, file, settings))
                         }
+                    } else if (child.name == "kotlin-js-store") {
+                        for (file in child.children) {
+                            if (file is PsiFile)
+                                otherFiles.children.add(PsiFileNode(project, file, settings))
+                        }
                     } else {
                         val virtualFolderNode = VirtualFolderNode(
                             project = project,

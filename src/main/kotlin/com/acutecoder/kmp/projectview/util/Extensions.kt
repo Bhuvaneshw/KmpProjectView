@@ -16,7 +16,7 @@ fun logError(message: Any?) {
 }
 
 fun PsiDirectory.canBeSkipped(): Boolean {
-    return name.startsWith(".") || name == "build"
+    return name.startsWith(".") || name == "build" || name == "projectFilesBackup"
 }
 
 fun PsiFile.isGradleFile(): Boolean {
