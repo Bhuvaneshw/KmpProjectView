@@ -5,10 +5,10 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Kmp/Cmp Project View</name>
+    <name>KMP Project View</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="acutecoder3@gmail.com" url="https://acutecoder.netlify.app">AcuteCoder</vendor>
+    <vendor email="bhuvaneshwaran319@gmail.com" url="https://acutecoder.netlify.app">Bhuvaneshwaran</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -35,7 +35,7 @@
         <applicationConfigurable
                 instance="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
                 id="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
-                displayName="Kmp Project View"
+                displayName="KMP Project View"
                 parentId="appearance"
         />
     </extensions>
