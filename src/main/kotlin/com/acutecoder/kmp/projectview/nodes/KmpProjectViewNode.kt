@@ -40,7 +40,7 @@ class KmpProjectViewNode(
 
             for (child in baseDirectory.children) {
                 if (child is PsiDirectory && !child.canBeSkipped()) {
-                    val moduleType = child.isKmpSubModule()
+                    val moduleType = child.moduleType()
 
                     if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
                         val moduleNode =
