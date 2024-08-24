@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Updated showModuleNameOnly for commonMain">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,20 +98,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Plugin.executor": "Run",
-    "Gradle.KmpProjectView [buildPlugin].executor": "Run",
-    "Gradle.KmpProjectView [setupDependencies].executor": "Run",
-    "Gradle.Run Plugin.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mgvis/KmpProjects/KmpProjectView/build/distributions/KmpProjectView-1.0.0.zip",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.KmpProjectView [buildPlugin].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.KmpProjectView [setupDependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mgvis/KmpProjects/KmpProjectView/build/distributions/KmpProjectView-1.0.0.zip&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mgvis\KmpProjects\KmpProjectView\src\main\resources\META-INF" />
@@ -192,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724407899018</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Updated showModuleNameOnly for commonMain">
+      <option name="closed" value="true" />
+      <created>1724408437342</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1724408437342</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -202,6 +209,7 @@
     <MESSAGE value="Ignored projectFilesBackup and added kotlin-js-store to other files" />
     <MESSAGE value="Added showModuleNameOnly preference" />
     <MESSAGE value="Added description and screenshots" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added description and screenshots" />
+    <MESSAGE value="Updated showModuleNameOnly for commonMain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated showModuleNameOnly for commonMain" />
   </component>
 </project>

@@ -45,11 +45,6 @@ open class VirtualFolderNode(
     }
 
     override fun contains(file: VirtualFile): Boolean {
-        children.forEach {
-            if (it.mayContain(file))
-                return true
-        }
-
         return false
     }
 }
