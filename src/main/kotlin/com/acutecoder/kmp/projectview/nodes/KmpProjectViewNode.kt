@@ -36,7 +36,7 @@ class KmpProjectViewNode(
 
         baseDirPsi?.let { baseDirectory ->
             val gradleFiles = GradleGroupNode(project = project, settings = settings)
-            val otherFiles = OtherGroupNode(project = project, settings = settings)
+            val otherFiles = OtherGroupNode(project = project, settings = settings, baseDirectory = baseDirectory)
 
             for (child in baseDirectory.children) {
                 if (child is PsiDirectory && !child.canBeSkipped()) {
@@ -46,6 +46,7 @@ class KmpProjectViewNode(
                         val moduleNode =
                             VirtualFolderNode(
                                 project = project,
+                                folder = child.findSrcDirectory() ?: child,
                                 moduleName = child.name,
                                 icon = AllIcons.Nodes.Module,
                                 viewSettings = settings,
@@ -53,8 +54,9 @@ class KmpProjectViewNode(
                                 showOnTop = true,
                             )
 
-                        for (subModuleFile in child.children)
+                        for (subModuleFile in child.children) {
                             appendKmpModule(project, settings, subModuleFile, moduleNode)
+                        }
 
                         children.add(moduleNode)
                     } else if (child.name == "gradle") {
@@ -70,6 +72,7 @@ class KmpProjectViewNode(
                     } else {
                         val virtualFolderNode = VirtualFolderNode(
                             project = project,
+                            folder = child,
                             moduleName = child.name,
                             icon = if (moduleType == ModuleType.Unknown) AllIcons.Nodes.Module else AllIcons.Nodes.Folder,
                             viewSettings = settings
@@ -144,19 +147,21 @@ private fun appendModule(
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
 private inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
-    LessImportantVirtualFolderNode(
+    VirtualGroupNode(
         project = project,
         folderName = "Gradle Files",
+        element = "Gradle Files",
         icon = AllIcons.Nodes.ConfigFolder.withoutTooltip(),
         viewSettings = settings,
         isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-private inline fun OtherGroupNode(project: Project, settings: ViewSettings) =
-    LessImportantVirtualFolderNode(
+private inline fun OtherGroupNode(project: Project, settings: ViewSettings, baseDirectory: PsiDirectory) =
+    VirtualGroupNode(
         project = project,
         folderName = "Other Files",
+        element = baseDirectory,
         icon = AllIcons.Nodes.Folder.withoutTooltip(),
         viewSettings = settings,
         isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,

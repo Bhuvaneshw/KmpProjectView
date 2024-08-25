@@ -3,7 +3,6 @@ package com.acutecoder.kmp.projectview
 import com.acutecoder.kmp.projectview.preference.PreferenceObserver
 import com.acutecoder.kmp.projectview.util.Constants
 import com.acutecoder.kmp.projectview.util.KmpSelectInTarget
-import com.acutecoder.kmp.projectview.util.log
 import com.intellij.ide.SelectInTarget
 import com.intellij.ide.projectView.ProjectView
 import com.intellij.ide.projectView.impl.ProjectAbstractTreeStructureBase
@@ -45,7 +44,6 @@ class KmpProjectPane(private val project: Project) : ProjectViewPane(project) {
             val linkedProjects = gradleSettings.linkedProjectsSettings
             return linkedProjects.isNotEmpty()
         } catch (e: Exception) {
-            log(e)
             return true
         }
     }

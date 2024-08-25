@@ -1,6 +1,7 @@
 package com.acutecoder.kmp.projectview.util
 
 import com.acutecoder.kmp.projectview.preference.PluginPreference
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -68,4 +69,22 @@ inline fun ScrollPane(jTextField: JTextField) = JBScrollPane(jTextField).apply {
     verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_NEVER
     maximumHeight = 40
     maximumWidth = 800
+}
+
+fun PsiDirectory.findSrcDirectory(): PsiDirectory? {
+    return children.find { it is PsiDirectory && it.name == "src" }.let {
+        if (it is PsiDirectory) it
+        else null
+    }
+}
+
+fun VirtualFile.isAncestorOf(file: VirtualFile?): Boolean {
+    var currentFile = file
+    while (currentFile != null) {
+        if (currentFile == this) {
+            return true
+        }
+        currentFile = currentFile.parent
+    }
+    return false
 }
