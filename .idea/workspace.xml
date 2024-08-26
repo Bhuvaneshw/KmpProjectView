@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Tooltip for icons only">
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Set appropriate icons and enhanced ui texts">
+      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot6.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualGroupNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualGroupNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot5.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -279,7 +285,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724654320638</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Set appropriate icons and enhanced ui texts">
+      <option name="closed" value="true" />
+      <created>1724657117966</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1724657117966</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -308,6 +322,7 @@
     <MESSAGE value="Added group except commonMain and commonMain identifiers options" />
     <MESSAGE value="Organize VirtualGroupNode" />
     <MESSAGE value="Tooltip for icons only" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tooltip for icons only" />
+    <MESSAGE value="Set appropriate icons and enhanced ui texts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set appropriate icons and enhanced ui texts" />
   </component>
 </project>
