@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Ignore gradle and build folders">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Added group except commonMain and commonMain identifiers options">
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualGroupNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/VirtualGroupNode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +242,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724648061510</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added group except commonMain and commonMain identifiers options">
+      <option name="closed" value="true" />
+      <created>1724651795328</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1724651795328</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added group except commonMain and commonMain identifiers options">
+      <option name="closed" value="true" />
+      <created>1724651850669</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1724651850669</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -272,6 +284,7 @@
     <MESSAGE value="Only for gradle projects" />
     <MESSAGE value="Enhanced VirtualNodes to have correct right click menus" />
     <MESSAGE value="Ignore gradle and build folders" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ignore gradle and build folders" />
+    <MESSAGE value="Added group except commonMain and commonMain identifiers options" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added group except commonMain and commonMain identifiers options" />
   </component>
 </project>

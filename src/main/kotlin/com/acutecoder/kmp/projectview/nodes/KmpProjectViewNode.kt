@@ -123,16 +123,7 @@ private fun appendSubKmpModule(
     val preferences = PluginPreference.getInstance().state
 
     if (preferences.groupOtherMain) {
-        val otherGroup = VirtualGroupNode(
-            project = project,
-            folderName = "Other Source Set",
-            element = "Other Source Set",
-            tooltip = "Source Set group",
-            icon = AllIcons.Nodes.ModuleGroup,
-            viewSettings = settings,
-            isTooltipEnabled = preferences.isTooltipEnabled,
-            weight = 10,
-        )
+        val otherGroup = OtherSourceSetGroup(project, settings)
 
         for (srcFile in subModuleFile.children) {
             if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
@@ -166,25 +157,3 @@ private fun appendModule(
         virtualFolderNode.children.add(PsiFileNode(project, subModuleFile, settings))
     }
 }
-
-@Suppress("NOTHING_TO_INLINE", "functionName")
-private inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
-    VirtualGroupNode(
-        project = project,
-        folderName = "Gradle Files",
-        element = "Gradle Files",
-        icon = AllIcons.Nodes.ConfigFolder.withoutTooltip(),
-        viewSettings = settings,
-        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
-    )
-
-@Suppress("NOTHING_TO_INLINE", "functionName")
-private inline fun OtherGroupNode(project: Project, settings: ViewSettings, baseDirectory: PsiDirectory) =
-    VirtualGroupNode(
-        project = project,
-        folderName = "Other Files",
-        element = baseDirectory,
-        icon = AllIcons.Nodes.Folder.withoutTooltip(),
-        viewSettings = settings,
-        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
-    )
