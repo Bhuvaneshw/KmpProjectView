@@ -16,8 +16,9 @@ class VirtualGroupNode<T : Any>(
     element: T,
     private val icon: Icon,
     viewSettings: ViewSettings,
-    private val tooltip: String = folderName,
     private val isTooltipEnabled: Boolean,
+    private val tooltip: String = folderName,
+    private val weight: Int = 100,
 ) : ProjectViewNode<T>(project, element, viewSettings) {
 
     val children = mutableListOf<AbstractTreeNode<*>>()
@@ -34,7 +35,7 @@ class VirtualGroupNode<T : Any>(
     }
 
     override fun getWeight(): Int {
-        return 100
+        return weight
     }
 
     override fun contains(file: VirtualFile): Boolean {

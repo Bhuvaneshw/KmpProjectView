@@ -5,6 +5,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiFileSystemItem
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.util.maximumHeight
 import com.intellij.ui.util.maximumWidth
@@ -87,4 +88,8 @@ fun VirtualFile.isAncestorOf(file: VirtualFile?): Boolean {
         currentFile = currentFile.parent
     }
     return false
+}
+
+infix fun PsiFileSystemItem.matches(identifiers: List<String>): Boolean {
+    return name in identifiers
 }
