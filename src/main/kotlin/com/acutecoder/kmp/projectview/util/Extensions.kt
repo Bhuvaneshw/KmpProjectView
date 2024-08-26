@@ -7,10 +7,9 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileSystemItem
 import com.intellij.ui.components.JBScrollPane
-import com.intellij.ui.util.maximumHeight
-import com.intellij.ui.util.maximumWidth
 import com.jetbrains.rd.util.LogLevel
 import com.jetbrains.rd.util.Logger
+import java.awt.Dimension
 import javax.swing.JScrollPane
 import javax.swing.JTextField
 
@@ -68,8 +67,7 @@ fun PsiElement.moduleType(): ModuleType {
 inline fun ScrollPane(jTextField: JTextField) = JBScrollPane(jTextField).apply {
     horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
     verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_NEVER
-    maximumHeight = 40
-    maximumWidth = 800
+    maximumSize = Dimension(800, 40)
 }
 
 fun PsiDirectory.findSrcDirectory(): PsiDirectory? {

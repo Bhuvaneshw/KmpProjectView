@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Updated version 1.0.1 and screenshots" />
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Include platform module dependency">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/util/Extensions.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,7 +134,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build Plugin">
+  <component name="RunManager" selected="Gradle.Run Plugin">
     <list>
       <item itemvalue="Gradle.Build Plugin" />
       <item itemvalue="Gradle.Run Plugin" />
@@ -298,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724659352617</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Include platform module dependency">
+      <option name="closed" value="true" />
+      <created>1724659839361</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1724659839361</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -330,6 +341,7 @@
     <MESSAGE value="Set appropriate icons and enhanced ui texts" />
     <MESSAGE value="Added restart hint" />
     <MESSAGE value="Updated version 1.0.1 and screenshots" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated version 1.0.1 and screenshots" />
+    <MESSAGE value="Include platform module dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Include platform module dependency" />
   </component>
 </project>
