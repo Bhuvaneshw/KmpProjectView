@@ -63,6 +63,7 @@ class PluginPreferenceConfigurable : Configurable {
         settingsPanel.add(JLabel("Hint: You can add multiple identifiers by separating them with commas."))
         settingsPanel.add(JLabel("If any KMP/CMP identifier matches with the build.gradle file,"))
         settingsPanel.add(JLabel("the corresponding module will be determined."))
+        settingsPanel.add(JLabel("If changes are not applied, try restarting the IDE."))
 
         reset()
 
