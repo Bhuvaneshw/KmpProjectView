@@ -29,9 +29,9 @@ class PluginPreferenceConfigurable : Configurable {
 
         showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
-        differentiateCommonMainCheckBox = JCheckBox("Differentiate commonMain")
+        differentiateCommonMainCheckBox = JCheckBox("Highlight commonMain")
         showModuleNameOnlyCheckBox = JCheckBox("Hide extra info for source set")
-        isTooltipEnabledCheckBox = JCheckBox("Enable Tooltips")
+        isTooltipEnabledCheckBox = JCheckBox("Show Tooltip")
         groupOtherMainCheckBox = JCheckBox("Group everything except commonMain")
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()

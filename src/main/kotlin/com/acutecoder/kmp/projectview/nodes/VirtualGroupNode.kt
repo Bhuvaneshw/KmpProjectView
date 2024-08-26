@@ -1,8 +1,7 @@
 package com.acutecoder.kmp.projectview.nodes
 
-import com.acutecoder.kmp.projectview.preference.PluginPreference
-import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.acutecoder.kmp.projectview.util.withTooltip
+import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -12,34 +11,45 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.SimpleTextAttributes
+import icons.GradleIcons
 import javax.swing.Icon
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
+inline fun GradleGroupNode(
+    project: Project,
+    settings: ViewSettings,
+    isTooltipEnabled: Boolean,
+) =
     VirtualGroupNode(
         project = project,
         folderName = "Gradle Files",
         element = "Gradle Files",
-        icon = AllIcons.Nodes.ConfigFolder,
+        icon = GradleIcons.Gradle,
         viewSettings = settings,
-        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
+        isTooltipEnabled = isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun OtherGroupNode(project: Project, settings: ViewSettings, baseDirectory: PsiDirectory) =
+inline fun OtherGroupNode(
+    project: Project,
+    settings: ViewSettings,
+    baseDirectory: PsiDirectory,
+    isTooltipEnabled: Boolean,
+) =
     VirtualGroupNode(
         project = project,
         folderName = "Other Files",
         element = baseDirectory,
-        icon = AllIcons.Nodes.Folder,
+        icon = AllIcons.FileTypes.Any_type,
         viewSettings = settings,
-        isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
+        isTooltipEnabled = isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
 inline fun OtherSourceSetGroup(
     project: Project,
     settings: ViewSettings,
+    isTooltipEnabled: Boolean,
 ) = VirtualGroupNode(
     project = project,
     folderName = "Other Source Set",
@@ -47,7 +57,7 @@ inline fun OtherSourceSetGroup(
     tooltip = "Source Set group",
     icon = AllIcons.Nodes.ModuleGroup,
     viewSettings = settings,
-    isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
+    isTooltipEnabled = isTooltipEnabled,
     weight = 10,
 )
 

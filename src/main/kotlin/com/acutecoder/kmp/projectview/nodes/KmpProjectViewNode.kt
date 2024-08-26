@@ -35,8 +35,9 @@ class KmpProjectViewNode(
         val baseDirPsi = psiManager.findDirectory(baseDir)
 
         baseDirPsi?.let { baseDirectory ->
-            val gradleFiles = GradleGroupNode(project = project, settings = settings)
-            val otherFiles = OtherGroupNode(project = project, settings = settings, baseDirectory = baseDirectory)
+            val preference = PluginPreference.getInstance().state
+            val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+            val otherFiles = OtherGroupNode(project, settings, baseDirectory, preference.isTooltipEnabled)
 
             for (child in baseDirectory.children) {
                 if (child is PsiDirectory && !child.canBeSkipped()) {
@@ -123,7 +124,7 @@ private fun appendSubKmpModule(
     val preferences = PluginPreference.getInstance().state
 
     if (preferences.groupOtherMain) {
-        val otherGroup = OtherSourceSetGroup(project, settings)
+        val otherGroup = OtherSourceSetGroup(project, settings, preferences.isTooltipEnabled)
 
         for (srcFile in subModuleFile.children) {
             if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
