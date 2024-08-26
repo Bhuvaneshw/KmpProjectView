@@ -2,6 +2,7 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.projectview.preference.PreferenceState
 import com.acutecoder.kmp.projectview.util.withoutTooltip
+import com.acutecoder.kmp.projectview.util.withTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ViewSettings
@@ -23,13 +24,16 @@ class CommonMainNode(
     override fun update(data: PresentationData) {
         super.update(data)
 
+        val icon =
+            if (preference.differentiateCommonMain) AllIcons.Modules.TestRoot
+            else AllIcons.Modules.SourceRoot
+
         data.setIcon(
-            (if (preference.differentiateCommonMain) AllIcons.Modules.TestRoot
-            else AllIcons.Modules.SourceRoot).withoutTooltip()
+            if (preference.isTooltipEnabled)
+                icon.withTooltip("Common Main source set")
+            else icon.withoutTooltip()
         )
 
-        if (preference.isTooltipEnabled)
-            data.tooltip = "Common Main source set"
         if (preference.showModuleNameOnly) {
             data.clearText()
             data.presentableText = directory.name

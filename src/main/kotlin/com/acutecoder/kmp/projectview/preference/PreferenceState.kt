@@ -7,7 +7,7 @@ class PreferenceState : BaseState() {
     var showCommonMainOnTop by property(true)
     var differentiateCommonMain by property(true)
     var showModuleNameOnly by property(true)
-    var isTooltipEnabled by property(false)
+    var isTooltipEnabled by property(true)
     var groupOtherMain by property(false)
     var kmpKeywords by string("libs.plugins.kotlinMultiplatform,libs.plugins.multiplatform")
     var cmpKeywords by string("libs.plugins.jetbrainsCompose,libs.plugins.compose")

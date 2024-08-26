@@ -2,6 +2,7 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.projectview.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.withoutTooltip
+import com.acutecoder.kmp.projectview.util.withTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -19,7 +20,7 @@ inline fun GradleGroupNode(project: Project, settings: ViewSettings) =
         project = project,
         folderName = "Gradle Files",
         element = "Gradle Files",
-        icon = AllIcons.Nodes.ConfigFolder.withoutTooltip(),
+        icon = AllIcons.Nodes.ConfigFolder,
         viewSettings = settings,
         isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     )
@@ -30,7 +31,7 @@ inline fun OtherGroupNode(project: Project, settings: ViewSettings, baseDirector
         project = project,
         folderName = "Other Files",
         element = baseDirectory,
-        icon = AllIcons.Nodes.Folder.withoutTooltip(),
+        icon = AllIcons.Nodes.Folder,
         viewSettings = settings,
         isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     )
@@ -44,7 +45,7 @@ inline fun OtherSourceSetGroup(
     folderName = "Other Source Set",
     element = "Other Source Set",
     tooltip = "Source Set group",
-    icon = AllIcons.Nodes.ModuleGroup.withoutTooltip(),
+    icon = AllIcons.Nodes.ModuleGroup,
     viewSettings = settings,
     isTooltipEnabled = PluginPreference.getInstance().state.isTooltipEnabled,
     weight = 10,
@@ -64,10 +65,13 @@ class VirtualGroupNode<T : Any>(
     val children = mutableListOf<AbstractTreeNode<*>>()
 
     override fun update(presentation: PresentationData) {
-        presentation.setIcon(icon.withoutTooltip())
+        presentation.setIcon(
+            if (isTooltipEnabled)
+                icon.withTooltip(tooltip)
+            else icon.withoutTooltip()
+        )
+
         presentation.addText(folderName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
-        if (isTooltipEnabled)
-            presentation.tooltip = tooltip
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
