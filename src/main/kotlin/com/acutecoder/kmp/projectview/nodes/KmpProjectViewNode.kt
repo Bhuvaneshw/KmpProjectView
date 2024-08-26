@@ -104,7 +104,7 @@ private fun appendKmpModule(
     subModuleFile: PsiElement,
     virtualFolderNode: VirtualFolderNode,
 ) {
-    if (subModuleFile is PsiDirectory && !subModuleFile.canBeSkipped()) {
+    if (subModuleFile is PsiDirectory && !subModuleFile.canBeSkipped() && subModuleFile.name != "gradle") {
         if (subModuleFile.name == "src") {
             appendSubKmpModule(project, settings, subModuleFile, virtualFolderNode)
         } else
@@ -123,7 +123,7 @@ private fun appendSubKmpModule(
     val preferences = PluginPreference.getInstance().state
 
     for (srcFile in subModuleFile.children) {
-        if (srcFile is PsiDirectory) {
+        if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
             if (srcFile.name == "commonMain")
                 virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
             else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
