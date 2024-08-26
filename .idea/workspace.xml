@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Set appropriate icons and enhanced ui texts">
-      <change afterPath="$PROJECT_DIR$/screenshots/Screenshot6.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot0.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/Screenshot5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/Screenshot5.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" afterDir="false" />
-    </list>
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Updated version 1.0.1 and screenshots" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +131,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run Plugin">
+  <component name="RunManager" selected="Gradle.Build Plugin">
     <list>
       <item itemvalue="Gradle.Build Plugin" />
       <item itemvalue="Gradle.Run Plugin" />
@@ -293,7 +282,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724657117966</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added restart hint">
+      <option name="closed" value="true" />
+      <created>1724659327848</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1724659327848</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Updated version 1.0.1 and screenshots">
+      <option name="closed" value="true" />
+      <created>1724659352617</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1724659352617</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -323,6 +328,8 @@
     <MESSAGE value="Organize VirtualGroupNode" />
     <MESSAGE value="Tooltip for icons only" />
     <MESSAGE value="Set appropriate icons and enhanced ui texts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set appropriate icons and enhanced ui texts" />
+    <MESSAGE value="Added restart hint" />
+    <MESSAGE value="Updated version 1.0.1 and screenshots" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated version 1.0.1 and screenshots" />
   </component>
 </project>
