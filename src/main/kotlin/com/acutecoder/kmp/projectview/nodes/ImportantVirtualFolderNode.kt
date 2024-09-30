@@ -15,6 +15,7 @@ open class ImportantVirtualFolderNode(
     settings: ViewSettings,
     private val showOnTop: Boolean = true,
     private val highlight: Boolean = false,
+    private val showOnlyName: Boolean = true,
     private val tooltip: String? = directory.name,
 ) : PsiDirectoryNode(project, directory, settings) {
 
@@ -33,5 +34,10 @@ open class ImportantVirtualFolderNode(
             tooltip?.let { icon.withTooltip(it) }
                 ?: icon.withoutTooltip()
         )
+
+        if (showOnlyName) {
+            data.clearText()
+            data.presentableText = directory.name
+        }
     }
 }

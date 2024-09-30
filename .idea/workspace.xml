@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Change plugin id">
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Set since and until versions">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/ImportantVirtualFolderNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/ImportantVirtualFolderNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +143,7 @@
       <recent name="com.acutecoder.kmp.projectview.nodes" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build Plugin">
+  <component name="RunManager" selected="Gradle.Run Plugin">
     <list>
       <item itemvalue="Gradle.Build Plugin" />
       <item itemvalue="Gradle.Run Plugin" />
@@ -354,7 +358,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727674238533</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Reset intellij version to 2023.2.6">
+      <option name="closed" value="true" />
+      <created>1727674833684</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1727674833684</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Set since and until versions">
+      <option name="closed" value="true" />
+      <created>1727676229038</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1727676229038</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -368,7 +388,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial Commit" />
     <MESSAGE value="Visual enhancement" />
     <MESSAGE value="Added Preference" />
     <MESSAGE value="Ignored projectFilesBackup and added kotlin-js-store to other files" />
@@ -392,6 +411,8 @@
     <MESSAGE value="Added Ungroup common main option and unset since and until build versions" />
     <MESSAGE value="Added change notes" />
     <MESSAGE value="Change plugin id" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change plugin id" />
+    <MESSAGE value="Reset intellij version to 2023.2.6" />
+    <MESSAGE value="Set since and until versions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set since and until versions" />
   </component>
 </project>

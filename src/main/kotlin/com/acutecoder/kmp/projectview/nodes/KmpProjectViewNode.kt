@@ -166,6 +166,7 @@ private fun appendCommonMain(
                         settings = settings,
                         showOnTop = preferences.showCommonMainOnTop,
                         highlight = preferences.differentiateCommonMain,
+                        showOnlyName = preferences.showModuleNameOnly,
                         tooltip = commonMainChildren.name + "(commonMain)"
                     )
                 )
