@@ -1,6 +1,7 @@
 package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.projectview.preference.PluginPreference
+import com.acutecoder.kmp.projectview.preference.PreferenceState
 import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.ViewSettings
@@ -128,9 +129,9 @@ private fun appendSubKmpModule(
 
         for (srcFile in subModuleFile.children) {
             if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
-                if (srcFile matches preferences.commonMainKeywordList)
-                    virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
-                else otherGroup.children.add(OtherMainNode(project, srcFile, settings, preferences))
+                if (srcFile matches preferences.commonMainKeywordList) {
+                    appendCommonMain(preferences, srcFile, virtualFolderNode, project, settings)
+                } else otherGroup.children.add(OtherMainNode(project, srcFile, settings, preferences))
             } else if (srcFile is PsiFile)
                 otherGroup.children.add(PsiFileNode(project, srcFile, settings))
         }
@@ -138,12 +139,38 @@ private fun appendSubKmpModule(
         virtualFolderNode.children.add(otherGroup)
     } else for (srcFile in subModuleFile.children) {
         if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
-            if (srcFile matches preferences.commonMainKeywordList)
-                virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
-            else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
+            if (srcFile matches preferences.commonMainKeywordList) {
+                appendCommonMain(preferences, srcFile, virtualFolderNode, project, settings)
+            } else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
         } else if (srcFile is PsiFile)
             virtualFolderNode.children.add(PsiFileNode(project, srcFile, settings))
     }
+}
+
+private fun appendCommonMain(
+    preferences: PreferenceState,
+    srcFile: PsiDirectory,
+    virtualFolderNode: VirtualFolderNode,
+    project: Project,
+    settings: ViewSettings,
+) {
+    if (preferences.unGroupCommonMain) {
+        for (commonMainChildren in srcFile.children) {
+            if (commonMainChildren is PsiFile)
+                virtualFolderNode.children.add(PsiFileNode(project, commonMainChildren, settings))
+            else if (commonMainChildren is PsiDirectory)
+                virtualFolderNode.children.add(
+                    ImportantVirtualFolderNode(
+                        project = project,
+                        directory = commonMainChildren,
+                        settings = settings,
+                        showOnTop = preferences.showCommonMainOnTop,
+                        highlight = preferences.differentiateCommonMain,
+                        tooltip = commonMainChildren.name + "(commonMain)"
+                    )
+                )
+        }
+    } else virtualFolderNode.children.add(CommonMainNode(project, srcFile, settings, preferences))
 }
 
 private fun appendModule(

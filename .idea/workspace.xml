@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Replaced maximumSize deprecated method for idea versions greater or equal to 242">
+    <list default="true" id="0bb86309-c3c1-4043-a282-c366a38cb30a" name="Changes" comment="Update screenshots">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/ImportantVirtualFolderNode.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/CommonMainNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/nodes/KmpProjectViewNode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PluginPreferenceConfigurable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/acutecoder/kmp/projectview/preference/PreferenceState.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +118,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mgvis/KmpProjects/KmpProjectView/src/main/resources",
+    "last_opened_file_path": "C:/Users/mgvis/KmpProjects/IRChatModels",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -132,8 +138,11 @@
       <recent name="com.acutecoder.kmp.projectview.util" />
       <recent name="" />
     </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.acutecoder.kmp.projectview.nodes" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build Plugin">
+  <component name="RunManager" selected="Gradle.Run Plugin">
     <list>
       <item itemvalue="Gradle.Build Plugin" />
       <item itemvalue="Gradle.Run Plugin" />
@@ -316,7 +325,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724695544286</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Update screenshots">
+      <option name="closed" value="true" />
+      <created>1726457562024</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1726457562024</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -350,6 +367,7 @@
     <MESSAGE value="Updated version 1.0.1 and screenshots" />
     <MESSAGE value="Include platform module dependency" />
     <MESSAGE value="Replaced maximumSize deprecated method for idea versions greater or equal to 242" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced maximumSize deprecated method for idea versions greater or equal to 242" />
+    <MESSAGE value="Update screenshots" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update screenshots" />
   </component>
 </project>

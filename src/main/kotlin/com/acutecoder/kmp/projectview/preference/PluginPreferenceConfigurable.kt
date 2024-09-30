@@ -14,6 +14,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var showModuleNameOnlyCheckBox: JCheckBox
     private lateinit var showKmpSideTextCheckBox: JCheckBox
     private lateinit var groupOtherMainCheckBox: JCheckBox
+    private lateinit var unGroupCommonMainCheckBox: JCheckBox
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
     private lateinit var commonMainKeywordsField: JTextField
@@ -33,6 +34,7 @@ class PluginPreferenceConfigurable : Configurable {
         showModuleNameOnlyCheckBox = JCheckBox("Hide extra info for source set")
         isTooltipEnabledCheckBox = JCheckBox("Show Tooltip")
         groupOtherMainCheckBox = JCheckBox("Group everything except commonMain")
+        unGroupCommonMainCheckBox = JCheckBox("Ungroup commonMain")
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
         commonMainKeywordsField = JTextField()
@@ -46,6 +48,7 @@ class PluginPreferenceConfigurable : Configurable {
         settingsPanel.add(showModuleNameOnlyCheckBox)
         settingsPanel.add(isTooltipEnabledCheckBox)
         settingsPanel.add(groupOtherMainCheckBox)
+        settingsPanel.add(unGroupCommonMainCheckBox)
         settingsPanel.add(Box.createVerticalStrut(20))
 
         settingsPanel.add(JLabel("commonMain Identifiers"))
@@ -64,6 +67,8 @@ class PluginPreferenceConfigurable : Configurable {
         settingsPanel.add(JLabel("If any KMP/CMP identifier matches with the build.gradle file,"))
         settingsPanel.add(JLabel("the corresponding module will be determined."))
         settingsPanel.add(JLabel("If changes are not applied, try restarting the IDE."))
+        settingsPanel.add(JLabel("Enable both \"Group everything except commonMain\" and \"Ungroup commonMain\""))
+        settingsPanel.add(JLabel("for better appearance."))
 
         reset()
 
@@ -79,6 +84,7 @@ class PluginPreferenceConfigurable : Configurable {
                 showModuleNameOnlyCheckBox.isSelected != settings.showModuleNameOnly ||
                 isTooltipEnabledCheckBox.isSelected != settings.isTooltipEnabled ||
                 groupOtherMainCheckBox.isSelected != settings.groupOtherMain ||
+                unGroupCommonMainCheckBox.isSelected != settings.unGroupCommonMain ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
                 commonMainKeywordsField.text != settings.commonMainKeywords
@@ -95,6 +101,7 @@ class PluginPreferenceConfigurable : Configurable {
                 showModuleNameOnly = showModuleNameOnlyCheckBox.isSelected
                 isTooltipEnabled = isTooltipEnabledCheckBox.isSelected
                 groupOtherMain = groupOtherMainCheckBox.isSelected
+                unGroupCommonMain = unGroupCommonMainCheckBox.isSelected
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
                 commonMainKeywords = commonMainKeywordsField.text
@@ -113,6 +120,7 @@ class PluginPreferenceConfigurable : Configurable {
         showModuleNameOnlyCheckBox.isSelected = settings.showModuleNameOnly
         isTooltipEnabledCheckBox.isSelected = settings.isTooltipEnabled
         groupOtherMainCheckBox.isSelected = settings.groupOtherMain
+        unGroupCommonMainCheckBox.isSelected = settings.unGroupCommonMain
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
         commonMainKeywordsField.text = settings.commonMainKeywords
