@@ -42,4 +42,17 @@
         />
     </extensions>
 
+    <change-notes>
+        <![CDATA[
+            <h2>New Features</h2>
+            <ul>
+              <li>Ungroup commonMain</li>
+            </ul>
+            <h2>Fixes</h2>
+            <ul>
+              <li>Removed deprecated api usage</li>
+            </ul>
+        ]]>
+    </change-notes>
+
 </idea-plugin>
