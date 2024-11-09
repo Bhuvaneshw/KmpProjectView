@@ -2,6 +2,7 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.projectview.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.*
+import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
 import com.intellij.ide.projectView.ViewSettings
@@ -11,22 +12,18 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
-import com.intellij.psi.PsiTreeChangeEvent
-import com.intellij.psi.PsiTreeChangeListener
 import com.intellij.ui.SimpleTextAttributes
 import javax.swing.Icon
 
-open class VirtualFolderNode(
+class FolderNode(
     project: Project,
-    var folder: PsiDirectory,
-    private val moduleName: String,
-    private val icon: Icon,
+    private val folder: PsiDirectory,
     viewSettings: ViewSettings,
+    private val moduleName: String = folder.name,
+    private val icon: Icon = AllIcons.Nodes.Folder,
     private val moduleType: ModuleType? = null,
-    private val showOnTop: Boolean = false,
 ) : ProjectViewNode<PsiDirectory>(project, folder, viewSettings) {
 
-    val children = mutableListOf<AbstractTreeNode<*>>()
     private val preferences = PluginPreference.getInstance().state
 
     init {
@@ -53,48 +50,18 @@ open class VirtualFolderNode(
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
+        val children = mutableListOf<AbstractTreeNode<*>>()
+
+        listAndAddChildren(folder, project, settings, false) {
+            children.add(it)
+        }
+
         return children
     }
 
-    override fun getWeight(): Int {
-        return if (showOnTop) 0 else Constants.DEFAULT_WEIGHT
-    }
+    override fun getWeight(): Int = Constants.DEFAULT_WEIGHT
 
     override fun contains(file: VirtualFile): Boolean {
         return folder.virtualFile == file || folder.virtualFile.isAncestorOf(file)
     }
-}
-
-class TreeChangeListener(private val handlePsiChange: (PsiTreeChangeEvent) -> Unit) : PsiTreeChangeListener {
-    override fun beforeChildAddition(event: PsiTreeChangeEvent) {}
-
-    override fun beforeChildRemoval(event: PsiTreeChangeEvent) {}
-
-    override fun beforeChildReplacement(event: PsiTreeChangeEvent) {}
-
-    override fun beforeChildMovement(event: PsiTreeChangeEvent) {}
-
-    override fun beforeChildrenChange(event: PsiTreeChangeEvent) {}
-
-    override fun beforePropertyChange(event: PsiTreeChangeEvent) {}
-
-    override fun childAdded(event: PsiTreeChangeEvent) {
-        handlePsiChange(event)
-    }
-
-    override fun childRemoved(event: PsiTreeChangeEvent) {
-        handlePsiChange(event)
-    }
-
-    override fun childReplaced(event: PsiTreeChangeEvent) {}
-
-    override fun childrenChanged(event: PsiTreeChangeEvent) {
-        handlePsiChange(event)
-    }
-
-    override fun childMoved(event: PsiTreeChangeEvent) {
-        handlePsiChange(event)
-    }
-
-    override fun propertyChanged(event: PsiTreeChangeEvent) {}
 }

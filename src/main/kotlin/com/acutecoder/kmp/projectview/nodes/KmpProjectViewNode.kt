@@ -6,7 +6,6 @@ import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode
-import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode
 import com.intellij.ide.util.treeView.AbstractTreeNode
 import com.intellij.openapi.project.Project
@@ -36,67 +35,126 @@ class KmpProjectViewNode(
         val baseDirPsi = psiManager.findDirectory(baseDir)
 
         baseDirPsi?.let { baseDirectory ->
-            val preference = PluginPreference.getInstance().state
-            val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
-            val otherFiles = OtherGroupNode(project, settings, baseDirectory, preference.isTooltipEnabled)
-
-            for (child in baseDirectory.children) {
-                if (child is PsiDirectory && !child.canBeSkipped()) {
-                    val moduleType = child.moduleType()
-
-                    if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
-                        val moduleNode =
-                            VirtualFolderNode(
-                                project = project,
-                                folder = child.findSrcDirectory() ?: child,
-                                moduleName = child.name,
-                                icon = AllIcons.Nodes.Module,
-                                viewSettings = settings,
-                                moduleType = moduleType,
-                                showOnTop = true,
-                            )
-
-                        for (subModuleFile in child.children) {
-                            appendKmpModule(project, settings, subModuleFile, moduleNode)
-                        }
-
-                        children.add(moduleNode)
-                    } else if (child.name == "gradle") {
-                        for (file in child.children) {
-                            if (file is PsiFile)
-                                gradleFiles.children.add(PsiFileNode(project, file, settings))
-                        }
-                    } else if (child.name == "kotlin-js-store") {
-                        for (file in child.children) {
-                            if (file is PsiFile)
-                                otherFiles.children.add(PsiFileNode(project, file, settings))
-                        }
-                    } else {
-                        val virtualFolderNode = VirtualFolderNode(
-                            project = project,
-                            folder = child,
-                            moduleName = child.name,
-                            icon = if (moduleType == ModuleType.Unknown) AllIcons.Nodes.Module else AllIcons.Nodes.Folder,
-                            viewSettings = settings
-                        )
-
-                        for (subModuleFile in child.children)
-                            appendModule(project, settings, subModuleFile, virtualFolderNode)
-
-                        children.add(virtualFolderNode)
-                    }
-                } else if (child is PsiFile) {
-                    if (child.isGradleFile())
-                        gradleFiles.children.add(PsiFileNode(project, child, settings))
-                    else otherFiles.children.add(PsiFileNode(project, child, settings))
-                }
+            listAndAddChildren(baseDirectory, project, settings, true) {
+                children.add(it)
             }
-
-            children.add(gradleFiles)
-            children.add(otherFiles)
         }
 
         return children
+    }
+}
+
+fun listAndAddChildren(
+    baseDirectory: PsiDirectory,
+    project: Project,
+    settings: ViewSettings,
+    splitFiles: Boolean,
+    add: (AbstractTreeNode<*>) -> Unit,
+) {
+    val preference = PluginPreference.getInstance().state
+    val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+    val otherFiles = OtherGroupNode(project, settings, baseDirectory, preference.isTooltipEnabled)
+
+    for (child in baseDirectory.children) {
+        if (child is PsiDirectory && !child.canBeSkipped()) {
+            findModuleTypeAndAdd(child, project, settings, gradleFiles, otherFiles, add)
+        } else if (child is PsiFile) {
+            if (splitFiles) {
+                if (child.isGradleFile())
+                    gradleFiles.children.add(PsiFileNode(project, child, settings))
+                else otherFiles.children.add(PsiFileNode(project, child, settings))
+            } else add(PsiFileNode(project, child, settings))
+        }
+    }
+
+    if (splitFiles) {
+        add(gradleFiles)
+        add(otherFiles)
+    }
+}
+
+private fun findModuleTypeAndAdd(
+    directory: PsiDirectory,
+    project: Project,
+    settings: ViewSettings,
+    gradleFiles: VirtualGroupNode<String>,
+    otherFiles: VirtualGroupNode<PsiDirectory>,
+    add: (AbstractTreeNode<*>) -> Unit,
+) {
+    val moduleType = directory.moduleType()
+
+    if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
+        val moduleNode =
+            VirtualFolderNode(
+                project = project,
+                folder = directory.findSrcDirectory() ?: directory,
+                moduleName = directory.name,
+                icon = AllIcons.Nodes.Module,
+                viewSettings = settings,
+                moduleType = moduleType,
+                showOnTop = true,
+            )
+
+        for (subModuleFile in directory.children) {
+            appendKmpModule(project, settings, subModuleFile, moduleNode)
+        }
+
+        add(moduleNode)
+    } else if (directory.name == "gradle") {
+        for (file in directory.children) {
+            if (file is PsiFile)
+                gradleFiles.children.add(PsiFileNode(project, file, settings))
+        }
+    } else if (directory.name == "kotlin-js-store") {
+        for (file in directory.children) {
+            if (file is PsiFile)
+                otherFiles.children.add(PsiFileNode(project, file, settings))
+        }
+    } else {
+        val virtualFolderNode = VirtualFolderNode(
+            project = project,
+            folder = directory,
+            moduleName = directory.name,
+            icon = if (moduleType == ModuleType.Unknown) AllIcons.Nodes.Module else AllIcons.Nodes.Folder,
+            viewSettings = settings
+        )
+
+        val hasAtLeastOneKmpModule = directory.children.any {
+            it.moduleType().let { type -> type == ModuleType.KMP || type == ModuleType.CMP }
+        }
+
+        if (hasAtLeastOneKmpModule) {
+            listAndAddChildren(directory, project, settings, true) {
+                virtualFolderNode.children.add(it)
+            }
+        } else {
+            val preference = PluginPreference.getInstance().state
+            val gradleFiles2 = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+            val otherFiles2 = OtherGroupNode(project, settings, directory, preference.isTooltipEnabled)
+
+            for (subModuleFile in directory.children) {
+                val hasAtLeastOneKmpModule2 = subModuleFile is PsiDirectory && subModuleFile.children.any {
+                    it.moduleType().let { type -> type == ModuleType.KMP || type == ModuleType.CMP }
+                }
+
+                appendModule(
+                    project = project,
+                    settings = settings,
+                    subModuleFile = subModuleFile,
+                    virtualFolderNode = virtualFolderNode,
+                    gradleFiles = gradleFiles2,
+                    otherFiles = otherFiles2,
+                    hasAtLeastOneKmpModule = hasAtLeastOneKmpModule2
+                )
+            }
+
+            if (gradleFiles2.children.isNotEmpty())
+                virtualFolderNode.children.add(gradleFiles2)
+            if (otherFiles2.children.isNotEmpty())
+                virtualFolderNode.children.add(otherFiles2)
+        }
+
+        add(virtualFolderNode)
     }
 }
 
@@ -108,15 +166,25 @@ private fun appendKmpModule(
 ) {
     if (subModuleFile is PsiDirectory && !subModuleFile.canBeSkipped() && subModuleFile.name != "gradle") {
         if (subModuleFile.name == "src") {
-            appendSubKmpModule(project, settings, subModuleFile, virtualFolderNode)
-        } else
-            virtualFolderNode.children.add(PsiDirectoryNode(project, subModuleFile, settings))
+            appendKmpSourceModule(project, settings, subModuleFile, virtualFolderNode)
+        } else {
+            val moduleType = subModuleFile.moduleType()
+            if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
+                val preference = PluginPreference.getInstance().state
+                val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+                val otherFiles = OtherGroupNode(project, settings, subModuleFile, preference.isTooltipEnabled)
+
+                findModuleTypeAndAdd(subModuleFile, project, settings, gradleFiles, otherFiles) {
+                    virtualFolderNode.children.add(it)
+                }
+            } else virtualFolderNode.children.add(FolderNode(project, subModuleFile, settings))
+        }
     } else if (subModuleFile is PsiFile) {
         virtualFolderNode.children.add(PsiFileNode(project, subModuleFile, settings))
     }
 }
 
-private fun appendSubKmpModule(
+private fun appendKmpSourceModule(
     project: Project,
     settings: ViewSettings,
     subModuleFile: PsiDirectory,
@@ -131,7 +199,18 @@ private fun appendSubKmpModule(
             if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
                 if (srcFile matches preferences.commonMainKeywordList) {
                     appendCommonMain(preferences, srcFile, virtualFolderNode, project, settings)
-                } else otherGroup.children.add(OtherMainNode(project, srcFile, settings, preferences))
+                } else {
+                    val moduleType = srcFile.moduleType()
+                    if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
+                        val preference = PluginPreference.getInstance().state
+                        val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+                        val otherFiles = OtherGroupNode(project, settings, srcFile, preference.isTooltipEnabled)
+
+                        findModuleTypeAndAdd(srcFile, project, settings, gradleFiles, otherFiles) {
+                            virtualFolderNode.children.add(it)
+                        }
+                    } else otherGroup.children.add(OtherMainNode(project, srcFile, settings, preferences))
+                }
             } else if (srcFile is PsiFile)
                 otherGroup.children.add(PsiFileNode(project, srcFile, settings))
         }
@@ -141,7 +220,18 @@ private fun appendSubKmpModule(
         if (srcFile is PsiDirectory && !srcFile.canBeSkipped() && srcFile.name != "gradle") {
             if (srcFile matches preferences.commonMainKeywordList) {
                 appendCommonMain(preferences, srcFile, virtualFolderNode, project, settings)
-            } else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
+            } else {
+                val moduleType = srcFile.moduleType()
+                if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
+                    val preference = PluginPreference.getInstance().state
+                    val gradleFiles = GradleGroupNode(project, settings, preference.isTooltipEnabled)
+                    val otherFiles = OtherGroupNode(project, settings, srcFile, preference.isTooltipEnabled)
+
+                    findModuleTypeAndAdd(srcFile, project, settings, gradleFiles, otherFiles) {
+                        virtualFolderNode.children.add(it)
+                    }
+                } else virtualFolderNode.children.add(OtherMainNode(project, srcFile, settings, preferences))
+            }
         } else if (srcFile is PsiFile)
             virtualFolderNode.children.add(PsiFileNode(project, srcFile, settings))
     }
@@ -179,10 +269,32 @@ private fun appendModule(
     settings: ViewSettings,
     subModuleFile: PsiElement,
     virtualFolderNode: VirtualFolderNode,
+    gradleFiles: VirtualGroupNode<String>,
+    otherFiles: VirtualGroupNode<PsiDirectory>,
+    hasAtLeastOneKmpModule: Boolean,
 ) {
     if (subModuleFile is PsiDirectory && !subModuleFile.canBeSkipped()) {
-        virtualFolderNode.children.add(PsiDirectoryNode(project, subModuleFile, settings))
+        val moduleType = subModuleFile.moduleType()
+        if (moduleType == ModuleType.KMP || moduleType == ModuleType.CMP) {
+            findModuleTypeAndAdd(subModuleFile, project, settings, gradleFiles, otherFiles) {
+                virtualFolderNode.children.add(it)
+            }
+        } else if (subModuleFile.name == "gradle") {
+            for (file in subModuleFile.children) {
+                if (file is PsiFile)
+                    gradleFiles.children.add(PsiFileNode(project, file, settings))
+            }
+        } else if (subModuleFile.name == "kotlin-js-store") {
+            for (file in subModuleFile.children) {
+                if (file is PsiFile)
+                    otherFiles.children.add(PsiFileNode(project, file, settings))
+            }
+        } else virtualFolderNode.children.add(FolderNode(project, subModuleFile, settings))
     } else if (subModuleFile is PsiFile) {
-        virtualFolderNode.children.add(PsiFileNode(project, subModuleFile, settings))
+        if (hasAtLeastOneKmpModule) {
+            if (subModuleFile.isGradleFile())
+                gradleFiles.children.add(PsiFileNode(project, subModuleFile, settings))
+            else otherFiles.children.add(PsiFileNode(project, subModuleFile, settings))
+        } else virtualFolderNode.children.add(PsiFileNode(project, subModuleFile, settings))
     }
 }
