@@ -1,6 +1,8 @@
 package com.acutecoder.kmp.projectview
 
-import com.acutecoder.kmp.projectview.nodes.KmpProjectViewNode
+import com.acutecoder.kmp.projectview.nodes.BaseProjectViewNode
+import com.acutecoder.kmp.projectview.preference.PluginPreference
+import com.acutecoder.kmp.projectview.util.Config
 import com.acutecoder.kmp.projectview.util.Constants
 import com.intellij.ide.projectView.ProjectView
 import com.intellij.ide.projectView.ViewSettings
@@ -15,7 +17,9 @@ class KmpTreeStructure(
 ) : ProjectTreeStructure(project, id) {
 
     override fun createRoot(project: Project, settings: ViewSettings): AbstractTreeNode<*> {
-        return KmpProjectViewNode(project, settings)
+        return BaseProjectViewNode(Config(project, settings) {
+            PluginPreference.getInstance().state
+        })
     }
 
     override fun isShowExcludedFiles(): Boolean {

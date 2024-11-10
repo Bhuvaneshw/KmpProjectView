@@ -1,13 +1,12 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.projectview.util.Config
 import com.acutecoder.kmp.projectview.util.withTooltip
 import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
-import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.util.treeView.AbstractTreeNode
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.SimpleTextAttributes
@@ -15,62 +14,45 @@ import icons.GradleIcons
 import javax.swing.Icon
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun GradleGroupNode(
-    project: Project,
-    settings: ViewSettings,
-    isTooltipEnabled: Boolean,
-) =
+inline fun GradleGroupNode(config: Config) =
     VirtualGroupNode(
-        project = project,
+        config = config,
         folderName = "Gradle Files",
         element = "Gradle Files",
         icon = GradleIcons.Gradle,
-        viewSettings = settings,
-        isTooltipEnabled = isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
 inline fun OtherGroupNode(
-    project: Project,
-    settings: ViewSettings,
+    config: Config,
     baseDirectory: PsiDirectory,
-    isTooltipEnabled: Boolean,
 ) =
     VirtualGroupNode(
-        project = project,
+        config = config,
         folderName = "Other Files",
         element = baseDirectory,
         icon = AllIcons.FileTypes.Any_type,
-        viewSettings = settings,
-        isTooltipEnabled = isTooltipEnabled,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun OtherSourceSetGroup(
-    project: Project,
-    settings: ViewSettings,
-    isTooltipEnabled: Boolean,
-) = VirtualGroupNode(
-    project = project,
+inline fun OtherSourceSetGroup(config: Config) = VirtualGroupNode(
+    config = config,
     folderName = "Other Source Set",
     element = "Other Source Set",
     tooltip = "Source Set group",
     icon = AllIcons.Nodes.ModuleGroup,
-    viewSettings = settings,
-    isTooltipEnabled = isTooltipEnabled,
     weight = 10,
 )
 
 class VirtualGroupNode<T : Any>(
-    project: Project,
+    config: Config,
     private val folderName: String,
     element: T,
     private val icon: Icon,
-    viewSettings: ViewSettings,
-    private val isTooltipEnabled: Boolean,
     private val tooltip: String = folderName,
     private val weight: Int = 100,
-) : ProjectViewNode<T>(project, element, viewSettings) {
+    private val isTooltipEnabled: Boolean = config.preference().isTooltipEnabled,
+) : ProjectViewNode<T>(config.project, element, config.viewSettings) {
 
     val children = mutableListOf<AbstractTreeNode<*>>()
 

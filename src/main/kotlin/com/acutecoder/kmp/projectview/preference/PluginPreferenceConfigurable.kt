@@ -1,13 +1,16 @@
 package com.acutecoder.kmp.projectview.preference
 
 import com.acutecoder.kmp.projectview.util.Constants
-import com.acutecoder.kmp.projectview.util.ScrollPane
 import com.intellij.openapi.options.Configurable
-import javax.swing.*
+import com.intellij.openapi.ui.ComboBox
+import com.intellij.util.ui.FormBuilder
+import javax.swing.JCheckBox
+import javax.swing.JComponent
+import javax.swing.JLabel
+import javax.swing.JTextField
 
 class PluginPreferenceConfigurable : Configurable {
 
-    private lateinit var settingsPanel: JPanel
     private lateinit var isTooltipEnabledCheckBox: JCheckBox
     private lateinit var showCommonMainOnTopCheckBox: JCheckBox
     private lateinit var differentiateCommonMainCheckBox: JCheckBox
@@ -15,19 +18,19 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var showKmpSideTextCheckBox: JCheckBox
     private lateinit var groupOtherMainCheckBox: JCheckBox
     private lateinit var unGroupCommonMainCheckBox: JCheckBox
+    private lateinit var splitGradleAndOtherComboBox: ComboBox<String>
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
     private lateinit var commonMainKeywordsField: JTextField
+    private lateinit var folderIgnoreField: JTextField
+    private lateinit var fileIgnoreField: JTextField
+    private val gap = 20
 
     override fun getDisplayName(): String {
         return Constants.SETTINGS_TAB_NAME
     }
 
     override fun createComponent(): JComponent {
-        settingsPanel = JPanel().apply {
-            layout = BoxLayout(this, BoxLayout.Y_AXIS)
-        }
-
         showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
         differentiateCommonMainCheckBox = JCheckBox("Highlight commonMain")
@@ -35,44 +38,41 @@ class PluginPreferenceConfigurable : Configurable {
         isTooltipEnabledCheckBox = JCheckBox("Show Tooltip")
         groupOtherMainCheckBox = JCheckBox("Group everything except commonMain")
         unGroupCommonMainCheckBox = JCheckBox("Ungroup commonMain")
+
+        splitGradleAndOtherComboBox = ComboBox(arrayOf("Module Level", "All Level", "None"))
+
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
         commonMainKeywordsField = JTextField()
-        val kmpScrollPane = ScrollPane(kmpKeywordsField)
-        val cmpScrollPane = ScrollPane(cmpKeywordsField)
-        val commonScrollPane = ScrollPane(commonMainKeywordsField)
+        folderIgnoreField = JTextField()
+        fileIgnoreField = JTextField()
 
-        settingsPanel.add(showKmpSideTextCheckBox)
-        settingsPanel.add(showCommonMainOnTopCheckBox)
-        settingsPanel.add(differentiateCommonMainCheckBox)
-        settingsPanel.add(showModuleNameOnlyCheckBox)
-        settingsPanel.add(isTooltipEnabledCheckBox)
-        settingsPanel.add(groupOtherMainCheckBox)
-        settingsPanel.add(unGroupCommonMainCheckBox)
-        settingsPanel.add(Box.createVerticalStrut(20))
+        return FormBuilder.createFormBuilder().apply {
+            addComponent(showKmpSideTextCheckBox)
+            addComponent(showCommonMainOnTopCheckBox)
+            addComponent(differentiateCommonMainCheckBox)
+            addComponent(showModuleNameOnlyCheckBox)
+            addComponent(isTooltipEnabledCheckBox)
+            addComponent(groupOtherMainCheckBox)
+            addComponent(unGroupCommonMainCheckBox)
 
-        settingsPanel.add(JLabel("commonMain Identifiers"))
-        settingsPanel.add(commonScrollPane)
-        settingsPanel.add(Box.createVerticalStrut(10))
+            addLabeledComponent(JLabel("Split Gradle and Other files in"), splitGradleAndOtherComboBox, gap, false)
 
-        settingsPanel.add(JLabel("KMP Identifiers"))
-        settingsPanel.add(kmpScrollPane)
-        settingsPanel.add(Box.createVerticalStrut(10))
+            addLabeledComponent(JLabel("commonMain Identifiers"), commonMainKeywordsField, gap, true)
+            addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, true)
+            addLabeledComponent(JLabel("CMP Identifiers"), cmpKeywordsField, true)
+            addLabeledComponent(JLabel("Folder ignore pattern"), folderIgnoreField, true)
+            addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
-        settingsPanel.add(JLabel("CMP Identifiers"))
-        settingsPanel.add(cmpScrollPane)
-        settingsPanel.add(Box.createVerticalStrut(10))
+            addComponent(JLabel("Hint: You can add multiple identifiers by separating them with commas."), gap)
+            addComponent(JLabel("If any KMP/CMP identifier matches with the build.gradle file,"))
+            addComponent(JLabel("the corresponding module will be determined."))
+            addComponent(JLabel("If changes are not applied, try restarting the IDE."))
+            addComponent(JLabel("Enable both \"Group everything except commonMain\" and \"Ungroup commonMain\""))
+            addComponent(JLabel("for better appearance."))
 
-        settingsPanel.add(JLabel("Hint: You can add multiple identifiers by separating them with commas."))
-        settingsPanel.add(JLabel("If any KMP/CMP identifier matches with the build.gradle file,"))
-        settingsPanel.add(JLabel("the corresponding module will be determined."))
-        settingsPanel.add(JLabel("If changes are not applied, try restarting the IDE."))
-        settingsPanel.add(JLabel("Enable both \"Group everything except commonMain\" and \"Ungroup commonMain\""))
-        settingsPanel.add(JLabel("for better appearance."))
-
-        reset()
-
-        return settingsPanel
+            reset()
+        }.panel
     }
 
     override fun isModified(): Boolean {
@@ -85,9 +85,12 @@ class PluginPreferenceConfigurable : Configurable {
                 isTooltipEnabledCheckBox.isSelected != settings.isTooltipEnabled ||
                 groupOtherMainCheckBox.isSelected != settings.groupOtherMain ||
                 unGroupCommonMainCheckBox.isSelected != settings.unGroupCommonMain ||
+                splitGradleAndOtherComboBox.selectedIndex != settings.splitGradleAndOther ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
-                commonMainKeywordsField.text != settings.commonMainKeywords
+                commonMainKeywordsField.text != settings.commonMainKeywords ||
+                folderIgnoreField.text != settings.folderIgnoreKeywords ||
+                fileIgnoreField.text != settings.fileIgnoreKeywords
     }
 
     override fun apply() {
@@ -102,9 +105,12 @@ class PluginPreferenceConfigurable : Configurable {
                 isTooltipEnabled = isTooltipEnabledCheckBox.isSelected
                 groupOtherMain = groupOtherMainCheckBox.isSelected
                 unGroupCommonMain = unGroupCommonMainCheckBox.isSelected
+                splitGradleAndOther = splitGradleAndOtherComboBox.selectedIndex
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
                 commonMainKeywords = commonMainKeywordsField.text
+                folderIgnoreKeywords = folderIgnoreField.text
+                fileIgnoreKeywords = fileIgnoreField.text
             }
         )
 
@@ -121,13 +127,12 @@ class PluginPreferenceConfigurable : Configurable {
         isTooltipEnabledCheckBox.isSelected = settings.isTooltipEnabled
         groupOtherMainCheckBox.isSelected = settings.groupOtherMain
         unGroupCommonMainCheckBox.isSelected = settings.unGroupCommonMain
+        splitGradleAndOtherComboBox.selectedIndex = settings.splitGradleAndOther
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
         commonMainKeywordsField.text = settings.commonMainKeywords
+        folderIgnoreField.text = settings.folderIgnoreKeywords
+        fileIgnoreField.text = settings.fileIgnoreKeywords
     }
-
-//    override fun disposeUIResources() {
-//        settingsPanel = null
-//    }
 
 }

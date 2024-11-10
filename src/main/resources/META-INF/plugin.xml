@@ -30,6 +30,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.acutecoder.kmp.projectview.StartupActivity"/>
         <projectViewPane implementation="com.acutecoder.kmp.projectview.KmpProjectPane"/>
         <applicationService serviceImplementation="com.acutecoder.kmp.projectview.preference.PluginPreference"/>
 
@@ -43,13 +44,18 @@
 
     <change-notes>
         <![CDATA[
-            <h2>New Features</h2>
             <ul>
-              <li>Ungroup commonMain</li>
-            </ul>
-            <h2>Fixes</h2>
-            <ul>
-              <li>Removed deprecated api usage</li>
+              <li>Identification of nested KMP/CMP modules</li>
+              <li>
+                Added "Gradle and Other files" split level
+                <ol>
+                    <li>Module Level</li>
+                    <li>All Level</li>
+                    <li>None</li>
+                </ol>
+              </li>
+              <li>Added "Folder ignore pattern"</li>
+              <li>Added "File ignore pattern"</li>
             </ul>
         ]]>
     </change-notes>

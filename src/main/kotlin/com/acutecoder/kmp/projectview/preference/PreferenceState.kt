@@ -10,9 +10,12 @@ class PreferenceState : BaseState() {
     var isTooltipEnabled by property(true)
     var groupOtherMain by property(false)
     var unGroupCommonMain by property(false)
+    var splitGradleAndOther by property(0)
     var kmpKeywords by string("libs.plugins.kotlinMultiplatform,libs.plugins.multiplatform")
     var cmpKeywords by string("libs.plugins.jetbrainsCompose,libs.plugins.compose")
     var commonMainKeywords by string("commonMain")
+    var folderIgnoreKeywords by string("\\..*,build,projectFilesBackup")
+    var fileIgnoreKeywords by string("")
 
     val kmpKeywordList: List<String> get() = kmpKeywords?.split(",") ?: emptyList()
     val cmpKeywordList: List<String> get() = cmpKeywords?.split(",") ?: emptyList()
