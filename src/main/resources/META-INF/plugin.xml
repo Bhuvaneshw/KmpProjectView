@@ -32,30 +32,44 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.acutecoder.kmp.projectview.StartupActivity"/>
         <projectViewPane implementation="com.acutecoder.kmp.projectview.KmpProjectPane"/>
-        <applicationService serviceImplementation="com.acutecoder.kmp.projectview.preference.PluginPreference"/>
+        <applicationService serviceImplementation="com.acutecoder.kmp.preference.PluginPreference"/>
 
         <applicationConfigurable
-                instance="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
-                id="com.acutecoder.kmp.projectview.preference.PluginPreferenceConfigurable"
+                instance="com.acutecoder.kmp.preference.PluginPreferenceConfigurable"
+                id="com.acutecoder.kmp.preference.PluginPreferenceConfigurable"
                 displayName="KMP Project View"
                 parentId="appearance"
         />
+
+        <notificationGroup id="Compose Vector Converter" displayType="BALLOON"/>
+        <notificationGroup id="Regenerate Res Class" displayType="BALLOON"/>
     </extensions>
+
+    <actions>
+        <action id="com.acutecoder.kmp.helper.action.ConvertToComposeVectorAction"
+                class="com.acutecoder.kmp.helper.action.ConvertToComposeVectorAction"
+                text="Convert To Compose Vector"
+                description="Converts XML file to Compose vector">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+        <action id="com.acutecoder.kmp.helper.action.RegenerateResClassAction"
+                class="com.acutecoder.kmp.helper.action.RegenerateResClassAction"
+                text="Regenerate Res Class"
+                description="Regenerates Res class">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 
     <change-notes>
         <![CDATA[
             <ul>
-              <li>Identification of nested KMP/CMP modules</li>
               <li>
-                Added "Gradle and Other files" split level
+                Added experimental features
                 <ol>
-                    <li>Module Level</li>
-                    <li>All Level</li>
-                    <li>None</li>
+                    <li>Regenerate Res Class</li>
+                    <li>Compose Vector Converter</li>
                 </ol>
               </li>
-              <li>Added "Folder ignore pattern"</li>
-              <li>Added "File ignore pattern"</li>
             </ul>
         ]]>
     </change-notes>

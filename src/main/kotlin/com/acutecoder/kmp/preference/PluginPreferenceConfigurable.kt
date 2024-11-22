@@ -1,9 +1,13 @@
-package com.acutecoder.kmp.projectview.preference
+package com.acutecoder.kmp.preference
 
 import com.acutecoder.kmp.projectview.util.Constants
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ex.ApplicationManagerEx
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.openapi.ui.Messages
 import com.intellij.util.ui.FormBuilder
+import java.awt.event.ItemEvent
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -24,6 +28,9 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var commonMainKeywordsField: JTextField
     private lateinit var folderIgnoreField: JTextField
     private lateinit var fileIgnoreField: JTextField
+    private lateinit var regenerateResClassCheckBox: JCheckBox
+    private lateinit var autoRegenerateResClassCheckBox: JCheckBox
+    private lateinit var composeVectorConverterCheckBox: JCheckBox
     private val gap = 20
 
     override fun getDisplayName(): String {
@@ -47,6 +54,14 @@ class PluginPreferenceConfigurable : Configurable {
         folderIgnoreField = JTextField()
         fileIgnoreField = JTextField()
 
+        regenerateResClassCheckBox = JCheckBox("Enable regenerateResClass feature")
+        autoRegenerateResClassCheckBox =
+            JCheckBox("Enable auto regenerateResClass feature")
+        composeVectorConverterCheckBox = JCheckBox("Enable composeVectorConverter feature")
+        regenerateResClassCheckBox.addItemListener {
+            autoRegenerateResClassCheckBox.isEnabled = it.stateChange == ItemEvent.SELECTED
+        }
+
         return FormBuilder.createFormBuilder().apply {
             addComponent(showKmpSideTextCheckBox)
             addComponent(showCommonMainOnTopCheckBox)
@@ -64,12 +79,16 @@ class PluginPreferenceConfigurable : Configurable {
             addLabeledComponent(JLabel("Folder ignore pattern"), folderIgnoreField, true)
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
-            addComponent(JLabel("Hint: You can add multiple identifiers by separating them with commas."), gap)
-            addComponent(JLabel("If any KMP/CMP identifier matches with the build.gradle file,"))
-            addComponent(JLabel("the corresponding module will be determined."))
-            addComponent(JLabel("If changes are not applied, try restarting the IDE."))
-            addComponent(JLabel("Enable both \"Group everything except commonMain\" and \"Ungroup commonMain\""))
-            addComponent(JLabel("for better appearance."))
+            addComponent(JLabel("Hint: Add multiple identifiers by separating them with commas."), gap)
+            addComponent(JLabel("If a KMP/CMP identifier matches the build.gradle file,"))
+            addComponent(JLabel("the corresponding module will be selected."))
+            addComponent(JLabel("If changes don’t take effect, restart the IDE."))
+
+            addComponent(JLabel("Experimental"), gap)
+            addComponent(regenerateResClassCheckBox)
+            addComponent(autoRegenerateResClassCheckBox)
+            addComponent(JLabel("Detects changes in resource directory and triggers generateResClass automatically."))
+            addComponent(composeVectorConverterCheckBox)
 
             reset()
         }.panel
@@ -90,11 +109,18 @@ class PluginPreferenceConfigurable : Configurable {
                 cmpKeywordsField.text != settings.cmpKeywords ||
                 commonMainKeywordsField.text != settings.commonMainKeywords ||
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
-                fileIgnoreField.text != settings.fileIgnoreKeywords
+                fileIgnoreField.text != settings.fileIgnoreKeywords ||
+                regenerateResClassCheckBox.isSelected != settings.regenerateResClassFeatureEnabled ||
+                autoRegenerateResClassCheckBox.isSelected != settings.autoRegenerateResClassFeatureEnabled ||
+                composeVectorConverterCheckBox.isSelected != settings.composeVectorConverterFeatureEnabled
     }
 
     override fun apply() {
         val settings = PluginPreference.getInstance()
+        val requiresRestart = settings.state.run {
+            regenerateResClassFeatureEnabled != regenerateResClassCheckBox.isSelected
+                    || autoRegenerateResClassFeatureEnabled != autoRegenerateResClassCheckBox.isSelected
+        }
 
         settings.loadState(
             settings.state.apply {
@@ -111,10 +137,28 @@ class PluginPreferenceConfigurable : Configurable {
                 commonMainKeywords = commonMainKeywordsField.text
                 folderIgnoreKeywords = folderIgnoreField.text
                 fileIgnoreKeywords = fileIgnoreField.text
+                regenerateResClassFeatureEnabled = regenerateResClassCheckBox.isSelected
+                autoRegenerateResClassFeatureEnabled = autoRegenerateResClassCheckBox.isSelected
+                composeVectorConverterFeatureEnabled = composeVectorConverterCheckBox.isSelected
             }
         )
 
         PreferenceObserver.emit()
+
+        if (requiresRestart) {
+            ApplicationManager.getApplication().invokeLater {
+                val result = Messages.showYesNoDialog(
+                    "Changes will take effect after restarting the IDE. Do you want to restart now?",
+                    "Restart Required",
+                    "Restart",
+                    "Cancel",
+                    null
+                )
+                if (result == Messages.YES) {
+                    ApplicationManagerEx.getApplicationEx().restart(true)
+                }
+            }
+        }
     }
 
     override fun reset() {
@@ -133,6 +177,9 @@ class PluginPreferenceConfigurable : Configurable {
         commonMainKeywordsField.text = settings.commonMainKeywords
         folderIgnoreField.text = settings.folderIgnoreKeywords
         fileIgnoreField.text = settings.fileIgnoreKeywords
+        regenerateResClassCheckBox.isSelected = settings.regenerateResClassFeatureEnabled
+        autoRegenerateResClassCheckBox.isSelected = settings.autoRegenerateResClassFeatureEnabled
+        composeVectorConverterCheckBox.isSelected = settings.composeVectorConverterFeatureEnabled
     }
 
 }

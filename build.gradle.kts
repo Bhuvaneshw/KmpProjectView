@@ -1,47 +1,57 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-  id("java")
-  id("org.jetbrains.kotlin.jvm") version "1.9.24"
-  id("org.jetbrains.intellij") version "1.17.3"
+    id("java")
+    // https://plugins.gradle.org/plugin/org.jetbrains.kotlin.jvm
+    id("org.jetbrains.kotlin.jvm") version "2.0.21"
+    // https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
+    id("org.jetbrains.intellij.platform") version "2.1.0"
 }
 
 group = "com.acutecoder.kmp.projectview"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
-  mavenCentral()
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-  version.set("2023.2.6")
-  type.set("IC") // Target IDE Platform
+dependencies {
+    intellijPlatform {
+        // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/25442-kmp-project-view/edit/versions/
+        intellijIdeaCommunity("2024.2.4")
 
-  plugins.set(listOf("org.jetbrains.plugins.gradle"))
+        bundledPlugins("org.jetbrains.plugins.gradle")
+        instrumentationTools()
+    }
 }
 
 tasks {
-  // Set the JVM compatibility versions
-  withType<JavaCompile> {
-    sourceCompatibility = "17"
-    targetCompatibility = "17"
-  }
-  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
-  }
+    // Set the JVM compatibility versions
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
 
-  patchPluginXml {
-    sinceBuild.set("232")
-    untilBuild.set("243.*")
-  }
+    patchPluginXml {
+        sinceBuild.set("232")
+        untilBuild.set("243.*")
+    }
 
-  signPlugin {
-    certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-    privateKey.set(System.getenv("PRIVATE_KEY"))
-    password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-  }
+    signPlugin {
+        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
+        privateKey.set(System.getenv("PRIVATE_KEY"))
+        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
+    }
 
-  publishPlugin {
-    token.set(System.getenv("PUBLISH_TOKEN"))
-  }
+    publishPlugin {
+        token.set(System.getenv("PUBLISH_TOKEN"))
+    }
 }

@@ -1,6 +1,6 @@
 package com.acutecoder.kmp.projectview
 
-import com.acutecoder.kmp.projectview.preference.PreferenceObserver
+import com.acutecoder.kmp.preference.PreferenceObserver
 import com.acutecoder.kmp.projectview.util.Constants
 import com.acutecoder.kmp.projectview.util.KmpSelectInTarget
 import com.intellij.ide.SelectInTarget

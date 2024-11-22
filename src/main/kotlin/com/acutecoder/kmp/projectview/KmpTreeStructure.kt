@@ -1,7 +1,7 @@
 package com.acutecoder.kmp.projectview
 
 import com.acutecoder.kmp.projectview.nodes.BaseProjectViewNode
-import com.acutecoder.kmp.projectview.preference.PluginPreference
+import com.acutecoder.kmp.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.Config
 import com.acutecoder.kmp.projectview.util.Constants
 import com.intellij.ide.projectView.ProjectView

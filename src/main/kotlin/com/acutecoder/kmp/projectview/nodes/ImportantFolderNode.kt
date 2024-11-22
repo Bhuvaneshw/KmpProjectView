@@ -1,8 +1,10 @@
 package com.acutecoder.kmp.projectview.nodes
 
+import com.acutecoder.kmp.preference.PluginPreference
 import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
+import com.acutecoder.kmp.projectview.module.listAndAddChildren
+import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
 import com.acutecoder.kmp.projectview.module.moduleType
-import com.acutecoder.kmp.projectview.preference.PluginPreference
 import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData

@@ -1,4 +1,4 @@
-package com.acutecoder.kmp.projectview.preference
+package com.acutecoder.kmp.preference
 
 import com.intellij.openapi.components.BaseState
 
@@ -20,4 +20,8 @@ class PreferenceState : BaseState() {
     val kmpKeywordList: List<String> get() = kmpKeywords?.split(",") ?: emptyList()
     val cmpKeywordList: List<String> get() = cmpKeywords?.split(",") ?: emptyList()
     val commonMainKeywordList: List<String> get() = commonMainKeywords?.split(",") ?: emptyList()
+
+    var regenerateResClassFeatureEnabled by property(false)
+    var autoRegenerateResClassFeatureEnabled by property(false)
+    var composeVectorConverterFeatureEnabled by property(false)
 }

@@ -1,4 +1,4 @@
-package com.acutecoder.kmp.projectview.preference
+package com.acutecoder.kmp.preference
 
 import com.intellij.openapi.components.*
 
