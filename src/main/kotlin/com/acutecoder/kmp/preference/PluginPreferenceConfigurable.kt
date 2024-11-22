@@ -61,6 +61,7 @@ class PluginPreferenceConfigurable : Configurable {
         regenerateResClassCheckBox.addItemListener {
             autoRegenerateResClassCheckBox.isEnabled = it.stateChange == ItemEvent.SELECTED
         }
+        autoRegenerateResClassCheckBox.isEnabled = PluginPreference.getInstance().state.regenerateResClassFeatureEnabled
 
         return FormBuilder.createFormBuilder().apply {
             addComponent(showKmpSideTextCheckBox)
