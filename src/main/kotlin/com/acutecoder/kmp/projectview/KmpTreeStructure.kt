@@ -1,7 +1,7 @@
 package com.acutecoder.kmp.projectview
 
-import com.acutecoder.kmp.projectview.nodes.BaseProjectViewNode
 import com.acutecoder.kmp.preference.PluginPreference
+import com.acutecoder.kmp.projectview.nodes.BaseProjectViewNode
 import com.acutecoder.kmp.projectview.util.Config
 import com.acutecoder.kmp.projectview.util.Constants
 import com.intellij.ide.projectView.ProjectView
@@ -9,7 +9,6 @@ import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.projectView.impl.ProjectTreeStructure
 import com.intellij.ide.util.treeView.AbstractTreeNode
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.registry.Registry
 
 class KmpTreeStructure(
     project: Project,
@@ -38,7 +37,4 @@ class KmpTreeStructure(
         return false
     }
 
-    override fun isToBuildChildrenInBackground(element: Any): Boolean {
-        return Registry.`is`("ide.projectView.ProjectViewPaneTreeStructure.BuildChildrenInBackground")
-    }
 }

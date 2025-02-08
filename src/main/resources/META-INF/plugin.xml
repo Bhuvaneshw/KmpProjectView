@@ -64,11 +64,7 @@
         <![CDATA[
             <ul>
               <li>
-                Added experimental features
-                <ol>
-                    <li>Regenerate Res Class</li>
-                    <li>Compose Vector Converter</li>
-                </ol>
+                Compatibility for IntelliJ 2025.1
               </li>
             </ul>
         ]]>
