@@ -12,23 +12,26 @@ import kotlinx.coroutines.launch
 
 class StartupActivity : ProjectActivity, Disposable {
 
+    private var currentProject: Project? = null
+
     override suspend fun execute(project: Project) {
+        currentProject = project
+
         VirtualFileManager.getInstance().addAsyncFileListener({
             object : AsyncFileListener.ChangeApplier {
                 override fun afterVfsChange() {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        refreshProjectView(project)
+                    currentProject?.let { currentProject ->
+                        CoroutineScope(Dispatchers.Default).launch {
+                            ProjectView.getInstance(currentProject).refresh()
+                        }
                     }
                 }
             }
         }, this)
     }
 
-    private fun refreshProjectView(project: Project) {
-        ProjectView.getInstance(project).refresh()
+    override fun dispose() {
+        currentProject = null
     }
 
-    override fun dispose() {}
-
 }
-
