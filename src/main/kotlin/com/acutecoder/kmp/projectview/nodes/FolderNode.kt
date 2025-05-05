@@ -10,13 +10,23 @@ import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
+import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode
 import com.intellij.ide.util.treeView.AbstractTreeNode
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
 import com.intellij.ui.SimpleTextAttributes
 
-class FolderNode(
+@Suppress("FunctionName")
+fun FolderNode(config: Config, folder: PsiDirectory) =
+    if (folder.isDirectory && folder.name.lowercase() == "kotlin") PsiDirectoryNode(
+        config.project,
+        folder,
+        config.viewSettings
+    )
+    else CustomFolderNode(config, folder)
+
+private class CustomFolderNode(
     private val config: Config,
     private val folder: PsiDirectory,
 ) : ProjectViewNode<PsiDirectory>(
