@@ -64,7 +64,10 @@
         <![CDATA[
             <ul>
               <li>
-                Compatibility for IntelliJ 2025.1
+                Fix broken features like Compact Middle Packages, Flatten Packages.
+              </li>
+              <li>
+                Fix memory leaks.
               </li>
             </ul>
         ]]>
