@@ -96,7 +96,14 @@ fun listAndAddChildrenAsModule(
                             else add(node)
                         } else if (srcChild.name == "gradle") {
                             for (file in srcChild.children) {
-                                if (file is PsiFile) {
+                                if (file is PsiDirectory && file.name == "wrapper") {
+                                    for (srcChild in file.children) {
+                                        if (srcChild is PsiFile) {
+                                            if (srcChild.name.lowercase().endsWith(".jar")) continue
+                                            gradleFiles.children.add(PsiFileNode(config.project, srcChild, config.viewSettings))
+                                        }
+                                    }
+                                } else if (file is PsiFile) {
                                     if (hasAtLeastOnKmpOrCmpModule)
                                         gradleFiles.children.add(PsiFileNode(config.project, file, config.viewSettings))
                                     else add(PsiFileNode(config.project, file, config.viewSettings))
@@ -158,7 +165,14 @@ fun listAndAddChildrenAsModule(
                 }
             } else if (child.name == "gradle") {
                 for (file in child.children) {
-                    if (file is PsiFile) {
+                    if (file is PsiDirectory && file.name == "wrapper") {
+                        for (srcChild in file.children) {
+                            if (srcChild is PsiFile) {
+                                if (srcChild.name.lowercase().endsWith(".jar")) continue
+                                gradleFiles.children.add(PsiFileNode(config.project, srcChild, config.viewSettings))
+                            }
+                        }
+                    } else if (file is PsiFile) {
                         if (hasAtLeastOnKmpOrCmpModule)
                             gradleFiles.children.add(PsiFileNode(config.project, file, config.viewSettings))
                         else add(PsiFileNode(config.project, file, config.viewSettings))
@@ -210,7 +224,14 @@ fun listAndAddChildren(
             if (child is PsiDirectory) {
                 if (child.name == "gradle") {
                     for (file in child.children) {
-                        if (file is PsiFile)
+                        if (file is PsiDirectory && file.name == "wrapper") {
+                            for (srcChild in file.children) {
+                                if (srcChild is PsiFile) {
+                                    if (srcChild.name.lowercase().endsWith(".jar")) continue
+                                    gradleFiles.children.add(PsiFileNode(config.project, srcChild, config.viewSettings))
+                                }
+                            }
+                        } else if (file is PsiFile)
                             gradleFiles.children.add(PsiFileNode(config.project, file, config.viewSettings))
                     }
                 } else if (child.name == "kotlin-js-store") {
