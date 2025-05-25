@@ -1,10 +1,7 @@
 package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
-import com.acutecoder.kmp.projectview.module.listAndAddChildren
-import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
-import com.acutecoder.kmp.projectview.module.moduleType
+import com.acutecoder.kmp.projectview.module.*
 import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
@@ -55,7 +52,7 @@ class ImportantFolderNode(
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
         val children = mutableListOf<AbstractTreeNode<*>>()
 
-        if (folder.moduleType().isKmpOrCmp())
+        if (folder.moduleType() != ModuleType.Unknown)
             listAndAddChildrenAsModule(
                 config = config,
                 baseDirectory = folder,

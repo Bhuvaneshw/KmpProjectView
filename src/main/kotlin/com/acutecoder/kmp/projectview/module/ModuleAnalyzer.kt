@@ -25,6 +25,7 @@ fun Array<PsiElement>.analyzeModuleType(): ModuleType {
     var src = false
     var kmp = false
     var cmp = false
+    var ktor = false
 
     this.forEach { file ->
         if (file is PsiDirectory && file.virtualFile.name == "src")
@@ -32,6 +33,7 @@ fun Array<PsiElement>.analyzeModuleType(): ModuleType {
         if (file is PsiFile && (file.virtualFile.name == "build.gradle.kts" || file.virtualFile.name == "build.gradle")) {
             kmp = preference.kmpKeywordList.any { file.text.contains(it.trim()) }
             cmp = preference.cmpKeywordList.any { file.text.contains(it.trim()) }
+            ktor = preference.ktorKeywordList.any { file.text.contains(it.trim()) }
         }
     }
 
@@ -39,12 +41,13 @@ fun Array<PsiElement>.analyzeModuleType(): ModuleType {
         when {
             kmp && cmp -> ModuleType.CMP
             kmp -> ModuleType.KMP
+            ktor -> ModuleType.Server
             else -> ModuleType.Unknown
         }
     } else ModuleType.Unknown
 }
 
-fun PsiDirectory.hasAtLeastOneKmpOrCmpModule() = children.any { it.moduleType().isKmpOrCmp() }
+fun PsiDirectory.hasAtLeastOneKmpOrCmpModule() = children.any { it.moduleType() != ModuleType.Unknown }
 
 fun listAndAddChildrenAsModule(
     config: Config,
@@ -58,7 +61,8 @@ fun listAndAddChildrenAsModule(
 
     for (child in baseDirectory.children) {
         if (child is PsiDirectory) {
-            if (child.name == "src") {
+            val moduleType = baseDirectory.moduleType()
+            if (child.name == "src" && moduleType.isKmpOrCmp()) {
                 val otherSourceSet = OtherSourceSetGroup(config)
 
                 for (srcChild in child.children) {
@@ -125,6 +129,33 @@ fun listAndAddChildrenAsModule(
 
                 if (config.preference().groupOtherMain)
                     add(otherSourceSet)
+            } else if (child.name == "src" && moduleType == ModuleType.Server) {
+                for (srcChild in child.children) {
+                    if (srcChild is PsiDirectory) {
+                        if (srcChild.isSourceSet()) {
+                            val node = ImportantFolderNode(
+                                config = config,
+                                folder = srcChild,
+                                defaultIcon = AllIcons.Modules.SourceRoot,
+                                showOnTop = false,
+                            )
+                            add(node)
+                        } else if (!srcChild.canBeSkipped(config))
+                            add(FolderNode(config, srcChild))
+                    } else if (srcChild is PsiFile) {
+                        if (srcChild.canBeSkipped(config)) continue
+
+                        if (srcChild.isGradleFile()) {
+                            if (hasAtLeastOnKmpOrCmpModule)
+                                gradleFiles.children.add(HintedPsiFileNode(config, srcChild, " (src)"))
+                            else add(HintedPsiFileNode(config, srcChild, " (src)"))
+                        } else {
+                            if (hasAtLeastOnKmpOrCmpModule)
+                                otherFiles.children.add(HintedPsiFileNode(config, srcChild, " (src)"))
+                            else add(HintedPsiFileNode(config, srcChild, " (src)"))
+                        }
+                    }
+                }
             } else if (child.name == "gradle") {
                 for (file in child.children) {
                     if (file is PsiFile) {

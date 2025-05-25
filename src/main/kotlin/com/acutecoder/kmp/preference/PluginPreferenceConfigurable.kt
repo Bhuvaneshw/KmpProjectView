@@ -25,6 +25,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var splitGradleAndOtherComboBox: ComboBox<String>
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
+    private lateinit var ktorKeywordsField: JTextField
     private lateinit var commonMainKeywordsField: JTextField
     private lateinit var folderIgnoreField: JTextField
     private lateinit var fileIgnoreField: JTextField
@@ -50,6 +51,7 @@ class PluginPreferenceConfigurable : Configurable {
 
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
+        ktorKeywordsField = JTextField()
         commonMainKeywordsField = JTextField()
         folderIgnoreField = JTextField()
         fileIgnoreField = JTextField()
@@ -77,6 +79,7 @@ class PluginPreferenceConfigurable : Configurable {
             addLabeledComponent(JLabel("commonMain Identifiers"), commonMainKeywordsField, gap, true)
             addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, true)
             addLabeledComponent(JLabel("CMP Identifiers"), cmpKeywordsField, true)
+            addLabeledComponent(JLabel("Ktor Identifiers"), ktorKeywordsField, true)
             addLabeledComponent(JLabel("Folder ignore pattern"), folderIgnoreField, true)
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
@@ -108,6 +111,7 @@ class PluginPreferenceConfigurable : Configurable {
                 splitGradleAndOtherComboBox.selectedIndex != settings.splitGradleAndOther ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
+                ktorKeywordsField.text != settings.ktorKeywords ||
                 commonMainKeywordsField.text != settings.commonMainKeywords ||
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
                 fileIgnoreField.text != settings.fileIgnoreKeywords ||
@@ -135,6 +139,7 @@ class PluginPreferenceConfigurable : Configurable {
                 splitGradleAndOther = splitGradleAndOtherComboBox.selectedIndex
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
+                ktorKeywords = ktorKeywordsField.text
                 commonMainKeywords = commonMainKeywordsField.text
                 folderIgnoreKeywords = folderIgnoreField.text
                 fileIgnoreKeywords = fileIgnoreField.text
@@ -175,6 +180,7 @@ class PluginPreferenceConfigurable : Configurable {
         splitGradleAndOtherComboBox.selectedIndex = settings.splitGradleAndOther
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
+        ktorKeywordsField.text = settings.ktorKeywords
         commonMainKeywordsField.text = settings.commonMainKeywords
         folderIgnoreField.text = settings.folderIgnoreKeywords
         fileIgnoreField.text = settings.fileIgnoreKeywords

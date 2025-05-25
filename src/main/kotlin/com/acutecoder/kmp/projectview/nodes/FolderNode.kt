@@ -2,10 +2,7 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.helper.executor.RegenerateResClassExecutor
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
-import com.acutecoder.kmp.projectview.module.listAndAddChildren
-import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
-import com.acutecoder.kmp.projectview.module.moduleType
+import com.acutecoder.kmp.projectview.module.*
 import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
@@ -31,7 +28,7 @@ private class CustomFolderNode(
     private val folder: PsiDirectory,
 ) : ProjectViewNode<PsiDirectory>(
     config.project,
-    folder.moduleType().let { if (it.isKmpOrCmp()) folder.findSrcDirectory() ?: folder else folder },
+    folder.moduleType().let { if (it != ModuleType.Unknown) folder.findSrcDirectory() ?: folder else folder },
     config.viewSettings
 ) {
 
@@ -52,26 +49,26 @@ private class CustomFolderNode(
     override fun update(presentation: PresentationData) {
         val moduleName = folder.name
         val moduleType = folder.moduleType()
-        val icon = if (moduleType.isKmpOrCmp()) AllIcons.Nodes.Module
+        val icon = if (moduleType != ModuleType.Unknown) AllIcons.Nodes.Module
         else if (moduleName.equals("kotlin", true)) AllIcons.Modules.SourceRoot
         else if (moduleName.contains("resource", true) || moduleName.equals("res", true)) AllIcons.Modules.ResourcesRoot
         else AllIcons.Nodes.Folder
 
         presentation.setIcon(
-            if (moduleType.isKmpOrCmp() && preferences.isTooltipEnabled)
+            if (moduleType != ModuleType.Unknown && preferences.isTooltipEnabled)
                 icon.withTooltip("${moduleType.displayName} module")
             else icon.withoutTooltip()
         )
 
         presentation.addText(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
-        if (moduleType.isKmpOrCmp() && preferences.showKmpModuleSideText)
+        if (moduleType != ModuleType.Unknown && preferences.showKmpModuleSideText)
             presentation.addText(" ($moduleType)", SimpleTextAttributes.GRAY_ATTRIBUTES)
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
         val children = mutableListOf<AbstractTreeNode<*>>()
 
-        if (folder.moduleType().isKmpOrCmp())
+        if (folder.moduleType() != ModuleType.Unknown)
             listAndAddChildrenAsModule(
                 config = config,
                 baseDirectory = folder,
