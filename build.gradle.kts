@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.acutecoder.kmp.projectview"
-version = "1.0.6-beta02"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
