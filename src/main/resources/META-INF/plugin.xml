@@ -64,6 +64,12 @@
         <![CDATA[
             <ul>
               <li>
+                Added support for Ktor modules
+              </li>
+              <li>
+                Included missing gradle-wrapper.properties file to gradle group
+              </li>
+              <li>
                 Fix broken features like Compact Middle Packages, Flatten Packages.
               </li>
               <li>
