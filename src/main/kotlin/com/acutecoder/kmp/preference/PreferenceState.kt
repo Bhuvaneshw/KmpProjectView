@@ -23,7 +23,7 @@ class PreferenceState : BaseState() {
     val ktorKeywordList: List<String> get() = ktorKeywords?.split(",") ?: emptyList()
     val commonMainKeywordList: List<String> get() = commonMainKeywords?.split(",") ?: emptyList()
 
-    var regenerateResClassFeatureEnabled by property(false)
-    var autoRegenerateResClassFeatureEnabled by property(false)
+    var regenerateResClassFeatureEnabled by property(true)
+    var autoRegenerateResClassFeatureEnabled by property(true)
     var composeVectorConverterFeatureEnabled by property(false)
 }

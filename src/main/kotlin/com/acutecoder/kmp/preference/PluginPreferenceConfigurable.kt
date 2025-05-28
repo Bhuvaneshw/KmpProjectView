@@ -88,10 +88,12 @@ class PluginPreferenceConfigurable : Configurable {
             addComponent(JLabel("the corresponding module will be selected."))
             addComponent(JLabel("If changes don’t take effect, restart the IDE."))
 
-            addComponent(JLabel("Experimental"), gap)
+            addComponent(JLabel("Other Tools"), gap)
             addComponent(regenerateResClassCheckBox)
             addComponent(autoRegenerateResClassCheckBox)
             addComponent(JLabel("Detects changes in resource directory and triggers generateResClass automatically."))
+
+            addComponent(JLabel("Experimental"), gap)
             addComponent(composeVectorConverterCheckBox)
 
             reset()
