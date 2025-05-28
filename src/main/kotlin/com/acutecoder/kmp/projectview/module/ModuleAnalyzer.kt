@@ -41,7 +41,7 @@ fun Array<PsiElement>.analyzeModuleType(): ModuleType {
         when {
             kmp && cmp -> ModuleType.CMP
             kmp -> ModuleType.KMP
-            ktor -> ModuleType.Server
+            ktor -> ModuleType.Ktor
             else -> ModuleType.Unknown
         }
     } else ModuleType.Unknown
@@ -136,7 +136,7 @@ fun listAndAddChildrenAsModule(
 
                 if (config.preference().groupOtherMain)
                     add(otherSourceSet)
-            } else if (child.name == "src" && moduleType == ModuleType.Server) {
+            } else if (child.name == "src" && moduleType == ModuleType.Ktor) {
                 for (srcChild in child.children) {
                     if (srcChild is PsiDirectory) {
                         if (srcChild.isSourceSet()) {

@@ -39,7 +39,7 @@ class PluginPreferenceConfigurable : Configurable {
     }
 
     override fun createComponent(): JComponent {
-        showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP)")
+        showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP/Ktor)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
         differentiateCommonMainCheckBox = JCheckBox("Highlight commonMain")
         showModuleNameOnlyCheckBox = JCheckBox("Hide extra info for source set")
