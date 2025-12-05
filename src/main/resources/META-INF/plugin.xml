@@ -64,16 +64,10 @@
         <![CDATA[
             <ul>
               <li>
-                Added support for Ktor modules
+                Update for latest Intellij version
               </li>
               <li>
-                Included missing gradle-wrapper.properties file to gradle group
-              </li>
-              <li>
-                Fix broken features like Compact Middle Packages, Flatten Packages.
-              </li>
-              <li>
-                Fix memory leaks.
+                Bold text for module folders
               </li>
             </ul>
         ]]>
