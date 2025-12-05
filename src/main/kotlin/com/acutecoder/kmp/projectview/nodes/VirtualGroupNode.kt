@@ -63,7 +63,7 @@ class VirtualGroupNode<T : Any>(
             else icon.withoutTooltip()
         )
 
-        presentation.addText(folderName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
+        presentation.addText(folderName, SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {

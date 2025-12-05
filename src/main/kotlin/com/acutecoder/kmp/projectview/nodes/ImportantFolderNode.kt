@@ -46,7 +46,7 @@ class ImportantFolderNode(
             else icon.withoutTooltip()
         )
 
-        presentation.addText(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
+        presentation.addText(moduleName, SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {

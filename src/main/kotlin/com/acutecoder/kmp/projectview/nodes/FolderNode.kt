@@ -60,7 +60,10 @@ private class CustomFolderNode(
             else icon.withoutTooltip()
         )
 
-        presentation.addText(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES)
+        val attributes = if (moduleType != ModuleType.Unknown)
+            SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES
+        else SimpleTextAttributes.REGULAR_ATTRIBUTES
+        presentation.addText(moduleName, attributes)
         if (moduleType != ModuleType.Unknown && preferences.showKmpModuleSideText)
             presentation.addText(" ($moduleType)", SimpleTextAttributes.GRAY_ATTRIBUTES)
     }
