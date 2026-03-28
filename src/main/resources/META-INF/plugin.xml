@@ -64,10 +64,7 @@
         <![CDATA[
             <ul>
               <li>
-                Update for latest Intellij version
-              </li>
-              <li>
-                Bold text for module folders
+                Now supports all Intellij versions from 232.*
               </li>
             </ul>
         ]]>
