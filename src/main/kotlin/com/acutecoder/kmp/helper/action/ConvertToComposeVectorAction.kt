@@ -8,7 +8,6 @@ import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.application.runWriteAction
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
@@ -34,8 +33,9 @@ class ConvertToComposeVectorAction : AnAction() {
                     indicator.text = "Converting ${file.name}..."
                     indicator.isIndeterminate = true
 
-                    ApplicationManager.getApplication().invokeAndWait {
-                        runReadAction {
+                    val app = ApplicationManager.getApplication()
+                    app.invokeAndWait {
+                        app.runReadAction {
                             val fileContent = VfsUtil.loadText(file)
 
                             runWriteAction {
