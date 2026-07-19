@@ -19,6 +19,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var isTooltipEnabledCheckBox: JCheckBox
     private lateinit var showCommonMainOnTopCheckBox: JCheckBox
     private lateinit var differentiateCommonMainCheckBox: JCheckBox
+    private lateinit var showSharedModuleOnTopCheckBox: JCheckBox
     private lateinit var showModuleNameOnlyCheckBox: JCheckBox
     private lateinit var showKmpSideTextCheckBox: JCheckBox
     private lateinit var groupOtherMainCheckBox: JCheckBox
@@ -29,6 +30,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
     private lateinit var ktorKeywordsField: JTextField
+    private lateinit var sharedModuleKeywordsField: JTextField
     private lateinit var commonMainKeywordsField: JTextField
     private lateinit var folderIgnoreField: JTextField
     private lateinit var fileIgnoreField: JTextField
@@ -45,6 +47,7 @@ class PluginPreferenceConfigurable : Configurable {
         showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP/Ktor)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
         differentiateCommonMainCheckBox = JCheckBox("Highlight commonMain")
+        showSharedModuleOnTopCheckBox = JCheckBox("Show shared module on top")
         showModuleNameOnlyCheckBox = JCheckBox("Hide extra info for source set")
         isTooltipEnabledCheckBox = JCheckBox("Show Tooltip")
         groupOtherMainCheckBox = JCheckBox("Group everything except commonMain")
@@ -58,6 +61,7 @@ class PluginPreferenceConfigurable : Configurable {
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
         ktorKeywordsField = JTextField()
+        sharedModuleKeywordsField = JTextField()
         commonMainKeywordsField = JTextField()
         folderIgnoreField = JTextField()
         fileIgnoreField = JTextField()
@@ -76,6 +80,7 @@ class PluginPreferenceConfigurable : Configurable {
             addComponent(showKmpSideTextCheckBox)
             addComponent(showCommonMainOnTopCheckBox)
             addComponent(differentiateCommonMainCheckBox)
+            addComponent(showSharedModuleOnTopCheckBox)
             addComponent(showModuleNameOnlyCheckBox)
             addComponent(isTooltipEnabledCheckBox)
             addComponent(groupOtherMainCheckBox)
@@ -91,15 +96,15 @@ class PluginPreferenceConfigurable : Configurable {
                 false
             )
 
-            addLabeledComponent(
-                JLabel("commonMain Identifiers"),
-                commonMainKeywordsField,
-                gap,
-                true
-            )
-            addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, true)
+            addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, gap, true)
             addLabeledComponent(JLabel("CMP Identifiers"), cmpKeywordsField, true)
             addLabeledComponent(JLabel("Ktor Identifiers"), ktorKeywordsField, true)
+            addLabeledComponent(
+                JLabel("Shared Module Identifiers"),
+                sharedModuleKeywordsField,
+                true
+            )
+            addLabeledComponent(JLabel("commonMain Identifiers"), commonMainKeywordsField, true)
             addLabeledComponent(JLabel("Folder ignore pattern"), folderIgnoreField, true)
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
@@ -119,32 +124,7 @@ class PluginPreferenceConfigurable : Configurable {
 
             addComponent(JButton("Restore Defaults").apply {
                 addActionListener {
-                    val defaultSettings = PreferenceState()
-                    showKmpSideTextCheckBox.isSelected = defaultSettings.showKmpModuleSideText
-                    showCommonMainOnTopCheckBox.isSelected = defaultSettings.showCommonMainOnTop
-                    differentiateCommonMainCheckBox.isSelected =
-                        defaultSettings.differentiateCommonMain
-                    showModuleNameOnlyCheckBox.isSelected = defaultSettings.showModuleNameOnly
-                    isTooltipEnabledCheckBox.isSelected = defaultSettings.isTooltipEnabled
-                    groupOtherMainCheckBox.isSelected = defaultSettings.groupOtherMain
-                    unGroupCommonMainCheckBox.isSelected = defaultSettings.unGroupCommonMain
-                    separateBuildsCheckBox.isSelected =
-                        defaultSettings.separateNodeForSubstitutedProject
-                    useGradleProjectNameCheckBox.isSelected =
-                        defaultSettings.useGradleProjectNameForSubstitutedProject
-                    splitGradleAndOtherComboBox.selectedIndex = defaultSettings.splitGradleAndOther
-                    kmpKeywordsField.text = defaultSettings.kmpKeywords
-                    cmpKeywordsField.text = defaultSettings.cmpKeywords
-                    ktorKeywordsField.text = defaultSettings.ktorKeywords
-                    commonMainKeywordsField.text = defaultSettings.commonMainKeywords
-                    folderIgnoreField.text = defaultSettings.folderIgnoreKeywords
-                    fileIgnoreField.text = defaultSettings.fileIgnoreKeywords
-                    regenerateResClassCheckBox.isSelected =
-                        defaultSettings.regenerateResClassFeatureEnabled
-                    autoRegenerateResClassCheckBox.isSelected =
-                        defaultSettings.autoRegenerateResClassFeatureEnabled
-                    composeVectorConverterCheckBox.isSelected =
-                        defaultSettings.composeVectorConverterFeatureEnabled
+                    reset(PreferenceState())
                 }
             }, gap)
 
@@ -158,6 +138,7 @@ class PluginPreferenceConfigurable : Configurable {
         return showKmpSideTextCheckBox.isSelected != settings.showKmpModuleSideText ||
                 showCommonMainOnTopCheckBox.isSelected != settings.showCommonMainOnTop ||
                 differentiateCommonMainCheckBox.isSelected != settings.differentiateCommonMain ||
+                showSharedModuleOnTopCheckBox.isSelected != settings.showSharedModuleOnTop ||
                 showModuleNameOnlyCheckBox.isSelected != settings.showModuleNameOnly ||
                 isTooltipEnabledCheckBox.isSelected != settings.isTooltipEnabled ||
                 groupOtherMainCheckBox.isSelected != settings.groupOtherMain ||
@@ -168,6 +149,7 @@ class PluginPreferenceConfigurable : Configurable {
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
                 ktorKeywordsField.text != settings.ktorKeywords ||
+                sharedModuleKeywordsField.text != settings.sharedModuleKeywords ||
                 commonMainKeywordsField.text != settings.commonMainKeywords ||
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
                 fileIgnoreField.text != settings.fileIgnoreKeywords ||
@@ -188,6 +170,7 @@ class PluginPreferenceConfigurable : Configurable {
                 showKmpModuleSideText = showKmpSideTextCheckBox.isSelected
                 showCommonMainOnTop = showCommonMainOnTopCheckBox.isSelected
                 differentiateCommonMain = differentiateCommonMainCheckBox.isSelected
+                showSharedModuleOnTop = showSharedModuleOnTopCheckBox.isSelected
                 showModuleNameOnly = showModuleNameOnlyCheckBox.isSelected
                 isTooltipEnabled = isTooltipEnabledCheckBox.isSelected
                 groupOtherMain = groupOtherMainCheckBox.isSelected
@@ -198,6 +181,7 @@ class PluginPreferenceConfigurable : Configurable {
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
                 ktorKeywords = ktorKeywordsField.text
+                sharedModuleKeywords = sharedModuleKeywordsField.text
                 commonMainKeywords = commonMainKeywordsField.text
                 folderIgnoreKeywords = folderIgnoreField.text
                 fileIgnoreKeywords = fileIgnoreField.text
@@ -226,11 +210,14 @@ class PluginPreferenceConfigurable : Configurable {
     }
 
     override fun reset() {
-        val settings = PluginPreference.getInstance().state
+        reset(PluginPreference.getInstance().state)
+    }
 
+    private fun reset(settings: PreferenceState) {
         showKmpSideTextCheckBox.isSelected = settings.showKmpModuleSideText
         showCommonMainOnTopCheckBox.isSelected = settings.showCommonMainOnTop
         differentiateCommonMainCheckBox.isSelected = settings.differentiateCommonMain
+        showSharedModuleOnTopCheckBox.isSelected = settings.showSharedModuleOnTop
         showModuleNameOnlyCheckBox.isSelected = settings.showModuleNameOnly
         isTooltipEnabledCheckBox.isSelected = settings.isTooltipEnabled
         groupOtherMainCheckBox.isSelected = settings.groupOtherMain
@@ -241,6 +228,7 @@ class PluginPreferenceConfigurable : Configurable {
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
         ktorKeywordsField.text = settings.ktorKeywords
+        sharedModuleKeywordsField.text = settings.sharedModuleKeywords
         commonMainKeywordsField.text = settings.commonMainKeywords
         folderIgnoreField.text = settings.folderIgnoreKeywords
         fileIgnoreField.text = settings.fileIgnoreKeywords

@@ -2,18 +2,8 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.helper.executor.RegenerateResClassExecutor
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.GradleModuleHelper
-import com.acutecoder.kmp.projectview.module.ModuleType
-import com.acutecoder.kmp.projectview.module.listAndAddChildren
-import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
-import com.acutecoder.kmp.projectview.module.moduleType
-import com.acutecoder.kmp.projectview.util.Config
-import com.acutecoder.kmp.projectview.util.Constants
-import com.acutecoder.kmp.projectview.util.OnFileChangeListener
-import com.acutecoder.kmp.projectview.util.findSrcDirectory
-import com.acutecoder.kmp.projectview.util.isAncestorOf
-import com.acutecoder.kmp.projectview.util.withTooltip
-import com.acutecoder.kmp.projectview.util.withoutTooltip
+import com.acutecoder.kmp.projectview.module.*
+import com.acutecoder.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -53,6 +43,7 @@ private class CustomFolderNode(
 
     private val preferences = PluginPreference.getInstance().state
     private val moduleType by lazy { folder.moduleType() }
+    private val isSharedModule by lazy { folder.isSharedModule(config) }
 
     init {
         if (
@@ -127,7 +118,10 @@ private class CustomFolderNode(
         return children
     }
 
-    override fun getWeight(): Int = Constants.DEFAULT_WEIGHT + additionalWeight
+    override fun getWeight(): Int {
+        val weight = if (isSharedModule && preferences.showSharedModuleOnTop) 0 else Constants.DEFAULT_WEIGHT
+        return weight + additionalWeight
+    }
 
     override fun contains(file: VirtualFile): Boolean {
         return folder.virtualFile == file || folder.virtualFile.isAncestorOf(file)

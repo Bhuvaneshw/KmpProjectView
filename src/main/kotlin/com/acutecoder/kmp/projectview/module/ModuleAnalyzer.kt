@@ -38,6 +38,15 @@ fun PsiDirectory.isBuildRoot(): Boolean {
     return GradleModuleHelper.getAllBuildRoots(project).any { FileUtil.pathsEqual(it, dirPath) }
 }
 
+fun PsiDirectory.isSharedModule(config: Config): Boolean {
+    val module = ModuleUtilCore.findModuleForPsiElement(this) ?: return false
+    val projectPath = ExternalSystemApiUtil.getExternalProjectPath(module) ?: return false
+    if (!FileUtil.pathsEqual(virtualFile.path, projectPath)) return false
+    
+    val moduleName = GradleModuleHelper.getModuleName(module)
+    return config.preference().sharedModuleKeywordList.any { moduleName.contains(it, ignoreCase = true) }
+}
+
 fun PsiDirectory.shouldGroupFiles(config: Config): Boolean {
     val splitMode = config.preference().splitGradleAndOther
     return when (splitMode) {

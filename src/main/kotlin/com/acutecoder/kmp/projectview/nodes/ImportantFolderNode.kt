@@ -69,8 +69,13 @@ class ImportantFolderNode(
         return children
     }
 
-    override fun getWeight(): Int =
-        (if (showOnTop) 0 else Constants.DEFAULT_WEIGHT - 1) + additionalWeight
+    override fun getWeight(): Int {
+        var weight = if (showOnTop) 0 else Constants.DEFAULT_WEIGHT - 1
+        if (folder.name.equals("kotlin", ignoreCase = true)) {
+            weight -= 1
+        }
+        return weight + additionalWeight
+    }
 
     override fun contains(file: VirtualFile): Boolean {
         return folder.virtualFile == file || folder.virtualFile.isAncestorOf(file)
