@@ -8,6 +8,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.Messages
 import com.intellij.util.ui.FormBuilder
 import java.awt.event.ItemEvent
+import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -22,6 +23,8 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var showKmpSideTextCheckBox: JCheckBox
     private lateinit var groupOtherMainCheckBox: JCheckBox
     private lateinit var unGroupCommonMainCheckBox: JCheckBox
+    private lateinit var separateBuildsCheckBox: JCheckBox
+    private lateinit var useGradleProjectNameCheckBox: JCheckBox
     private lateinit var splitGradleAndOtherComboBox: ComboBox<String>
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
@@ -46,6 +49,9 @@ class PluginPreferenceConfigurable : Configurable {
         isTooltipEnabledCheckBox = JCheckBox("Show Tooltip")
         groupOtherMainCheckBox = JCheckBox("Group everything except commonMain")
         unGroupCommonMainCheckBox = JCheckBox("Ungroup commonMain")
+        separateBuildsCheckBox = JCheckBox("Show included builds as separate folders. [1]")
+        useGradleProjectNameCheckBox =
+            JCheckBox("Use Gradle root project name instead of folder name. [1]")
 
         splitGradleAndOtherComboBox = ComboBox(arrayOf("Module Level", "All Level", "None"))
 
@@ -63,7 +69,8 @@ class PluginPreferenceConfigurable : Configurable {
         regenerateResClassCheckBox.addItemListener {
             autoRegenerateResClassCheckBox.isEnabled = it.stateChange == ItemEvent.SELECTED
         }
-        autoRegenerateResClassCheckBox.isEnabled = PluginPreference.getInstance().state.regenerateResClassFeatureEnabled
+        autoRegenerateResClassCheckBox.isEnabled =
+            PluginPreference.getInstance().state.regenerateResClassFeatureEnabled
 
         return FormBuilder.createFormBuilder().apply {
             addComponent(showKmpSideTextCheckBox)
@@ -73,19 +80,33 @@ class PluginPreferenceConfigurable : Configurable {
             addComponent(isTooltipEnabledCheckBox)
             addComponent(groupOtherMainCheckBox)
             addComponent(unGroupCommonMainCheckBox)
+            addComponent(separateBuildsCheckBox)
+            addComponent(useGradleProjectNameCheckBox)
+            addComponent(JLabel("Note [1]: Only applicable for composite builds with included projects."))
 
-            addLabeledComponent(JLabel("Split Gradle and Other files in"), splitGradleAndOtherComboBox, gap, false)
+            addLabeledComponent(
+                JLabel("Split Gradle and Other files in"),
+                splitGradleAndOtherComboBox,
+                gap,
+                false
+            )
 
-            addLabeledComponent(JLabel("commonMain Identifiers"), commonMainKeywordsField, gap, true)
+            addLabeledComponent(
+                JLabel("commonMain Identifiers"),
+                commonMainKeywordsField,
+                gap,
+                true
+            )
             addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, true)
             addLabeledComponent(JLabel("CMP Identifiers"), cmpKeywordsField, true)
             addLabeledComponent(JLabel("Ktor Identifiers"), ktorKeywordsField, true)
             addLabeledComponent(JLabel("Folder ignore pattern"), folderIgnoreField, true)
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
-            addComponent(JLabel("Hint: Add multiple identifiers by separating them with commas."), gap)
-            addComponent(JLabel("If a KMP/CMP identifier matches the build.gradle file,"))
-            addComponent(JLabel("the corresponding module will be selected."))
+            addComponent(
+                JLabel("Hint: Add multiple identifiers by separating them with commas."),
+                gap
+            )
             addComponent(JLabel("If changes don’t take effect, restart the IDE."))
 
             addComponent(JLabel("Other Tools"), gap)
@@ -95,6 +116,37 @@ class PluginPreferenceConfigurable : Configurable {
 
             addComponent(JLabel("Experimental"), gap)
             addComponent(composeVectorConverterCheckBox)
+
+            addComponent(JButton("Restore Defaults").apply {
+                addActionListener {
+                    val defaultSettings = PreferenceState()
+                    showKmpSideTextCheckBox.isSelected = defaultSettings.showKmpModuleSideText
+                    showCommonMainOnTopCheckBox.isSelected = defaultSettings.showCommonMainOnTop
+                    differentiateCommonMainCheckBox.isSelected =
+                        defaultSettings.differentiateCommonMain
+                    showModuleNameOnlyCheckBox.isSelected = defaultSettings.showModuleNameOnly
+                    isTooltipEnabledCheckBox.isSelected = defaultSettings.isTooltipEnabled
+                    groupOtherMainCheckBox.isSelected = defaultSettings.groupOtherMain
+                    unGroupCommonMainCheckBox.isSelected = defaultSettings.unGroupCommonMain
+                    separateBuildsCheckBox.isSelected =
+                        defaultSettings.separateNodeForSubstitutedProject
+                    useGradleProjectNameCheckBox.isSelected =
+                        defaultSettings.useGradleProjectNameForSubstitutedProject
+                    splitGradleAndOtherComboBox.selectedIndex = defaultSettings.splitGradleAndOther
+                    kmpKeywordsField.text = defaultSettings.kmpKeywords
+                    cmpKeywordsField.text = defaultSettings.cmpKeywords
+                    ktorKeywordsField.text = defaultSettings.ktorKeywords
+                    commonMainKeywordsField.text = defaultSettings.commonMainKeywords
+                    folderIgnoreField.text = defaultSettings.folderIgnoreKeywords
+                    fileIgnoreField.text = defaultSettings.fileIgnoreKeywords
+                    regenerateResClassCheckBox.isSelected =
+                        defaultSettings.regenerateResClassFeatureEnabled
+                    autoRegenerateResClassCheckBox.isSelected =
+                        defaultSettings.autoRegenerateResClassFeatureEnabled
+                    composeVectorConverterCheckBox.isSelected =
+                        defaultSettings.composeVectorConverterFeatureEnabled
+                }
+            }, gap)
 
             reset()
         }.panel
@@ -110,6 +162,8 @@ class PluginPreferenceConfigurable : Configurable {
                 isTooltipEnabledCheckBox.isSelected != settings.isTooltipEnabled ||
                 groupOtherMainCheckBox.isSelected != settings.groupOtherMain ||
                 unGroupCommonMainCheckBox.isSelected != settings.unGroupCommonMain ||
+                separateBuildsCheckBox.isSelected != settings.separateNodeForSubstitutedProject ||
+                useGradleProjectNameCheckBox.isSelected != settings.useGradleProjectNameForSubstitutedProject ||
                 splitGradleAndOtherComboBox.selectedIndex != settings.splitGradleAndOther ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
@@ -138,6 +192,8 @@ class PluginPreferenceConfigurable : Configurable {
                 isTooltipEnabled = isTooltipEnabledCheckBox.isSelected
                 groupOtherMain = groupOtherMainCheckBox.isSelected
                 unGroupCommonMain = unGroupCommonMainCheckBox.isSelected
+                separateNodeForSubstitutedProject = separateBuildsCheckBox.isSelected
+                useGradleProjectNameForSubstitutedProject = useGradleProjectNameCheckBox.isSelected
                 splitGradleAndOther = splitGradleAndOtherComboBox.selectedIndex
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
@@ -179,6 +235,8 @@ class PluginPreferenceConfigurable : Configurable {
         isTooltipEnabledCheckBox.isSelected = settings.isTooltipEnabled
         groupOtherMainCheckBox.isSelected = settings.groupOtherMain
         unGroupCommonMainCheckBox.isSelected = settings.unGroupCommonMain
+        separateBuildsCheckBox.isSelected = settings.separateNodeForSubstitutedProject
+        useGradleProjectNameCheckBox.isSelected = settings.useGradleProjectNameForSubstitutedProject
         splitGradleAndOtherComboBox.selectedIndex = settings.splitGradleAndOther
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
