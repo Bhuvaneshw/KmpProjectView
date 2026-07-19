@@ -13,19 +13,26 @@ class PreferenceState : BaseState() {
     var separateNodeForSubstitutedProject by property(true)
     var useGradleProjectNameForSubstitutedProject by property(false)
     var splitGradleAndOther by property(0)
-    var kmpKeywords by string("org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension")
-    var cmpKeywords by string("org.jetbrains.compose.ComposeExtension")
-    var ktorKeywords by string("io.ktor.plugin.KtorExtension")
+    var kmpKeywords by string("KotlinMultiplatformExtension")
+    var cmpKeywords by string("ComposeExtension,compose")
+    var ktorKeywords by string("KtorExtension,ktor")
     var commonMainKeywords by string("commonMain")
     var folderIgnoreKeywords by string("\\..*,build,projectFilesBackup")
     var fileIgnoreKeywords by string("")
 
-    val kmpKeywordList: List<String> get() = kmpKeywords?.split(",") ?: emptyList()
-    val cmpKeywordList: List<String> get() = cmpKeywords?.split(",") ?: emptyList()
-    val ktorKeywordList: List<String> get() = ktorKeywords?.split(",") ?: emptyList()
-    val commonMainKeywordList: List<String> get() = commonMainKeywords?.split(",") ?: emptyList()
+    val kmpKeywordList: List<String> get() = kmpKeywords.splitKeyword()
+    val cmpKeywordList: List<String> get() = cmpKeywords.splitKeyword()
+    val ktorKeywordList: List<String> get() = ktorKeywords.splitKeyword()
+    val commonMainKeywordList: List<String> get() = commonMainKeywords.splitKeyword()
 
     var regenerateResClassFeatureEnabled by property(true)
     var autoRegenerateResClassFeatureEnabled by property(true)
     var composeVectorConverterFeatureEnabled by property(false)
 }
+
+@Suppress("NOTHING_TO_INLINE")
+private inline fun String?.splitKeyword() = this
+    ?.split(",")
+    ?.map(String::trim)
+    ?.filter(String::isNotEmpty)
+    ?: emptyList()

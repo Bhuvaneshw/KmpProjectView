@@ -1,7 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
 import com.acutecoder.kmp.projectview.module.listAndAddChildren
 import com.acutecoder.kmp.projectview.util.Config
 import com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode
@@ -69,7 +68,6 @@ class BaseProjectViewNode(private val config: Config) :
                 listAndAddChildren(
                     config = config,
                     baseDirectory = baseDirPsi,
-                    groupGradleAndOtherFiles = baseDirPsi.hasAtLeastOneKmpOrCmpModule(),
                     add = children::add,
                     weightOffset = weightOffset,
                     isLabelEnabled = isComposite

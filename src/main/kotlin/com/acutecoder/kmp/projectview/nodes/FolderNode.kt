@@ -4,7 +4,6 @@ import com.acutecoder.kmp.helper.executor.RegenerateResClassExecutor
 import com.acutecoder.kmp.preference.PluginPreference
 import com.acutecoder.kmp.projectview.module.GradleModuleHelper
 import com.acutecoder.kmp.projectview.module.ModuleType
-import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
 import com.acutecoder.kmp.projectview.module.listAndAddChildren
 import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
 import com.acutecoder.kmp.projectview.module.moduleType
@@ -120,7 +119,6 @@ private class CustomFolderNode(
         else listAndAddChildren(
             config = config,
             baseDirectory = folder,
-            groupGradleAndOtherFiles = folder.hasAtLeastOneKmpOrCmpModule(),
             add = children::add,
             weightOffset = additionalWeight,
             isLabelEnabled = isLabelEnabled

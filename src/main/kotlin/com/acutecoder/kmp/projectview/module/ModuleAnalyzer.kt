@@ -33,8 +33,18 @@ fun PsiElement.moduleType(): ModuleType {
     } else ModuleType.Unknown
 }
 
-fun PsiDirectory.hasAtLeastOneKmpOrCmpModule() = children.any {
-    it is PsiDirectory && it.moduleType().isKmpOrCmp()
+fun PsiDirectory.isBuildRoot(): Boolean {
+    val dirPath = virtualFile.path
+    return GradleModuleHelper.getAllBuildRoots(project).any { FileUtil.pathsEqual(it, dirPath) }
+}
+
+fun PsiDirectory.shouldGroupFiles(config: Config): Boolean {
+    val splitMode = config.preference().splitGradleAndOther
+    return when (splitMode) {
+        0 -> isBuildRoot()
+        1 -> true
+        else -> false
+    }
 }
 
 fun listAndAddChildrenAsModule(
@@ -45,8 +55,7 @@ fun listAndAddChildrenAsModule(
     isLabelEnabled: Boolean = true
 ) {
     val moduleType = baseDirectory.moduleType()
-    val hasAtLeastOnKmpOrCmpModule =
-        baseDirectory.hasAtLeastOneKmpOrCmpModule() || config.preference().splitGradleAndOther == 1
+    val shouldGroup = baseDirectory.shouldGroupFiles(config)
 
     val rootPath = baseDirectory.virtualFile.path
     val projectName =
@@ -69,7 +78,7 @@ fun listAndAddChildrenAsModule(
                         add = add,
                         gradleFiles = gradleFiles,
                         otherFiles = otherFiles,
-                        hasAtLeastOnKmpOrCmpModule = hasAtLeastOnKmpOrCmpModule,
+                        shouldGroup = shouldGroup,
                         projectName = projectName,
                         rootPath = rootPath,
                         weightOffset = weightOffset,
@@ -83,7 +92,7 @@ fun listAndAddChildrenAsModule(
                         config = config,
                         add = add,
                         gradleFiles = gradleFiles,
-                        hasAtLeastOnKmpOrCmpModule = hasAtLeastOnKmpOrCmpModule
+                        shouldGroup = shouldGroup
                     )
                 }
 
@@ -101,7 +110,7 @@ fun listAndAddChildrenAsModule(
             }
         } else if (child is PsiFile && !child.canBeSkipped(config)) {
             val node = if (child.isGradleFile()) gradleFiles else otherFiles
-            if (hasAtLeastOnKmpOrCmpModule) {
+            if (shouldGroup) {
                 node.children.add(PsiFileNode(config.project, child, config.viewSettings))
             } else {
                 add(PsiFileNode(config.project, child, config.viewSettings))
@@ -109,7 +118,7 @@ fun listAndAddChildrenAsModule(
         }
     }
 
-    if (hasAtLeastOnKmpOrCmpModule) {
+    if (shouldGroup) {
         if (gradleFiles.children.isNotEmpty()) add(gradleFiles)
         if (otherFiles.children.isNotEmpty()) add(otherFiles)
     }
@@ -122,7 +131,7 @@ private fun handleSourceDirectory(
     add: (AbstractTreeNode<*>) -> Unit,
     gradleFiles: VirtualGroupNode<*>,
     otherFiles: VirtualGroupNode<*>,
-    hasAtLeastOnKmpOrCmpModule: Boolean,
+    shouldGroup: Boolean,
     projectName: String?,
     rootPath: String,
     weightOffset: Int,
@@ -172,9 +181,8 @@ private fun handleSourceDirectory(
                         additionalWeight = weightOffset,
                         isLabelEnabled = isLabelEnabled
                     )
-                    if (config.preference().groupOtherMain && moduleType.isKmpOrCmp()) otherSourceSet.children.add(
-                        node
-                    )
+                    if (config.preference().groupOtherMain && moduleType.isKmpOrCmp())
+                        otherSourceSet.children.add(node)
                     else add(node)
                 }
 
@@ -183,12 +191,12 @@ private fun handleSourceDirectory(
                     config = config,
                     add = add,
                     gradleFiles = gradleFiles,
-                    hasAtLeastOnKmpOrCmpModule = hasAtLeastOnKmpOrCmpModule
+                    shouldGroup = shouldGroup
                 )
 
                 srcChild.name == "kotlin-js-store" -> {
                     srcChild.children.filterIsInstance<PsiFile>().forEach { file ->
-                        if (hasAtLeastOnKmpOrCmpModule) otherFiles.children.add(
+                        if (shouldGroup) otherFiles.children.add(
                             PsiFileNode(config.project, file, config.viewSettings)
                         )
                         else add(PsiFileNode(config.project, file, config.viewSettings))
@@ -203,12 +211,12 @@ private fun handleSourceDirectory(
         } else if (srcChild is PsiFile && !srcChild.canBeSkipped(config)) {
             val hint = " (src)"
             if (srcChild.isGradleFile()) {
-                if (hasAtLeastOnKmpOrCmpModule) gradleFiles.children.add(
+                if (shouldGroup) gradleFiles.children.add(
                     HintedPsiFileNode(config, srcChild, hint)
                 )
                 else add(HintedPsiFileNode(config, srcChild, hint))
             } else {
-                if (hasAtLeastOnKmpOrCmpModule) otherFiles.children.add(
+                if (shouldGroup) otherFiles.children.add(
                     HintedPsiFileNode(config, srcChild, hint)
                 )
                 else add(HintedPsiFileNode(config, srcChild, hint))
@@ -225,7 +233,7 @@ private fun handleGradleDirectory(
     config: Config,
     add: (AbstractTreeNode<*>) -> Unit,
     gradleFiles: VirtualGroupNode<*>,
-    hasAtLeastOnKmpOrCmpModule: Boolean
+    shouldGroup: Boolean
 ) {
     for (file in gradleDir.children) {
         if (file is PsiDirectory && file.name == "wrapper") {
@@ -237,7 +245,7 @@ private fun handleGradleDirectory(
                     )
                 }
         } else if (file is PsiFile) {
-            if (hasAtLeastOnKmpOrCmpModule)
+            if (shouldGroup)
                 gradleFiles.children.add(PsiFileNode(config.project, file, config.viewSettings))
             else add(PsiFileNode(config.project, file, config.viewSettings))
         }
@@ -247,12 +255,12 @@ private fun handleGradleDirectory(
 fun listAndAddChildren(
     config: Config,
     baseDirectory: PsiDirectory,
-    groupGradleAndOtherFiles: Boolean,
     add: (AbstractTreeNode<*>) -> Unit,
     weightOffset: Int = 0,
     isLabelEnabled: Boolean = true
 ) {
-    if (groupGradleAndOtherFiles && config.preference().splitGradleAndOther < 2) {
+    val shouldGroup = baseDirectory.shouldGroupFiles(config)
+    if (shouldGroup) {
         val rootPath = baseDirectory.virtualFile.path
         val projectName =
             if (isLabelEnabled && !config.preference().separateNodeForSubstitutedProject) GradleModuleHelper.getProjectName(

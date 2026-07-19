@@ -1,7 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.projectview.module.GradleModuleHelper
-import com.acutecoder.kmp.projectview.module.hasAtLeastOneKmpOrCmpModule
 import com.acutecoder.kmp.projectview.module.listAndAddChildren
 import com.acutecoder.kmp.projectview.util.Config
 import com.acutecoder.kmp.projectview.util.Constants
@@ -32,7 +31,6 @@ class BuildRootNode(
         listAndAddChildren(
             config = config,
             baseDirectory = rootDirectory,
-            groupGradleAndOtherFiles = rootDirectory.hasAtLeastOneKmpOrCmpModule(),
             add = children::add
         )
         return children

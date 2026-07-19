@@ -18,13 +18,22 @@ object GradleModuleHelper {
             GradleExtensionsSettings.getInstance(module.project).getExtensionsFor(module)
                 ?: return ModuleType.Unknown
 
-        val extensionTypes = extensionsData.extensions.values.map { it.typeFqn }
+        val extensions = extensionsData.extensions.values
         val preference = PluginPreference.getInstance().state
 
+        fun matches(keywords: List<String>): Boolean {
+            return keywords.any { keyword ->
+                extensions.any { ext ->
+                    ext.name.contains(keyword, ignoreCase = true) || 
+                    ext.typeFqn.contains(keyword, ignoreCase = true)
+                }
+            }
+        }
+
         return when {
-            extensionTypes.any { type -> preference.cmpKeywordList.any { type.contains(it.trim()) } } -> ModuleType.CMP
-            extensionTypes.any { type -> preference.kmpKeywordList.any { type.contains(it.trim()) } } -> ModuleType.KMP
-            extensionTypes.any { type -> preference.ktorKeywordList.any { type.contains(it.trim()) } } -> ModuleType.Ktor
+            matches(preference.cmpKeywordList) -> ModuleType.CMP
+            matches(preference.kmpKeywordList) -> ModuleType.KMP
+            matches(preference.ktorKeywordList) -> ModuleType.Ktor
             else -> ModuleType.Unknown
         }
     }

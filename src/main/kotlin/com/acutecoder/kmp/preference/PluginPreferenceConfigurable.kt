@@ -53,7 +53,7 @@ class PluginPreferenceConfigurable : Configurable {
         useGradleProjectNameCheckBox =
             JCheckBox("Use Gradle root project name instead of folder name. [1]")
 
-        splitGradleAndOtherComboBox = ComboBox(arrayOf("Module Level", "All Level", "None"))
+        splitGradleAndOtherComboBox = ComboBox(arrayOf("Project Level", "All Level", "None"))
 
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
