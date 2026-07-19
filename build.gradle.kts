@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("java")
     // https://plugins.gradle.org/plugin/org.jetbrains.kotlin.jvm
-    id("org.jetbrains.kotlin.jvm") version "2.3.20"
+    id("org.jetbrains.kotlin.jvm") version "2.4.10"
     // https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
-    id("org.jetbrains.intellij.platform") version "2.13.1"
+    id("org.jetbrains.intellij.platform") version "2.18.1"
 }
 
 group = "com.acutecoder.kmp.projectview"
@@ -21,7 +21,7 @@ repositories {
 dependencies {
     intellijPlatform {
         // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/25442-kmp-project-view/edit/versions/
-        intellijIdea("261.22158.182") // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
+        intellijIdea("261.26222.22") // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
 
         bundledPlugins("com.intellij.gradle")
     }

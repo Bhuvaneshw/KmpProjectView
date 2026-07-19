@@ -14,44 +14,66 @@ import icons.GradleIcons
 import javax.swing.Icon
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun GradleGroupNode(config: Config) =
+inline fun GradleGroupNode(
+    config: Config,
+    projectName: String? = null,
+    rootPath: String = "",
+    weightOffset: Int = 0
+) =
     VirtualGroupNode(
         config = config,
         folderName = "Gradle Files",
-        element = "Gradle Files",
+        element = "Gradle-$rootPath",
         icon = GradleIcons.Gradle,
+        projectName = projectName,
+        weight = 100,
+        additionalWeight = weightOffset
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
 inline fun OtherGroupNode(
     config: Config,
     baseDirectory: PsiDirectory,
+    projectName: String? = null,
+    weightOffset: Int = 0
 ) =
     VirtualGroupNode(
         config = config,
         folderName = "Other Files",
         element = baseDirectory,
         icon = AllIcons.FileTypes.Any_type,
+        projectName = projectName,
+        weight = 200,
+        additionalWeight = weightOffset
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
-inline fun OtherSourceSetGroup(config: Config) = VirtualGroupNode(
+inline fun OtherSourceSetGroup(
+    config: Config,
+    projectName: String? = null,
+    rootPath: String = "",
+    weightOffset: Int = 0
+) = VirtualGroupNode(
     config = config,
     folderName = "Other Source Set",
-    element = "Other Source Set",
-    tooltip = "Source Set group",
+    element = "SourceSet-$rootPath",
     icon = AllIcons.Nodes.ModuleGroup,
+    tooltip = "Source Set group",
     weight = 10,
+    projectName = projectName,
+    additionalWeight = weightOffset
 )
 
 class VirtualGroupNode<T : Any>(
-    config: Config,
+    private val config: Config,
     private val folderName: String,
     element: T,
     private val icon: Icon,
     private val tooltip: String = folderName,
     private val weight: Int = 100,
     private val isTooltipEnabled: Boolean = config.preference().isTooltipEnabled,
+    private val projectName: String? = null,
+    private val additionalWeight: Int = 0,
 ) : ProjectViewNode<T>(config.project, element, config.viewSettings) {
 
     val children = mutableListOf<AbstractTreeNode<*>>()
@@ -64,6 +86,12 @@ class VirtualGroupNode<T : Any>(
         )
 
         presentation.addText(folderName, SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
+
+        if (!config.preference().separateNodeForSubstitutedProject) {
+            projectName?.let {
+                presentation.addText(" [$it]", SimpleTextAttributes.GRAY_ITALIC_ATTRIBUTES)
+            }
+        }
     }
 
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
@@ -71,7 +99,7 @@ class VirtualGroupNode<T : Any>(
     }
 
     override fun getWeight(): Int {
-        return weight
+        return weight + additionalWeight
     }
 
     override fun contains(file: VirtualFile): Boolean {

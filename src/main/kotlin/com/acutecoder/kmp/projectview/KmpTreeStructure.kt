@@ -34,7 +34,7 @@ class KmpTreeStructure(
     }
 
     override fun isShowScratchesAndConsoles(): Boolean {
-        return false
+        return ProjectView.getInstance(myProject).isShowScratchesAndConsoles(id)
     }
 
 }
