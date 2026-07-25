@@ -1,7 +1,6 @@
 package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.ModuleType
 import com.acutecoder.kmp.projectview.module.listAndAddChildren
 import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
 import com.acutecoder.kmp.projectview.module.moduleType
@@ -50,7 +49,7 @@ class ImportantFolderNode(
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
         val children = mutableListOf<AbstractTreeNode<*>>()
 
-        if (moduleType != ModuleType.Unknown)
+        if (moduleType.isGradleModule())
             listAndAddChildrenAsModule(
                 config = config,
                 baseDirectory = folder,

@@ -30,6 +30,10 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
     private lateinit var ktorKeywordsField: JTextField
+    private lateinit var androidKeywordsField: JTextField
+    private lateinit var iosFileMarkersField: JTextField
+    private lateinit var desktopKeywordsField: JTextField
+    private lateinit var webKeywordsField: JTextField
     private lateinit var sharedModuleKeywordsField: JTextField
     private lateinit var commonMainKeywordsField: JTextField
     private lateinit var folderIgnoreField: JTextField
@@ -44,7 +48,7 @@ class PluginPreferenceConfigurable : Configurable {
     }
 
     override fun createComponent(): JComponent {
-        showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP/Ktor)")
+        showKmpSideTextCheckBox = JCheckBox("Show module type (KMP/CMP/Ktor/...)")
         showCommonMainOnTopCheckBox = JCheckBox("Show commonMain on top")
         differentiateCommonMainCheckBox = JCheckBox("Highlight commonMain")
         showSharedModuleOnTopCheckBox = JCheckBox("Show shared module on top")
@@ -61,6 +65,10 @@ class PluginPreferenceConfigurable : Configurable {
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
         ktorKeywordsField = JTextField()
+        androidKeywordsField = JTextField()
+        iosFileMarkersField = JTextField()
+        desktopKeywordsField = JTextField()
+        webKeywordsField = JTextField()
         sharedModuleKeywordsField = JTextField()
         commonMainKeywordsField = JTextField()
         folderIgnoreField = JTextField()
@@ -99,6 +107,10 @@ class PluginPreferenceConfigurable : Configurable {
             addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, gap, true)
             addLabeledComponent(JLabel("CMP Identifiers"), cmpKeywordsField, true)
             addLabeledComponent(JLabel("Ktor Identifiers"), ktorKeywordsField, true)
+            addLabeledComponent(JLabel("Android Identifiers"), androidKeywordsField, true)
+            addLabeledComponent(JLabel("Desktop Identifiers"), desktopKeywordsField, true)
+            addLabeledComponent(JLabel("Web Identifiers"), webKeywordsField, true)
+            addLabeledComponent(JLabel("iOS File Markers"), iosFileMarkersField, true)
             addLabeledComponent(
                 JLabel("Shared Module Identifiers"),
                 sharedModuleKeywordsField,
@@ -109,10 +121,15 @@ class PluginPreferenceConfigurable : Configurable {
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
             addComponent(
-                JLabel("Hint: Add multiple identifiers by separating them with commas."),
+                JLabel("<html>Hint: <ul>" +
+                        "<li>Add multiple identifiers by separating them with commas.</li>" +
+                        "<li>[Type] matches Extension Types (FQNs)</li>" +
+                        "<li>(Name) matches Extension Names,</li>" +
+                        "<li>If both [] and () are used in a single field, both(at-least one in each) must match (AND logic).</li>" +
+                        "<li>If changes don’t take effect, restart the IDE.</li>" +
+                        "</ul> </html>"),
                 gap
             )
-            addComponent(JLabel("If changes don’t take effect, restart the IDE."))
 
             addComponent(JLabel("Other Tools"), gap)
             addComponent(regenerateResClassCheckBox)
@@ -149,6 +166,10 @@ class PluginPreferenceConfigurable : Configurable {
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
                 ktorKeywordsField.text != settings.ktorKeywords ||
+                androidKeywordsField.text != settings.androidKeywords ||
+                iosFileMarkersField.text != settings.iosFileMarkers ||
+                desktopKeywordsField.text != settings.desktopKeywords ||
+                webKeywordsField.text != settings.webKeywords ||
                 sharedModuleKeywordsField.text != settings.sharedModuleKeywords ||
                 commonMainKeywordsField.text != settings.commonMainKeywords ||
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
@@ -181,6 +202,10 @@ class PluginPreferenceConfigurable : Configurable {
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
                 ktorKeywords = ktorKeywordsField.text
+                androidKeywords = androidKeywordsField.text
+                iosFileMarkers = iosFileMarkersField.text
+                desktopKeywords = desktopKeywordsField.text
+                webKeywords = webKeywordsField.text
                 sharedModuleKeywords = sharedModuleKeywordsField.text
                 commonMainKeywords = commonMainKeywordsField.text
                 folderIgnoreKeywords = folderIgnoreField.text
@@ -228,6 +253,10 @@ class PluginPreferenceConfigurable : Configurable {
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
         ktorKeywordsField.text = settings.ktorKeywords
+        androidKeywordsField.text = settings.androidKeywords
+        iosFileMarkersField.text = settings.iosFileMarkers
+        desktopKeywordsField.text = settings.desktopKeywords
+        webKeywordsField.text = settings.webKeywords
         sharedModuleKeywordsField.text = settings.sharedModuleKeywords
         commonMainKeywordsField.text = settings.commonMainKeywords
         folderIgnoreField.text = settings.folderIgnoreKeywords

@@ -1,5 +1,6 @@
 package com.acutecoder.kmp.projectview.module
 
+import com.acutecoder.kmp.preference.PluginPreference
 import com.acutecoder.kmp.projectview.nodes.FolderNode
 import com.acutecoder.kmp.projectview.nodes.GradleGroupNode
 import com.acutecoder.kmp.projectview.nodes.HintedPsiFileNode
@@ -24,13 +25,23 @@ import com.intellij.psi.PsiFile
 
 fun PsiElement.moduleType(): ModuleType {
     val directory = this as? PsiDirectory ?: return ModuleType.Unknown
-    val module = ModuleUtilCore.findModuleForPsiElement(directory) ?: return ModuleType.Unknown
-    val projectPath =
-        ExternalSystemApiUtil.getExternalProjectPath(module) ?: return ModuleType.Unknown
 
-    return if (FileUtil.pathsEqual(directory.virtualFile.path, projectPath)) {
-        GradleModuleHelper.getModuleType(module)
-    } else ModuleType.Unknown
+    val module = ModuleUtilCore.findModuleForPsiElement(directory)
+    if (module != null) {
+        val projectPath =
+            ExternalSystemApiUtil.getExternalProjectPath(module)
+        if (projectPath != null && FileUtil.pathsEqual(directory.virtualFile.path, projectPath)) {
+            val moduleType = GradleModuleHelper.getModuleType(module)
+            if (moduleType != ModuleType.Unknown) return moduleType
+        }
+    }
+
+    val preference = PluginPreference.getInstance().state
+    if (GradleModuleHelper.hasFileMarkers(directory, preference.iosFileMarkerList)) {
+        return ModuleType.IOS
+    }
+
+    return ModuleType.Unknown
 }
 
 fun PsiDirectory.isBuildRoot(): Boolean {
@@ -42,7 +53,7 @@ fun PsiDirectory.isSharedModule(config: Config): Boolean {
     val module = ModuleUtilCore.findModuleForPsiElement(this) ?: return false
     val projectPath = ExternalSystemApiUtil.getExternalProjectPath(module) ?: return false
     if (!FileUtil.pathsEqual(virtualFile.path, projectPath)) return false
-    
+
     val moduleName = GradleModuleHelper.getModuleName(module)
     return config.preference().sharedModuleKeywordList.any { moduleName.contains(it, ignoreCase = true) }
 }
@@ -79,7 +90,7 @@ fun listAndAddChildrenAsModule(
     for (child in baseDirectory.children) {
         if (child is PsiDirectory) {
             when {
-                child.name == "src" && (moduleType.isKmpOrCmp() || moduleType == ModuleType.Ktor) -> {
+                child.name == "src" && (moduleType.isGradleModule()) -> {
                     handleSourceDirectory(
                         srcDir = child,
                         config = config,

@@ -2,8 +2,19 @@ package com.acutecoder.kmp.projectview.nodes
 
 import com.acutecoder.kmp.helper.executor.RegenerateResClassExecutor
 import com.acutecoder.kmp.preference.PluginPreference
-import com.acutecoder.kmp.projectview.module.*
-import com.acutecoder.kmp.projectview.util.*
+import com.acutecoder.kmp.projectview.module.GradleModuleHelper
+import com.acutecoder.kmp.projectview.module.ModuleType
+import com.acutecoder.kmp.projectview.module.isSharedModule
+import com.acutecoder.kmp.projectview.module.listAndAddChildren
+import com.acutecoder.kmp.projectview.module.listAndAddChildrenAsModule
+import com.acutecoder.kmp.projectview.module.moduleType
+import com.acutecoder.kmp.projectview.util.Config
+import com.acutecoder.kmp.projectview.util.Constants
+import com.acutecoder.kmp.projectview.util.OnFileChangeListener
+import com.acutecoder.kmp.projectview.util.findSrcDirectory
+import com.acutecoder.kmp.projectview.util.isAncestorOf
+import com.acutecoder.kmp.projectview.util.withTooltip
+import com.acutecoder.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -37,7 +48,7 @@ private class CustomFolderNode(
 ) : ProjectViewNode<PsiDirectory>(
     config.project,
     folder.moduleType()
-        .let { if (it != ModuleType.Unknown) folder.findSrcDirectory() ?: folder else folder },
+        .let { if (it.isGradleModule()) folder.findSrcDirectory() ?: folder else folder },
     config.viewSettings
 ) {
 
@@ -60,8 +71,8 @@ private class CustomFolderNode(
     override fun update(presentation: PresentationData) {
         val isModule = moduleType != ModuleType.Unknown
         val module = if (isModule) ModuleUtilCore.findModuleForPsiElement(folder) else null
-        val moduleName =
-            if (isModule && module != null) GradleModuleHelper.getModuleName(module) else folder.name
+        val moduleName = if (moduleType.isGradleModule() && module != null)
+            GradleModuleHelper.getModuleName(module) else folder.name
 
         val icon = if (isModule) AllIcons.Nodes.Module
         else if (moduleName.equals("kotlin", true)) AllIcons.Modules.SourceRoot
@@ -74,7 +85,7 @@ private class CustomFolderNode(
 
         presentation.setIcon(
             if (isModule && preferences.isTooltipEnabled)
-                icon.withTooltip("${moduleType.displayName} module")
+                icon.withTooltip("${moduleType.description} module")
             else icon.withoutTooltip()
         )
 
@@ -99,7 +110,7 @@ private class CustomFolderNode(
     override fun getChildren(): MutableCollection<AbstractTreeNode<*>> {
         val children = mutableListOf<AbstractTreeNode<*>>()
 
-        if (moduleType != ModuleType.Unknown)
+        if (moduleType.isGradleModule())
             listAndAddChildrenAsModule(
                 config = config,
                 baseDirectory = folder,
@@ -119,7 +130,8 @@ private class CustomFolderNode(
     }
 
     override fun getWeight(): Int {
-        val weight = if (isSharedModule && preferences.showSharedModuleOnTop) 0 else Constants.DEFAULT_WEIGHT
+        val weight =
+            if (isSharedModule && preferences.showSharedModuleOnTop) 0 else Constants.DEFAULT_WEIGHT
         return weight + additionalWeight
     }
 
