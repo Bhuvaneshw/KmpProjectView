@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.acutecoder.kmp.projectview</id>
+    <id>com.bhuvaneshw.kmp.projectview</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -30,13 +30,13 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="com.acutecoder.kmp.projectview.StartupActivity"/>
-        <projectViewPane implementation="com.acutecoder.kmp.projectview.KmpProjectPane"/>
-        <applicationService serviceImplementation="com.acutecoder.kmp.preference.PluginPreference"/>
+        <postStartupActivity implementation="com.bhuvaneshw.kmp.projectview.StartupActivity"/>
+        <projectViewPane implementation="com.bhuvaneshw.kmp.projectview.KmpProjectPane"/>
+        <applicationService serviceImplementation="com.bhuvaneshw.kmp.preference.PluginPreference"/>
 
         <applicationConfigurable
-                instance="com.acutecoder.kmp.preference.PluginPreferenceConfigurable"
-                id="com.acutecoder.kmp.preference.PluginPreferenceConfigurable"
+                instance="com.bhuvaneshw.kmp.preference.PluginPreferenceConfigurable"
+                id="com.bhuvaneshw.kmp.preference.PluginPreferenceConfigurable"
                 displayName="KMP Project View"
                 parentId="appearance"
         />
@@ -46,14 +46,14 @@
     </extensions>
 
     <actions>
-        <action id="com.acutecoder.kmp.helper.action.ConvertToComposeVectorAction"
-                class="com.acutecoder.kmp.helper.action.ConvertToComposeVectorAction"
+        <action id="com.bhuvaneshw.kmp.helper.action.ConvertToComposeVectorAction"
+                class="com.bhuvaneshw.kmp.helper.action.ConvertToComposeVectorAction"
                 text="Convert To Compose Vector"
                 description="Converts XML file to Compose vector">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
-        <action id="com.acutecoder.kmp.helper.action.RegenerateResClassAction"
-                class="com.acutecoder.kmp.helper.action.RegenerateResClassAction"
+        <action id="com.bhuvaneshw.kmp.helper.action.RegenerateResClassAction"
+                class="com.bhuvaneshw.kmp.helper.action.RegenerateResClassAction"
                 text="Regenerate Res Class"
                 description="Regenerates Res class">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>

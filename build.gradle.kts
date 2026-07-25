@@ -8,7 +8,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.18.1"
 }
 
-group = "com.acutecoder.kmp.projectview"
+group = "com.bhuvaneshw.kmp.projectview"
 version = "1.1.0"
 
 repositories {
