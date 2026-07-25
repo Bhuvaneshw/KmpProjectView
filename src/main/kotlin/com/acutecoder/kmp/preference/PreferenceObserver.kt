@@ -1,6 +1,8 @@
 package com.acutecoder.kmp.preference
 
-typealias Observer = () -> Unit
+fun interface Observer {
+    fun onPreferenceChange()
+}
 
 object PreferenceObserver {
 
@@ -10,10 +12,12 @@ object PreferenceObserver {
         observers.add(observer)
     }
 
+    fun remove(observer: Observer) {
+        observers.remove(observer)
+    }
+
     fun emit() {
-        observers.forEach { observer ->
-            observer()
-        }
+        observers.forEach(Observer::onPreferenceChange)
     }
 
 }

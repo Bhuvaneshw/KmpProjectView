@@ -30,14 +30,6 @@ object GradleModuleHelper {
         if (extensionNames.isEmpty() && extensionTypes.isEmpty() && sourceSetNames.isEmpty())
             return ModuleType.Unknown
 
-        println("===================================================================================")
-        println("module: ${module.name}")
-        println("===================================================================================")
-        println("extensionNames: $extensionNames")
-        println("extensionTypes: $extensionTypes")
-        println("sourceSetNames: $sourceSetNames")
-        println("===================================================================================\n")
-
         fun isMatch(keywords: List<String>): Boolean {
             val typeKeywords = mutableListOf<String>()
             val nameKeywords = mutableListOf<String>()
