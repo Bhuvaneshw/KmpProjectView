@@ -11,29 +11,4 @@ class RegenerateResClassExecutor {
         runGradleTask(project, Constants.REGENERATE_RES_CLASS_GRADLE_TASK, callback)
     }
 
-    companion object {
-        private lateinit var executor: RegenerateResClassExecutor
-        private var isRunning = false
-
-        fun executeSafe(project: Project) {
-            if (isRunning) return
-
-            synchronized(this) {
-                isRunning = true
-                if (!this::executor.isInitialized) executor = RegenerateResClassExecutor()
-            }
-
-            synchronized(executor) {
-                executor.execute(project, object : TaskCallback {
-                    override fun onSuccess() {
-                        isRunning = false
-                    }
-
-                    override fun onFailure() {
-                        isRunning = false
-                    }
-                })
-            }
-        }
-    }
 }

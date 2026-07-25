@@ -1,20 +1,8 @@
 package com.bhuvaneshw.kmp.projectview.nodes
 
-import com.bhuvaneshw.kmp.helper.executor.RegenerateResClassExecutor
 import com.bhuvaneshw.kmp.preference.PluginPreference
-import com.bhuvaneshw.kmp.projectview.module.GradleModuleHelper
-import com.bhuvaneshw.kmp.projectview.module.ModuleType
-import com.bhuvaneshw.kmp.projectview.module.isSharedModule
-import com.bhuvaneshw.kmp.projectview.module.listAndAddChildren
-import com.bhuvaneshw.kmp.projectview.module.listAndAddChildrenAsModule
-import com.bhuvaneshw.kmp.projectview.module.moduleType
-import com.bhuvaneshw.kmp.projectview.util.Config
-import com.bhuvaneshw.kmp.projectview.util.Constants
-import com.bhuvaneshw.kmp.projectview.util.OnFileChangeListener
-import com.bhuvaneshw.kmp.projectview.util.findSrcDirectory
-import com.bhuvaneshw.kmp.projectview.util.isAncestorOf
-import com.bhuvaneshw.kmp.projectview.util.withTooltip
-import com.bhuvaneshw.kmp.projectview.util.withoutTooltip
+import com.bhuvaneshw.kmp.projectview.module.*
+import com.bhuvaneshw.kmp.projectview.util.*
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -23,7 +11,6 @@ import com.intellij.ide.util.treeView.AbstractTreeNode
 import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiManager
 import com.intellij.ui.SimpleTextAttributes
 
 @Suppress("FunctionName")
@@ -55,18 +42,6 @@ private class CustomFolderNode(
     private val preferences = PluginPreference.getInstance().state
     private val moduleType by lazy { folder.moduleType() }
     private val isSharedModule by lazy { folder.isSharedModule(config) }
-
-    init {
-        if (
-            preferences.run { regenerateResClassFeatureEnabled && autoRegenerateResClassFeatureEnabled }
-            && folder.name.contains("resource", true)
-        ) {
-            PsiManager.getInstance(config.project)
-                .addPsiTreeChangeListener(OnFileChangeListener(folder) {
-                    RegenerateResClassExecutor.executeSafe(config.project)
-                }) {}
-        }
-    }
 
     override fun update(presentation: PresentationData) {
         val isModule = moduleType != ModuleType.Unknown

@@ -7,7 +7,6 @@ import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.Messages
 import com.intellij.util.ui.FormBuilder
-import java.awt.event.ItemEvent
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComponent
@@ -39,7 +38,6 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var folderIgnoreField: JTextField
     private lateinit var fileIgnoreField: JTextField
     private lateinit var regenerateResClassCheckBox: JCheckBox
-    private lateinit var autoRegenerateResClassCheckBox: JCheckBox
     private lateinit var composeVectorConverterCheckBox: JCheckBox
     private val gap = 20
 
@@ -75,14 +73,7 @@ class PluginPreferenceConfigurable : Configurable {
         fileIgnoreField = JTextField()
 
         regenerateResClassCheckBox = JCheckBox("Enable regenerateResClass feature")
-        autoRegenerateResClassCheckBox =
-            JCheckBox("Enable auto regenerateResClass feature")
         composeVectorConverterCheckBox = JCheckBox("Enable composeVectorConverter feature")
-        regenerateResClassCheckBox.addItemListener {
-            autoRegenerateResClassCheckBox.isEnabled = it.stateChange == ItemEvent.SELECTED
-        }
-        autoRegenerateResClassCheckBox.isEnabled =
-            PluginPreference.getInstance().state.regenerateResClassFeatureEnabled
 
         return FormBuilder.createFormBuilder().apply {
             addComponent(showKmpSideTextCheckBox)
@@ -121,22 +112,20 @@ class PluginPreferenceConfigurable : Configurable {
             addLabeledComponent(JLabel("File ignore pattern"), fileIgnoreField, true)
 
             addComponent(
-                JLabel("<html>Hint: <ul>" +
-                        "<li>Add multiple identifiers by separating them with commas.</li>" +
-                        "<li>[Type] matches Extension Types (FQNs)</li>" +
-                        "<li>(Name) matches Extension Names,</li>" +
-                        "<li>If both [] and () are used in a single field, both(at-least one in each) must match (AND logic).</li>" +
-                        "<li>If changes don’t take effect, restart the IDE.</li>" +
-                        "</ul> </html>"),
+                JLabel(
+                    "<html>Hint: <ul>" +
+                            "<li>Add multiple identifiers by separating them with commas.</li>" +
+                            "<li>[Type] matches Extension Types (FQNs)</li>" +
+                            "<li>(Name) matches Extension Names,</li>" +
+                            "<li>If both [] and () are used in a single field, both(at-least one in each) must match (AND logic).</li>" +
+                            "<li>If changes don’t take effect, restart the IDE.</li>" +
+                            "</ul> </html>"
+                ),
                 gap
             )
 
             addComponent(JLabel("Other Tools"), gap)
             addComponent(regenerateResClassCheckBox)
-            addComponent(autoRegenerateResClassCheckBox)
-            addComponent(JLabel("Detects changes in resource directory and triggers generateResClass automatically."))
-
-            addComponent(JLabel("Experimental"), gap)
             addComponent(composeVectorConverterCheckBox)
 
             addComponent(JButton("Restore Defaults").apply {
@@ -175,7 +164,6 @@ class PluginPreferenceConfigurable : Configurable {
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
                 fileIgnoreField.text != settings.fileIgnoreKeywords ||
                 regenerateResClassCheckBox.isSelected != settings.regenerateResClassFeatureEnabled ||
-                autoRegenerateResClassCheckBox.isSelected != settings.autoRegenerateResClassFeatureEnabled ||
                 composeVectorConverterCheckBox.isSelected != settings.composeVectorConverterFeatureEnabled
     }
 
@@ -183,7 +171,6 @@ class PluginPreferenceConfigurable : Configurable {
         val settings = PluginPreference.getInstance()
         val requiresRestart = settings.state.run {
             regenerateResClassFeatureEnabled != regenerateResClassCheckBox.isSelected
-                    || autoRegenerateResClassFeatureEnabled != autoRegenerateResClassCheckBox.isSelected
         }
 
         settings.loadState(
@@ -211,7 +198,6 @@ class PluginPreferenceConfigurable : Configurable {
                 folderIgnoreKeywords = folderIgnoreField.text
                 fileIgnoreKeywords = fileIgnoreField.text
                 regenerateResClassFeatureEnabled = regenerateResClassCheckBox.isSelected
-                autoRegenerateResClassFeatureEnabled = autoRegenerateResClassCheckBox.isSelected
                 composeVectorConverterFeatureEnabled = composeVectorConverterCheckBox.isSelected
             }
         )
@@ -262,7 +248,6 @@ class PluginPreferenceConfigurable : Configurable {
         folderIgnoreField.text = settings.folderIgnoreKeywords
         fileIgnoreField.text = settings.fileIgnoreKeywords
         regenerateResClassCheckBox.isSelected = settings.regenerateResClassFeatureEnabled
-        autoRegenerateResClassCheckBox.isSelected = settings.autoRegenerateResClassFeatureEnabled
         composeVectorConverterCheckBox.isSelected = settings.composeVectorConverterFeatureEnabled
     }
 
