@@ -26,6 +26,7 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.gradle</depends>
+    <depends>org.jetbrains.android</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
@@ -57,6 +58,12 @@
                 text="Regenerate Res Class"
                 description="Regenerates Res class">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+        <action id="com.bhuvaneshw.kmp.helper.action.ImportAndroidIconAction"
+                class="com.bhuvaneshw.kmp.helper.action.ImportAndroidIconAction"
+                text="Compose Vector Asset"
+                description="Imports Material icon into composeResources and converts it to Compose format">
+            <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
     </actions>
 

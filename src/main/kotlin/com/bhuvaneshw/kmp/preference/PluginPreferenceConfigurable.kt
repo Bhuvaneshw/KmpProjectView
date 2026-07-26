@@ -39,6 +39,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var fileIgnoreField: JTextField
     private lateinit var regenerateResClassCheckBox: JCheckBox
     private lateinit var composeVectorConverterCheckBox: JCheckBox
+    private lateinit var composeVectorAssetCheckBox: JCheckBox
     private val gap = 20
 
     override fun getDisplayName(): String {
@@ -72,8 +73,13 @@ class PluginPreferenceConfigurable : Configurable {
         folderIgnoreField = JTextField()
         fileIgnoreField = JTextField()
 
-        regenerateResClassCheckBox = JCheckBox("Enable regenerateResClass feature")
-        composeVectorConverterCheckBox = JCheckBox("Enable composeVectorConverter feature")
+        regenerateResClassCheckBox = JCheckBox("Enable Regenerate Res Class feature. (Right Click composeResource -> Regenerate Res Class)")
+        composeVectorConverterCheckBox = JCheckBox("Enable Compose Vector Converter feature. (Right Click <drawable>.xml -> Convert To Compose Vector).")
+        composeVectorAssetCheckBox = JCheckBox("Enable Compose Vector Asset feature. (Right Click composeResource -> New -> Compose Vector Asset)")
+
+        composeVectorConverterCheckBox.addItemListener {
+            composeVectorAssetCheckBox.isEnabled = it.stateChange == java.awt.event.ItemEvent.SELECTED
+        }
 
         return FormBuilder.createFormBuilder().apply {
             addComponent(showKmpSideTextCheckBox)
@@ -127,6 +133,8 @@ class PluginPreferenceConfigurable : Configurable {
             addComponent(JLabel("Other Tools"), gap)
             addComponent(regenerateResClassCheckBox)
             addComponent(composeVectorConverterCheckBox)
+            addComponent(JLabel("Removes android related attributes."))
+            addComponent(composeVectorAssetCheckBox)
 
             addComponent(JButton("Restore Defaults").apply {
                 addActionListener {
@@ -164,7 +172,8 @@ class PluginPreferenceConfigurable : Configurable {
                 folderIgnoreField.text != settings.folderIgnoreKeywords ||
                 fileIgnoreField.text != settings.fileIgnoreKeywords ||
                 regenerateResClassCheckBox.isSelected != settings.regenerateResClassFeatureEnabled ||
-                composeVectorConverterCheckBox.isSelected != settings.composeVectorConverterFeatureEnabled
+                composeVectorConverterCheckBox.isSelected != settings.composeVectorConverterFeatureEnabled ||
+                composeVectorAssetCheckBox.isSelected != settings.composeVectorAssetFeatureEnabled
     }
 
     override fun apply() {
@@ -199,6 +208,7 @@ class PluginPreferenceConfigurable : Configurable {
                 fileIgnoreKeywords = fileIgnoreField.text
                 regenerateResClassFeatureEnabled = regenerateResClassCheckBox.isSelected
                 composeVectorConverterFeatureEnabled = composeVectorConverterCheckBox.isSelected
+                composeVectorAssetFeatureEnabled = composeVectorAssetCheckBox.isSelected
             }
         )
 
@@ -249,6 +259,8 @@ class PluginPreferenceConfigurable : Configurable {
         fileIgnoreField.text = settings.fileIgnoreKeywords
         regenerateResClassCheckBox.isSelected = settings.regenerateResClassFeatureEnabled
         composeVectorConverterCheckBox.isSelected = settings.composeVectorConverterFeatureEnabled
+        composeVectorAssetCheckBox.isSelected = settings.composeVectorAssetFeatureEnabled
+        composeVectorAssetCheckBox.isEnabled = settings.composeVectorConverterFeatureEnabled
     }
 
 }

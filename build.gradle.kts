@@ -21,9 +21,11 @@ repositories {
 dependencies {
     intellijPlatform {
         // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/25442-kmp-project-view/edit/versions/
-        intellijIdea("261.26222.22") // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
+        val intellijVersion = "261.26222.22"
+        intellijIdea(intellijVersion) // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
 
         bundledPlugins("com.intellij.gradle")
+        plugins("org.jetbrains.android:$intellijVersion")
     }
 }
 

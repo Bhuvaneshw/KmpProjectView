@@ -39,7 +39,8 @@ class PreferenceState : BaseState() {
     val commonMainKeywordList: List<String> get() = commonMainKeywords.splitKeywords()
 
     var regenerateResClassFeatureEnabled by property(true)
-    var composeVectorConverterFeatureEnabled by property(false)
+    var composeVectorConverterFeatureEnabled by property(true)
+    var composeVectorAssetFeatureEnabled by property(true)
 }
 
 @Suppress("NOTHING_TO_INLINE")
