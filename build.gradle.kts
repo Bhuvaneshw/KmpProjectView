@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/25442-kmp-project-view/edit/versions/
+        // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/33147-kmp-project-view/edit/versions/
         val intellijVersion = "261.26222.22"
         intellijIdea(intellijVersion) // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
 
