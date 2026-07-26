@@ -45,7 +45,7 @@ class StartupActivity : ProjectActivity, Disposable {
                 NotificationType.WARNING
             )
             .addAction(NotificationAction.createSimple("Install new version") {
-                BrowserUtil.browse("https://plugins.jetbrains.com/plugin/25442-kmp-project-view")
+                BrowserUtil.browse("https://plugins.jetbrains.com/plugin/33147-kmp-project-view")
             })
             .notify(project)
     }

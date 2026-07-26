@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.acutecoder.kmp.projectview"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -20,8 +20,8 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/25442-kmp-project-view/edit/versions/
-        intellijIdea("261.22158.182") // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
+        // https://plugins.jetbrains.com/plugin/22989-android/versions, https://plugins.jetbrains.com/plugin/33147-kmp-project-view/edit/versions/
+        intellijIdea("261.26222.22") // v2025.1-EAP-4 https://www.jetbrains.com/idea/nextversion/ https://www.jetbrains.com/idea/download/other.html
 
         bundledPlugins("com.intellij.gradle")
     }
