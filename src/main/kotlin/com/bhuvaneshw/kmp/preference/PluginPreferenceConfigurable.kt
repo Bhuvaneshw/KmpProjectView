@@ -212,7 +212,7 @@ class PluginPreferenceConfigurable : Configurable {
             }
         )
 
-        PreferenceObserver.emit()
+        ApplicationManager.getApplication().messageBus.syncPublisher(KMP_PREFERENCE_CHANGE).onPreferenceChange()
 
         if (requiresRestart) {
             ApplicationManager.getApplication().invokeLater {

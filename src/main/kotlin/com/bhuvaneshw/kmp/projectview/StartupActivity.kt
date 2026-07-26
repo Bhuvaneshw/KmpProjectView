@@ -6,13 +6,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
 import com.intellij.openapi.vfs.AsyncFileListener
 import com.intellij.openapi.vfs.VirtualFileManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class StartupActivity : ProjectActivity, Disposable {
 
     private var currentProject: Project? = null
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override suspend fun execute(project: Project) {
         currentProject = project
@@ -21,7 +20,7 @@ class StartupActivity : ProjectActivity, Disposable {
             object : AsyncFileListener.ChangeApplier {
                 override fun afterVfsChange() {
                     currentProject?.let { currentProject ->
-                        CoroutineScope(Dispatchers.Default).launch {
+                        scope.launch {
                             ProjectView.getInstance(currentProject).refresh()
                         }
                     }
@@ -31,7 +30,7 @@ class StartupActivity : ProjectActivity, Disposable {
     }
 
     override fun dispose() {
+        scope.cancel()
         currentProject = null
     }
-
 }

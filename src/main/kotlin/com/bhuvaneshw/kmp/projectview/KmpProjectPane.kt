@@ -1,8 +1,8 @@
 package com.bhuvaneshw.kmp.projectview
 
-import com.bhuvaneshw.kmp.preference.Observer
-import com.bhuvaneshw.kmp.preference.PreferenceObserver
 import com.bhuvaneshw.kmp.projectview.util.Constants
+import com.bhuvaneshw.kmp.preference.KMP_PREFERENCE_CHANGE
+import com.bhuvaneshw.kmp.preference.PreferenceChangeListener
 import com.bhuvaneshw.kmp.projectview.util.KmpSelectInTarget
 import com.intellij.ide.SelectInTarget
 import com.intellij.ide.projectView.ProjectView
@@ -11,10 +11,10 @@ import com.intellij.ide.projectView.impl.ProjectViewPane
 import com.intellij.openapi.project.Project
 import org.jetbrains.plugins.gradle.settings.GradleSettings
 
-class KmpProjectPane(private val project: Project) : ProjectViewPane(project), Observer {
+class KmpProjectPane(private val project: Project) : ProjectViewPane(project), PreferenceChangeListener {
 
     init {
-        PreferenceObserver.observe(this)
+        project.messageBus.connect(this).subscribe(KMP_PREFERENCE_CHANGE, this)
     }
 
     override fun getId(): String = Constants.PANE_ID
@@ -33,10 +33,4 @@ class KmpProjectPane(private val project: Project) : ProjectViewPane(project), O
             return true
         }
     }
-
-    override fun dispose() {
-        PreferenceObserver.remove(this)
-        super.dispose()
-    }
-
 }
