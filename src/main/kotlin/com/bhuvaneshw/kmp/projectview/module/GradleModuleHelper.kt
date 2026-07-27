@@ -23,7 +23,7 @@ object GradleModuleHelper {
         val extensionsData =
             GradleExtensionsSettings.getInstance(module.project).getExtensionsFor(module)
 
-        val extensionNames = extensionsData?.extensions?.values?.map { it.name } ?: emptyList()
+        val extensionNames = extensionsData?.extensions?.keys?.toList() ?: emptyList()
         val extensionTypes = extensionsData?.extensions?.values?.map { it.typeFqn } ?: emptyList()
         val sourceSetNames = getModuleSourceSets(module)
 
