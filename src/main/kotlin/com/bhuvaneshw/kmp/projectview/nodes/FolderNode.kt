@@ -1,8 +1,19 @@
 package com.bhuvaneshw.kmp.projectview.nodes
 
+import com.bhuvaneshw.kmp.preference.ModuleSortingOrder
 import com.bhuvaneshw.kmp.preference.PluginPreference
-import com.bhuvaneshw.kmp.projectview.module.*
-import com.bhuvaneshw.kmp.projectview.util.*
+import com.bhuvaneshw.kmp.projectview.module.GradleModuleHelper
+import com.bhuvaneshw.kmp.projectview.module.ModuleType
+import com.bhuvaneshw.kmp.projectview.module.isSharedModule
+import com.bhuvaneshw.kmp.projectview.module.listAndAddChildren
+import com.bhuvaneshw.kmp.projectview.module.listAndAddChildrenAsModule
+import com.bhuvaneshw.kmp.projectview.module.moduleType
+import com.bhuvaneshw.kmp.projectview.util.Config
+import com.bhuvaneshw.kmp.projectview.util.Constants
+import com.bhuvaneshw.kmp.projectview.util.findSrcDirectory
+import com.bhuvaneshw.kmp.projectview.util.isAncestorOf
+import com.bhuvaneshw.kmp.projectview.util.withTooltip
+import com.bhuvaneshw.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -105,8 +116,22 @@ private class CustomFolderNode(
     }
 
     override fun getWeight(): Int {
-        val weight =
-            if (isSharedModule && preferences.showSharedModuleOnTop) 0 else Constants.DEFAULT_WEIGHT
+        if (isSharedModule && preferences.showSharedModuleOnTop) return 0 + additionalWeight
+
+        val weight = when (preferences.moduleSortingOrder) {
+            ModuleSortingOrder.ALPHABETICAL -> Constants.DEFAULT_WEIGHT
+            ModuleSortingOrder.PRIORITIZE_MODULES -> if (moduleType != ModuleType.Unknown) 1 else Constants.DEFAULT_WEIGHT
+            ModuleSortingOrder.PRIORITIZE_AND_CATEGORIZE -> when {
+                isSharedModule -> 1
+                moduleType == ModuleType.Android -> 2
+                moduleType == ModuleType.IOS -> 3
+                moduleType == ModuleType.Desktop -> 4
+                moduleType == ModuleType.Web -> 5
+                moduleType == ModuleType.Ktor -> 6
+                moduleType != ModuleType.Unknown -> 7
+                else -> Constants.DEFAULT_WEIGHT
+            }
+        }
         return weight + additionalWeight
     }
 

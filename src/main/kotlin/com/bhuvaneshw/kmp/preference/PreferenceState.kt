@@ -13,7 +13,16 @@ class PreferenceState : BaseState() {
     var unGroupCommonMain by property(false)
     var separateNodeForSubstitutedProject by property(true)
     var useGradleProjectNameForSubstitutedProject by property(false)
-    var splitGradleAndOther by property(0)
+    
+    private var _splitGradleAndOther by property(SplitMode.PROJECT_LEVEL.ordinal)
+    var splitGradleAndOther: SplitMode
+        get() = SplitMode.entries.getOrElse(_splitGradleAndOther) { SplitMode.PROJECT_LEVEL }
+        set(value) { _splitGradleAndOther = value.ordinal }
+
+    private var _moduleSortingOrder by property(ModuleSortingOrder.PRIORITIZE_AND_CATEGORIZE.ordinal)
+    var moduleSortingOrder: ModuleSortingOrder
+        get() = ModuleSortingOrder.entries.getOrElse(_moduleSortingOrder) { ModuleSortingOrder.PRIORITIZE_AND_CATEGORIZE }
+        set(value) { _moduleSortingOrder = value.ordinal }
 
     var kmpKeywords by string("[KotlinMultiplatformExtension]")
     var cmpKeywords by string("[ComposeExtension],(compose)")

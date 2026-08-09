@@ -7,11 +7,8 @@ import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.Messages
 import com.intellij.util.ui.FormBuilder
-import javax.swing.JButton
-import javax.swing.JCheckBox
-import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JTextField
+import java.awt.BorderLayout
+import javax.swing.*
 
 class PluginPreferenceConfigurable : Configurable {
 
@@ -25,7 +22,8 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var unGroupCommonMainCheckBox: JCheckBox
     private lateinit var separateBuildsCheckBox: JCheckBox
     private lateinit var useGradleProjectNameCheckBox: JCheckBox
-    private lateinit var splitGradleAndOtherComboBox: ComboBox<String>
+    private lateinit var splitGradleAndOtherComboBox: ComboBox<SplitMode>
+    private lateinit var moduleSortingOrderComboBox: ComboBox<ModuleSortingOrder>
     private lateinit var kmpKeywordsField: JTextField
     private lateinit var cmpKeywordsField: JTextField
     private lateinit var ktorKeywordsField: JTextField
@@ -59,7 +57,10 @@ class PluginPreferenceConfigurable : Configurable {
         useGradleProjectNameCheckBox =
             JCheckBox("Use Gradle root project name instead of folder name. [1]")
 
-        splitGradleAndOtherComboBox = ComboBox(arrayOf("Project Level", "All Level", "None"))
+        splitGradleAndOtherComboBox =
+            ComboBox(DefaultComboBoxModel(SplitMode.entries.toTypedArray()))
+        moduleSortingOrderComboBox =
+            ComboBox(DefaultComboBoxModel(ModuleSortingOrder.entries.toTypedArray()))
 
         kmpKeywordsField = JTextField()
         cmpKeywordsField = JTextField()
@@ -73,12 +74,16 @@ class PluginPreferenceConfigurable : Configurable {
         folderIgnoreField = JTextField()
         fileIgnoreField = JTextField()
 
-        regenerateResClassCheckBox = JCheckBox("Enable Regenerate Res Class feature. (Right Click composeResource -> Regenerate Res Class)")
-        composeVectorConverterCheckBox = JCheckBox("Enable Compose Vector Converter feature. (Right Click <drawable>.xml -> Convert To Compose Vector).")
-        composeVectorAssetCheckBox = JCheckBox("Enable Compose Vector Asset feature. (Right Click composeResource -> New -> Compose Vector Asset)")
+        regenerateResClassCheckBox =
+            JCheckBox("Enable Regenerate Res Class feature. (Right Click composeResource -> Regenerate Res Class)")
+        composeVectorConverterCheckBox =
+            JCheckBox("Enable Compose Vector Converter feature. (Right Click <drawable>.xml -> Convert To Compose Vector).")
+        composeVectorAssetCheckBox =
+            JCheckBox("Enable Compose Vector Asset feature. (Right Click composeResource -> New -> Compose Vector Asset)")
 
         composeVectorConverterCheckBox.addItemListener {
-            composeVectorAssetCheckBox.isEnabled = it.stateChange == java.awt.event.ItemEvent.SELECTED
+            composeVectorAssetCheckBox.isEnabled =
+                it.stateChange == java.awt.event.ItemEvent.SELECTED
         }
 
         return FormBuilder.createFormBuilder().apply {
@@ -96,9 +101,16 @@ class PluginPreferenceConfigurable : Configurable {
 
             addLabeledComponent(
                 JLabel("Split Gradle and Other files in"),
-                splitGradleAndOtherComboBox,
+                JPanel(BorderLayout()).apply { add(splitGradleAndOtherComboBox) },
                 gap,
-                false
+                true
+            )
+
+            addLabeledComponent(
+                JLabel("Module Sorting Order"),
+                JPanel(BorderLayout()).apply { add(moduleSortingOrderComboBox) },
+                gap,
+                true
             )
 
             addLabeledComponent(JLabel("KMP Identifiers"), kmpKeywordsField, gap, true)
@@ -159,7 +171,8 @@ class PluginPreferenceConfigurable : Configurable {
                 unGroupCommonMainCheckBox.isSelected != settings.unGroupCommonMain ||
                 separateBuildsCheckBox.isSelected != settings.separateNodeForSubstitutedProject ||
                 useGradleProjectNameCheckBox.isSelected != settings.useGradleProjectNameForSubstitutedProject ||
-                splitGradleAndOtherComboBox.selectedIndex != settings.splitGradleAndOther ||
+                splitGradleAndOtherComboBox.selectedItem != settings.splitGradleAndOther ||
+                moduleSortingOrderComboBox.selectedItem != settings.moduleSortingOrder ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
                 cmpKeywordsField.text != settings.cmpKeywords ||
                 ktorKeywordsField.text != settings.ktorKeywords ||
@@ -194,7 +207,10 @@ class PluginPreferenceConfigurable : Configurable {
                 unGroupCommonMain = unGroupCommonMainCheckBox.isSelected
                 separateNodeForSubstitutedProject = separateBuildsCheckBox.isSelected
                 useGradleProjectNameForSubstitutedProject = useGradleProjectNameCheckBox.isSelected
-                splitGradleAndOther = splitGradleAndOtherComboBox.selectedIndex
+                splitGradleAndOther = splitGradleAndOtherComboBox.selectedItem as? SplitMode
+                    ?: SplitMode.PROJECT_LEVEL
+                moduleSortingOrder = moduleSortingOrderComboBox.selectedItem as? ModuleSortingOrder
+                    ?: ModuleSortingOrder.PRIORITIZE_AND_CATEGORIZE
                 kmpKeywords = kmpKeywordsField.text
                 cmpKeywords = cmpKeywordsField.text
                 ktorKeywords = ktorKeywordsField.text
@@ -212,7 +228,8 @@ class PluginPreferenceConfigurable : Configurable {
             }
         )
 
-        ApplicationManager.getApplication().messageBus.syncPublisher(KMP_PREFERENCE_CHANGE).onPreferenceChange()
+        ApplicationManager.getApplication().messageBus.syncPublisher(KMP_PREFERENCE_CHANGE)
+            .onPreferenceChange()
 
         if (requiresRestart) {
             ApplicationManager.getApplication().invokeLater {
@@ -245,7 +262,8 @@ class PluginPreferenceConfigurable : Configurable {
         unGroupCommonMainCheckBox.isSelected = settings.unGroupCommonMain
         separateBuildsCheckBox.isSelected = settings.separateNodeForSubstitutedProject
         useGradleProjectNameCheckBox.isSelected = settings.useGradleProjectNameForSubstitutedProject
-        splitGradleAndOtherComboBox.selectedIndex = settings.splitGradleAndOther
+        splitGradleAndOtherComboBox.selectedItem = settings.splitGradleAndOther
+        moduleSortingOrderComboBox.selectedItem = settings.moduleSortingOrder
         kmpKeywordsField.text = settings.kmpKeywords
         cmpKeywordsField.text = settings.cmpKeywords
         ktorKeywordsField.text = settings.ktorKeywords

@@ -1,6 +1,7 @@
 package com.bhuvaneshw.kmp.projectview.module
 
 import com.bhuvaneshw.kmp.preference.PluginPreference
+import com.bhuvaneshw.kmp.preference.SplitMode
 import com.bhuvaneshw.kmp.projectview.nodes.FolderNode
 import com.bhuvaneshw.kmp.projectview.nodes.GradleGroupNode
 import com.bhuvaneshw.kmp.projectview.nodes.HintedPsiFileNode
@@ -61,9 +62,9 @@ fun PsiDirectory.isSharedModule(config: Config): Boolean {
 fun PsiDirectory.shouldGroupFiles(config: Config): Boolean {
     val splitMode = config.preference().splitGradleAndOther
     return when (splitMode) {
-        0 -> isBuildRoot()
-        1 -> true
-        else -> false
+        SplitMode.PROJECT_LEVEL -> isBuildRoot()
+        SplitMode.ALL_LEVEL -> true
+        SplitMode.NONE -> false
     }
 }
 
