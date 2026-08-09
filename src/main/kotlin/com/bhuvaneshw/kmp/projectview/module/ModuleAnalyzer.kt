@@ -89,6 +89,7 @@ fun listAndAddChildrenAsModule(
 
     for (child in baseDirectory.children) {
         if (child is PsiDirectory) {
+            if (child.isBuildRoot()) continue
             when {
                 child.name == "src" && (moduleType.isGradleModule()) -> {
                     handleSourceDirectory(
@@ -293,6 +294,7 @@ fun listAndAddChildren(
 
         for (child in baseDirectory.children) {
             if (child is PsiDirectory) {
+                if (child.isBuildRoot()) continue
                 when (child.name) {
                     "gradle" -> handleGradleDirectory(child, config, add, gradleFiles, true)
                     "kotlin-js-store" -> child.children.filterIsInstance<PsiFile>().forEach {
@@ -318,9 +320,11 @@ fun listAndAddChildren(
         if (otherFiles.children.isNotEmpty()) add(otherFiles)
     } else {
         baseDirectory.children.forEach { child ->
-            if (child is PsiDirectory && !child.canBeSkipped(config))
-                add(FolderNode(config, child, weightOffset, isLabelEnabled))
-            else if (child is PsiFile && !child.canBeSkipped(config))
+            if (child is PsiDirectory) {
+                if (child.isBuildRoot()) return@forEach
+                if (!child.canBeSkipped(config))
+                    add(FolderNode(config, child, weightOffset, isLabelEnabled))
+            } else if (child is PsiFile && !child.canBeSkipped(config))
                 add(PsiFileNode(config.project, child, config.viewSettings))
         }
     }
