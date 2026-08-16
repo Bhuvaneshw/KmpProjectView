@@ -32,8 +32,8 @@ class ImportantFolderNode(
 
     override fun update(presentation: PresentationData) {
         val moduleName = folder.name
-        val icon = defaultIcon ?: if (moduleName.equals("kotlin", true)) AllIcons.Modules.SourceRoot
-        else if (moduleName.contains("resource", true) || moduleName.equals("res", true))
+        val icon = defaultIcon ?: if (moduleName.equals(Constants.Folder.KOTLIN, true)) AllIcons.Modules.SourceRoot
+        else if (moduleName.contains("resource", true) || moduleName.equals(Constants.Folder.RES, true))
             AllIcons.Modules.ResourcesRoot
         else AllIcons.Nodes.Folder
 
@@ -69,8 +69,8 @@ class ImportantFolderNode(
     }
 
     override fun getWeight(): Int {
-        var weight = if (showOnTop) 0 else Constants.DEFAULT_WEIGHT - 1
-        if (folder.name.equals("kotlin", ignoreCase = true)) {
+        var weight = if (showOnTop) 0 else Constants.Weight.DEFAULT_WEIGHT - 1
+        if (folder.name.equals(Constants.Folder.KOTLIN, ignoreCase = true)) {
             weight -= 1
         }
         return weight + additionalWeight

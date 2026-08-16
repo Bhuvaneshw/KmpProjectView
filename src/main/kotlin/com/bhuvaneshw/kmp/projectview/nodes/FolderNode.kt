@@ -31,7 +31,7 @@ fun FolderNode(
     additionalWeight: Int = 0,
     isLabelEnabled: Boolean = true
 ) =
-    if (folder.isDirectory && folder.name.lowercase() == "kotlin") PsiDirectoryNode(
+    if (folder.isDirectory && folder.name.lowercase() == Constants.Folder.KOTLIN) PsiDirectoryNode(
         config.project,
         folder,
         config.viewSettings
@@ -61,9 +61,9 @@ private class CustomFolderNode(
             GradleModuleHelper.getModuleName(module) else folder.name
 
         val icon = if (isModule) AllIcons.Nodes.Module
-        else if (moduleName.equals("kotlin", true)) AllIcons.Modules.SourceRoot
+        else if (moduleName.equals(Constants.Folder.KOTLIN, true)) AllIcons.Modules.SourceRoot
         else if (moduleName.contains("resource", true) || moduleName.equals(
-                "res",
+                Constants.Folder.RES,
                 true
             )
         ) AllIcons.Modules.ResourcesRoot
@@ -119,8 +119,8 @@ private class CustomFolderNode(
         if (isSharedModule && preferences.showSharedModuleOnTop) return 0 + additionalWeight
 
         val weight = when (preferences.moduleSortingOrder) {
-            ModuleSortingOrder.ALPHABETICAL -> Constants.DEFAULT_WEIGHT
-            ModuleSortingOrder.PRIORITIZE_MODULES -> if (moduleType != ModuleType.Unknown) 1 else Constants.DEFAULT_WEIGHT
+            ModuleSortingOrder.ALPHABETICAL -> Constants.Weight.DEFAULT_WEIGHT
+            ModuleSortingOrder.PRIORITIZE_MODULES -> if (moduleType != ModuleType.Unknown) 1 else Constants.Weight.DEFAULT_WEIGHT
             ModuleSortingOrder.PRIORITIZE_AND_CATEGORIZE -> when {
                 isSharedModule -> 1
                 moduleType == ModuleType.Android -> 2
@@ -129,7 +129,7 @@ private class CustomFolderNode(
                 moduleType == ModuleType.Web -> 5
                 moduleType == ModuleType.Ktor -> 6
                 moduleType != ModuleType.Unknown -> 7
-                else -> Constants.DEFAULT_WEIGHT
+                else -> Constants.Weight.DEFAULT_WEIGHT
             }
         }
         return weight + additionalWeight

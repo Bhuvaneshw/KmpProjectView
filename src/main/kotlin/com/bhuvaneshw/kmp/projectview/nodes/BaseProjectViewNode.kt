@@ -4,6 +4,7 @@ import com.bhuvaneshw.kmp.preference.PluginPreference
 import com.bhuvaneshw.kmp.projectview.module.GradleModuleHelper
 import com.bhuvaneshw.kmp.projectview.module.listAndAddChildren
 import com.bhuvaneshw.kmp.projectview.util.Config
+import com.bhuvaneshw.kmp.projectview.util.Constants
 import com.bhuvaneshw.kmp.projectview.util.isGradleFile
 import com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode
 import com.intellij.ide.util.treeView.AbstractTreeNode
@@ -122,9 +123,9 @@ class BaseProjectViewNode(private val config: Config) :
             val isComposite = compositePaths.any { FileUtil.pathsEqual(it, path) }
 
             val buildLabel = when {
-                isComposite -> "Included build: ${gradleProject.name}"
-                isRoot -> "Project: ${gradleProject.name}"
-                else -> "Module ${gradleProject.id}"
+                isComposite -> Constants.Hint.INCLUDED_BUILD.format(gradleProject.name)
+                isRoot -> Constants.Hint.PROJECT.format(gradleProject.name)
+                else -> Constants.Hint.MODULE.format(gradleProject.id)
             }
 
             dirPsi.children.forEach { child ->
@@ -132,53 +133,50 @@ class BaseProjectViewNode(private val config: Config) :
                     is PsiFile -> {
                         val name = child.name.lowercase()
                         when {
-                            name.startsWith("build.gradle") -> addFile(child, buildLabel)
-                            name.startsWith("settings.gradle") -> addFile(child, "Project Settings")
-                            name == "gradle.properties" -> addFile(child, "Project Properties")
-                            name == "local.properties" -> addFile(child, "SDK Location")
-                            name == "gradle-wrapper.properties" -> addFile(child, "Gradle Version")
-                            name.endsWith(".versions.toml") -> addFile(
+                            name.startsWith(Constants.File.BUILD_GRADLE) -> addFile(child, buildLabel)
+                            name.startsWith(Constants.File.SETTINGS_GRADLE) -> addFile(child, Constants.Hint.PROJECT_SETTINGS)
+                            name == Constants.File.GRADLE_PROPERTIES -> addFile(child, Constants.Hint.PROJECT_PROPERTIES)
+                            name == Constants.File.LOCAL_PROPERTIES -> addFile(child, Constants.Hint.SDK_LOCATION)
+                            name == Constants.File.GRADLE_WRAPPER_PROPERTIES -> addFile(child, Constants.Hint.GRADLE_VERSION)
+                            name.endsWith(Constants.Suffix.VERSIONS_TOML) -> addFile(
                                 child,
-                                "Version Catalog \"${
-                                    child.name.removeSuffix(".versions.toml").removeSuffix(".toml")
-                                }\""
+                                Constants.Hint.VERSION_CATALOG.format(
+                                    child.name.removeSuffix(Constants.Suffix.VERSIONS_TOML).removeSuffix(Constants.Suffix.TOML)
+                                )
                             )
 
-                            name.endsWith(".pro") -> addFile(
-                                child,
-                                "ProGuard Rules for \"${gradleProject.id}\""
-                            )
+                            name.endsWith(Constants.Suffix.PRO) -> addFile(child, Constants.Hint.PROGUARD_RULES.format(gradleProject.id))
 
                             child.isGradleFile() -> addFile(child, buildLabel)
                         }
                     }
 
-                    is PsiDirectory if child.name == "gradle" -> {
-                        child.findSubdirectory("wrapper")?.children?.filterIsInstance<PsiFile>()
+                    is PsiDirectory if child.name == Constants.Folder.GRADLE -> {
+                        child.findSubdirectory(Constants.Folder.WRAPPER)?.children?.filterIsInstance<PsiFile>()
                             ?.forEach { file ->
-                                if (file.name == "gradle-wrapper.properties") addFile(
+                                if (file.name == Constants.File.GRADLE_WRAPPER_PROPERTIES) addFile(
                                     file,
-                                    "Gradle Version"
+                                    Constants.Hint.GRADLE_VERSION
                                 )
-                                else if (file.isGradleFile()) addFile(file, "Gradle Wrapper")
+                                else if (file.isGradleFile()) addFile(file, Constants.Hint.GRADLE_WRAPPER)
                             }
 
                         child.children.filterIsInstance<PsiFile>().forEach { file ->
                             val name = file.name.lowercase()
-                            if (name.endsWith(".versions.toml")) addFile(
+                            if (name.endsWith(Constants.Suffix.VERSIONS_TOML)) addFile(
                                 file,
-                                "Version Catalog \"${
-                                    file.name.removeSuffix(".versions.toml").removeSuffix(".toml")
-                                }\""
+                                Constants.Hint.VERSION_CATALOG.format(
+                                    file.name.removeSuffix(Constants.Suffix.VERSIONS_TOML).removeSuffix(Constants.Suffix.TOML)
+                                )
                             )
-                            else if (file.isGradleFile()) addFile(file, "Gradle Script")
+                            else if (file.isGradleFile()) addFile(file, Constants.Hint.GRADLE_SCRIPT)
                         }
                     }
 
-                    is PsiDirectory if child.name == "src" -> {
+                    is PsiDirectory if child.name == Constants.Folder.SRC -> {
                         child.children.filterIsInstance<PsiFile>().filter { it.isGradleFile() }
                             .forEach { file ->
-                                addFile(file, "$buildLabel (src)")
+                                addFile(file, "$buildLabel${Constants.Hint.SRC}")
                             }
                     }
                 }

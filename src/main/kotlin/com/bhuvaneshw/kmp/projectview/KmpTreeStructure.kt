@@ -12,7 +12,7 @@ import com.intellij.openapi.project.Project
 
 class KmpTreeStructure(
     project: Project,
-    private val id: String = Constants.PANE_ID,
+    private val id: String = Constants.Common.PANE_ID,
 ) : ProjectTreeStructure(project, id) {
 
     override fun createRoot(project: Project, settings: ViewSettings): AbstractTreeNode<*> {
@@ -22,7 +22,7 @@ class KmpTreeStructure(
     }
 
     override fun getChildElements(element: Any): Array<Any> {
-        if (element is AbstractTreeNode<*> && element.value == "Global-Gradle") {
+        if (element is AbstractTreeNode<*> && element.value == Constants.Node.GLOBAL_GRADLE_NODE_ID) {
             return element.children.toTypedArray()
         }
         return super.getChildElements(element)

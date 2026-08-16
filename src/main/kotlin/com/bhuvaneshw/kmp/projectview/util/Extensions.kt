@@ -21,7 +21,6 @@ fun PsiDirectory.canBeSkipped(config: Config): Boolean {
         ?.split(",")
         ?.filter { it.isNotBlank() }
         ?.any { Pattern.matches(it, name) } ?: false
-//    return name.startsWith(".") || name == "build" || name == "projectFilesBackup" || name == "gradle"
 }
 
 fun PsiFile.canBeSkipped(config: Config): Boolean {
@@ -34,20 +33,20 @@ fun PsiFile.canBeSkipped(config: Config): Boolean {
 fun PsiFile.isGradleFile(): Boolean {
     val name = name.lowercase()
     return name in listOf(
-        "build.gradle.kts",
-        "build.gradle",
-        "gradlew",
-        "gradlew.bat",
-        "settings.gradle.kts",
-        "settings.gradle",
-        "gradle.properties",
-        "local.properties",
-        "gradle-wrapper.properties",
-    ) || name.endsWith(".versions.toml") || name.endsWith(".pro")
+        Constants.File.BUILD_GRADLE_KTS,
+        Constants.File.BUILD_GRADLE,
+        Constants.File.GRADLEW,
+        Constants.File.GRADLEW_BAT,
+        Constants.File.SETTINGS_GRADLE_KTS,
+        Constants.File.SETTINGS_GRADLE,
+        Constants.File.GRADLE_PROPERTIES,
+        Constants.File.LOCAL_PROPERTIES,
+        Constants.File.GRADLE_WRAPPER_PROPERTIES,
+    ) || name.endsWith(Constants.Suffix.VERSIONS_TOML) || name.endsWith(Constants.Suffix.PRO)
 }
 
 fun PsiDirectory.findSrcDirectory(): PsiDirectory? {
-    return children.find { it is PsiDirectory && it.name == "src" }.let {
+    return children.find { it is PsiDirectory && it.name == Constants.Folder.SRC }.let {
         if (it is PsiDirectory) it
         else null
     }
@@ -69,5 +68,5 @@ infix fun PsiFileSystemItem.matches(identifiers: List<String>): Boolean {
 }
 
 fun PsiDirectory.isSourceSet(): Boolean {
-    return children.any { it is PsiDirectory && it.name == "kotlin" }
+    return children.any { it is PsiDirectory && it.name == Constants.Folder.KOTLIN }
 }

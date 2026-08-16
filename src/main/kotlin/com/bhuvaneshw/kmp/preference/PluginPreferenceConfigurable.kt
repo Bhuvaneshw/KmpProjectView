@@ -42,7 +42,7 @@ class PluginPreferenceConfigurable : Configurable {
     private val gap = 20
 
     override fun getDisplayName(): String {
-        return Constants.SETTINGS_TAB_NAME
+        return Constants.Common.SETTINGS_TAB_NAME
     }
 
     override fun createComponent(): JComponent {

@@ -1,6 +1,7 @@
 package com.bhuvaneshw.kmp.projectview.nodes
 
 import com.bhuvaneshw.kmp.projectview.util.Config
+import com.bhuvaneshw.kmp.projectview.util.Constants
 import com.bhuvaneshw.kmp.projectview.util.withTooltip
 import com.bhuvaneshw.kmp.projectview.util.withoutTooltip
 import com.intellij.icons.AllIcons
@@ -36,10 +37,10 @@ inline fun GlobalGradleGroupNode(
 ) =
     VirtualGroupNode(
         config = config,
-        folderName = "Gradle Scripts",
-        element = "Global-Gradle",
+        folderName = Constants.Node.GRADLE_SCRIPTS_NODE_NAME,
+        element = Constants.Node.GLOBAL_GRADLE_NODE_ID,
         icon = GradleIcons.Gradle,
-        weight = 100,
+        weight = Constants.Weight.GLOBAL_GRADLE_WEIGHT,
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")

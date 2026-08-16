@@ -10,7 +10,7 @@ import com.intellij.psi.PsiFileSystemItem
 
 class KmpSelectInTarget(
     project: Project,
-    private val id: String = Constants.PANE_ID,
+    private val id: String = Constants.Common.PANE_ID,
 ) : ProjectViewSelectInTarget(project), DumbAware {
 
     override fun toString(): String {

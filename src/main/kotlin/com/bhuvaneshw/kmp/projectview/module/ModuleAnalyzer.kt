@@ -10,6 +10,7 @@ import com.bhuvaneshw.kmp.projectview.nodes.OtherGroupNode
 import com.bhuvaneshw.kmp.projectview.nodes.OtherSourceSetGroup
 import com.bhuvaneshw.kmp.projectview.nodes.VirtualGroupNode
 import com.bhuvaneshw.kmp.projectview.util.Config
+import com.bhuvaneshw.kmp.projectview.util.Constants
 import com.bhuvaneshw.kmp.projectview.util.canBeSkipped
 import com.bhuvaneshw.kmp.projectview.util.isGradleFile
 import com.bhuvaneshw.kmp.projectview.util.isSourceSet
@@ -92,7 +93,7 @@ fun listAndAddChildrenAsModule(
         if (child is PsiDirectory) {
             if (child.isBuildRoot()) continue
             when {
-                child.name == "src" && (moduleType.isGradleModule()) -> {
+                child.name == Constants.Folder.SRC && (moduleType.isGradleModule()) -> {
                     handleSourceDirectory(
                         srcDir = child,
                         config = config,
@@ -108,7 +109,7 @@ fun listAndAddChildrenAsModule(
                     )
                 }
 
-                child.name == "gradle" -> {
+                child.name == Constants.Folder.GRADLE -> {
                     handleGradleDirectory(
                         gradleDir = child,
                         config = config,
@@ -118,7 +119,7 @@ fun listAndAddChildrenAsModule(
                     )
                 }
 
-                child.name == "kotlin-js-store" -> {
+                child.name == Constants.Folder.KOTLIN_JS_STORE -> {
                     child.children.filterIsInstance<PsiFile>().forEach {
                         otherFiles.children.add(
                             PsiFileNode(config.project, it, config.viewSettings)
@@ -219,7 +220,7 @@ private fun handleSourceDirectory(
                     else add(node)
                 }
 
-                srcChild.name == "gradle" -> handleGradleDirectory(
+                srcChild.name == Constants.Folder.GRADLE -> handleGradleDirectory(
                     gradleDir = srcChild,
                     config = config,
                     add = add,
@@ -227,7 +228,7 @@ private fun handleSourceDirectory(
                     shouldGroup = shouldGroup
                 )
 
-                srcChild.name == "kotlin-js-store" -> {
+                srcChild.name == Constants.Folder.KOTLIN_JS_STORE -> {
                     srcChild.children.filterIsInstance<PsiFile>().forEach { file ->
                         if (shouldGroup) otherFiles.children.add(
                             PsiFileNode(config.project, file, config.viewSettings)
@@ -242,7 +243,7 @@ private fun handleSourceDirectory(
                     )
             }
         } else if (srcChild is PsiFile && !srcChild.canBeSkipped(config)) {
-            val hint = " (src)"
+            val hint = Constants.Hint.SRC
             if (srcChild.isGradleFile()) {
                 if (!isGlobal) {
                     if (shouldGroup) gradleFiles.children.add(
@@ -274,9 +275,9 @@ private fun handleGradleDirectory(
     if (isGlobal) return
 
     for (file in gradleDir.children) {
-        if (file is PsiDirectory && file.name == "wrapper") {
+        if (file is PsiDirectory && file.name == Constants.Folder.WRAPPER) {
             file.children.filterIsInstance<PsiFile>()
-                .filter { !it.name.lowercase().endsWith(".jar") }
+                .filter { !it.name.lowercase().endsWith(Constants.Suffix.JAR) }
                 .forEach {
                     gradleFiles.children.add(
                         PsiFileNode(config.project, it, config.viewSettings)
@@ -315,8 +316,8 @@ fun listAndAddChildren(
             if (child is PsiDirectory) {
                 if (child.isBuildRoot()) continue
                 when (child.name) {
-                    "gradle" -> handleGradleDirectory(child, config, add, gradleFiles, true)
-                    "kotlin-js-store" -> child.children.filterIsInstance<PsiFile>().forEach {
+                    Constants.Folder.GRADLE -> handleGradleDirectory(child, config, add, gradleFiles, true)
+                    Constants.Folder.KOTLIN_JS_STORE -> child.children.filterIsInstance<PsiFile>().forEach {
                         otherFiles.children.add(
                             PsiFileNode(config.project, it, config.viewSettings)
                         )
