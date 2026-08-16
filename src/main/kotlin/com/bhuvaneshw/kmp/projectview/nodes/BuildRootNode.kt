@@ -3,7 +3,6 @@ package com.bhuvaneshw.kmp.projectview.nodes
 import com.bhuvaneshw.kmp.projectview.module.GradleModuleHelper
 import com.bhuvaneshw.kmp.projectview.module.listAndAddChildren
 import com.bhuvaneshw.kmp.projectview.util.Config
-import com.bhuvaneshw.kmp.projectview.util.Constants
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
@@ -36,7 +35,7 @@ class BuildRootNode(
         return children
     }
 
-    override fun getWeight(): Int = Constants.DEFAULT_WEIGHT - 10 + additionalWeight
+    override fun getWeight(): Int = additionalWeight
 
     override fun contains(file: VirtualFile): Boolean {
         return rootDirectory.virtualFile == file || rootDirectory.virtualFile.path.let { rootPath ->

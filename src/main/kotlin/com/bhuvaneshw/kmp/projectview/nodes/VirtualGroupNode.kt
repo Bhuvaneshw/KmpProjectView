@@ -23,7 +23,7 @@ inline fun GradleGroupNode(
 ) =
     VirtualGroupNode(
         config = config,
-        folderName = "Gradle Files",
+        folderName = Constants.Node.GRADLE_FILES,
         element = "Gradle-$rootPath",
         icon = GradleIcons.Gradle,
         projectName = projectName,
@@ -52,7 +52,7 @@ inline fun OtherGroupNode(
 ) =
     VirtualGroupNode(
         config = config,
-        folderName = "Other Files",
+        folderName = Constants.Node.OTHER_FILES,
         element = baseDirectory,
         icon = AllIcons.FileTypes.Any_type,
         projectName = projectName,
@@ -68,7 +68,7 @@ inline fun OtherSourceSetGroup(
     weightOffset: Int = 0
 ) = VirtualGroupNode(
     config = config,
-    folderName = "Other Source Set",
+    folderName = Constants.Node.OTHER_SOURCE_SET,
     element = "SourceSet-$rootPath",
     icon = AllIcons.Nodes.ModuleGroup,
     tooltip = "Source Set group",

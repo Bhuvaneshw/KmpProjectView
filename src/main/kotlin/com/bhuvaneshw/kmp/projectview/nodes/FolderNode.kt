@@ -62,7 +62,7 @@ private class CustomFolderNode(
 
         val icon = if (isModule) AllIcons.Nodes.Module
         else if (moduleName.equals(Constants.Folder.KOTLIN, true)) AllIcons.Modules.SourceRoot
-        else if (moduleName.contains("resource", true) || moduleName.equals(
+        else if (moduleName.contains(Constants.Folder.RESOURCE, true) || moduleName.equals(
                 Constants.Folder.RES,
                 true
             )

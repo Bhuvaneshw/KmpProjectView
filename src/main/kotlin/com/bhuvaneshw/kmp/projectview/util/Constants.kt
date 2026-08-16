@@ -17,6 +17,9 @@ object Constants {
     object Node {
         const val GRADLE_SCRIPTS_NODE_NAME = "Gradle Scripts"
         const val GLOBAL_GRADLE_NODE_ID = "Global-Gradle"
+        const val GRADLE_FILES = "Gradle Files"
+        const val OTHER_FILES = "Other Files"
+        const val OTHER_SOURCE_SET = "Other Source Set"
     }
 
     object File {
@@ -37,6 +40,7 @@ object Constants {
         const val SRC = "src"
         const val KOTLIN_JS_STORE = "kotlin-js-store"
         const val KOTLIN = "kotlin"
+        const val RESOURCE = "resource"
         const val RES = "res"
     }
 

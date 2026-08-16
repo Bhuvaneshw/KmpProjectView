@@ -46,10 +46,8 @@ fun PsiFile.isGradleFile(): Boolean {
 }
 
 fun PsiDirectory.findSrcDirectory(): PsiDirectory? {
-    return children.find { it is PsiDirectory && it.name == Constants.Folder.SRC }.let {
-        if (it is PsiDirectory) it
-        else null
-    }
+    return children.find { it is PsiDirectory && it.name == Constants.Folder.SRC }
+        .let { it as? PsiDirectory }
 }
 
 fun VirtualFile.isAncestorOf(file: VirtualFile?): Boolean {

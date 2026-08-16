@@ -33,7 +33,7 @@ class ImportantFolderNode(
     override fun update(presentation: PresentationData) {
         val moduleName = folder.name
         val icon = defaultIcon ?: if (moduleName.equals(Constants.Folder.KOTLIN, true)) AllIcons.Modules.SourceRoot
-        else if (moduleName.contains("resource", true) || moduleName.equals(Constants.Folder.RES, true))
+        else if (moduleName.contains(Constants.Folder.RESOURCE, true) || moduleName.equals(Constants.Folder.RES, true))
             AllIcons.Modules.ResourcesRoot
         else AllIcons.Nodes.Folder
 
