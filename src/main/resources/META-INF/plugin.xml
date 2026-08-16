@@ -70,14 +70,9 @@
     <change-notes>
         <![CDATA[
             <ul>
-              <li>Support for new AGP 9 project structure.</li>
-              <li>Added support for composite builds and included projects.</li>
-              <li>Enhanced module detection for Android, iOS, Desktop, and Web platforms.</li>
-              <li>Improved Gradle matching logic using extension types and source sets.</li>
-              <li>Added shared module prioritization and customizable settings.</li>
-              <li>Refactored file grouping and project view weighting for better organization.</li>
-              <li>Optimized performance and refactored internal architecture.</li>
-              <li>Added Compose Vector Asset import feature (New -> Compose Vector Asset).</li>
+              <li>Added Global Gradle Scripts view to group build files at the project root.</li>
+              <li>Implemented advanced module sorting and categorization for better project organization.</li>
+              <li>Optimized project tree logic to correctly skip duplicated Gradle modules.</li>
             </ul>
         ]]>
     </change-notes>
