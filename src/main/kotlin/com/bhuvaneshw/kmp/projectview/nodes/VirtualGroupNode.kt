@@ -31,6 +31,18 @@ inline fun GradleGroupNode(
     )
 
 @Suppress("NOTHING_TO_INLINE", "functionName")
+inline fun GlobalGradleGroupNode(
+    config: Config,
+) =
+    VirtualGroupNode(
+        config = config,
+        folderName = "Gradle Scripts",
+        element = "Global-Gradle",
+        icon = GradleIcons.Gradle,
+        weight = 100,
+    )
+
+@Suppress("NOTHING_TO_INLINE", "functionName")
 inline fun OtherGroupNode(
     config: Config,
     baseDirectory: PsiDirectory,

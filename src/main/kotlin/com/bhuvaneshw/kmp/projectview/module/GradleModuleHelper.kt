@@ -185,4 +185,20 @@ object GradleModuleHelper {
         return allRoots.filter { FileUtil.isAncestor(it, path, false) }
             .maxByOrNull { it.length }
     }
+
+    fun getAllGradleProjects(project: Project): List<ExternalProject> {
+        val linkedProjects = GradleSettings.getInstance(project).linkedProjectsSettings
+        val allProjects = mutableListOf<ExternalProject>()
+        linkedProjects.forEach { setting ->
+            ExternalProjectDataCache.getInstance(project).getRootExternalProject(setting.externalProjectPath)?.let { root ->
+                collectProjects(root, allProjects)
+            }
+        }
+        return allProjects
+    }
+
+    private fun collectProjects(project: ExternalProject, list: MutableList<ExternalProject>) {
+        list.add(project)
+        project.childProjects.values.forEach { collectProjects(it, list) }
+    }
 }

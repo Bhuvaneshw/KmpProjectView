@@ -77,13 +77,13 @@ fun listAndAddChildrenAsModule(
 ) {
     val moduleType = baseDirectory.moduleType()
     val shouldGroup = baseDirectory.shouldGroupFiles(config)
+    val isGlobal = config.preference().globalGradleFiles
 
     val rootPath = baseDirectory.virtualFile.path
-    val projectName =
-        if (isLabelEnabled && !config.preference().separateNodeForSubstitutedProject) GradleModuleHelper.getProjectName(
-            config.project,
-            rootPath
-        ) else null
+    val projectName = if (isLabelEnabled && !config.preference().separateNodeForSubstitutedProject) GradleModuleHelper.getProjectName(
+        config.project,
+        rootPath
+    ) else null
 
     val otherFiles = OtherGroupNode(config, baseDirectory, projectName, weightOffset)
     val gradleFiles = GradleGroupNode(config, projectName, rootPath, weightOffset)
@@ -131,17 +131,26 @@ fun listAndAddChildrenAsModule(
                 }
             }
         } else if (child is PsiFile && !child.canBeSkipped(config)) {
-            val node = if (child.isGradleFile()) gradleFiles else otherFiles
-            if (shouldGroup) {
-                node.children.add(PsiFileNode(config.project, child, config.viewSettings))
+            if (child.isGradleFile()) {
+                if (!isGlobal) {
+                    if (shouldGroup) {
+                        gradleFiles.children.add(PsiFileNode(config.project, child, config.viewSettings))
+                    } else {
+                        add(PsiFileNode(config.project, child, config.viewSettings))
+                    }
+                }
             } else {
-                add(PsiFileNode(config.project, child, config.viewSettings))
+                if (shouldGroup) {
+                    otherFiles.children.add(PsiFileNode(config.project, child, config.viewSettings))
+                } else {
+                    add(PsiFileNode(config.project, child, config.viewSettings))
+                }
             }
         }
     }
 
     if (shouldGroup) {
-        if (gradleFiles.children.isNotEmpty()) add(gradleFiles)
+        if (!isGlobal && gradleFiles.children.isNotEmpty()) add(gradleFiles)
         if (otherFiles.children.isNotEmpty()) add(otherFiles)
     }
 }
@@ -160,6 +169,8 @@ private fun handleSourceDirectory(
     isLabelEnabled: Boolean
 ) {
     val otherSourceSet = OtherSourceSetGroup(config, projectName, rootPath, weightOffset)
+    val isGlobal = config.preference().globalGradleFiles
+
     for (srcChild in srcDir.children) {
         if (srcChild is PsiDirectory) {
             when {
@@ -233,10 +244,12 @@ private fun handleSourceDirectory(
         } else if (srcChild is PsiFile && !srcChild.canBeSkipped(config)) {
             val hint = " (src)"
             if (srcChild.isGradleFile()) {
-                if (shouldGroup) gradleFiles.children.add(
-                    HintedPsiFileNode(config, srcChild, hint)
-                )
-                else add(HintedPsiFileNode(config, srcChild, hint))
+                if (!isGlobal) {
+                    if (shouldGroup) gradleFiles.children.add(
+                        HintedPsiFileNode(config, srcChild, hint)
+                    )
+                    else add(HintedPsiFileNode(config, srcChild, hint))
+                }
             } else {
                 if (shouldGroup) otherFiles.children.add(
                     HintedPsiFileNode(config, srcChild, hint)
@@ -257,6 +270,9 @@ private fun handleGradleDirectory(
     gradleFiles: VirtualGroupNode<*>,
     shouldGroup: Boolean
 ) {
+    val isGlobal = config.preference().globalGradleFiles
+    if (isGlobal) return
+
     for (file in gradleDir.children) {
         if (file is PsiDirectory && file.name == "wrapper") {
             file.children.filterIsInstance<PsiFile>()
@@ -282,6 +298,8 @@ fun listAndAddChildren(
     isLabelEnabled: Boolean = true
 ) {
     val shouldGroup = baseDirectory.shouldGroupFiles(config)
+    val isGlobal = config.preference().globalGradleFiles
+
     if (shouldGroup) {
         val rootPath = baseDirectory.virtualFile.path
         val projectName =
@@ -308,16 +326,18 @@ fun listAndAddChildren(
                         add(FolderNode(config, child, weightOffset, isLabelEnabled))
                 }
             } else if (child is PsiFile && !child.canBeSkipped(config)) {
-                if (child.isGradleFile())
-                    gradleFiles.children.add(
-                        PsiFileNode(config.project, child, config.viewSettings)
-                    )
-                else
+                if (child.isGradleFile()) {
+                    if (!isGlobal) {
+                        gradleFiles.children.add(
+                            PsiFileNode(config.project, child, config.viewSettings)
+                        )
+                    }
+                } else
                     otherFiles.children.add(PsiFileNode(config.project, child, config.viewSettings))
             }
         }
 
-        if (gradleFiles.children.isNotEmpty()) add(gradleFiles)
+        if (!isGlobal && gradleFiles.children.isNotEmpty()) add(gradleFiles)
         if (otherFiles.children.isNotEmpty()) add(otherFiles)
     } else {
         baseDirectory.children.forEach { child ->
@@ -325,8 +345,13 @@ fun listAndAddChildren(
                 if (child.isBuildRoot()) return@forEach
                 if (!child.canBeSkipped(config))
                     add(FolderNode(config, child, weightOffset, isLabelEnabled))
-            } else if (child is PsiFile && !child.canBeSkipped(config))
-                add(PsiFileNode(config.project, child, config.viewSettings))
+            } else if (child is PsiFile && !child.canBeSkipped(config)) {
+                if (child.isGradleFile()) {
+                    if (!isGlobal) {
+                        add(PsiFileNode(config.project, child, config.viewSettings))
+                    }
+                } else add(PsiFileNode(config.project, child, config.viewSettings))
+            }
         }
     }
 }

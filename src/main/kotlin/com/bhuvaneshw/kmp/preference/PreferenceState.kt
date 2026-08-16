@@ -13,6 +13,7 @@ class PreferenceState : BaseState() {
     var unGroupCommonMain by property(false)
     var separateNodeForSubstitutedProject by property(true)
     var useGradleProjectNameForSubstitutedProject by property(false)
+    var globalGradleFiles by property(false)
     
     private var _splitGradleAndOther by property(SplitMode.PROJECT_LEVEL.ordinal)
     var splitGradleAndOther: SplitMode

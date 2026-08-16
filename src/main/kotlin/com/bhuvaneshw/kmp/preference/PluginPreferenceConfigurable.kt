@@ -22,6 +22,7 @@ class PluginPreferenceConfigurable : Configurable {
     private lateinit var unGroupCommonMainCheckBox: JCheckBox
     private lateinit var separateBuildsCheckBox: JCheckBox
     private lateinit var useGradleProjectNameCheckBox: JCheckBox
+    private lateinit var globalGradleFilesCheckBox: JCheckBox
     private lateinit var splitGradleAndOtherComboBox: ComboBox<SplitMode>
     private lateinit var moduleSortingOrderComboBox: ComboBox<ModuleSortingOrder>
     private lateinit var kmpKeywordsField: JTextField
@@ -56,6 +57,7 @@ class PluginPreferenceConfigurable : Configurable {
         separateBuildsCheckBox = JCheckBox("Show included builds as separate folders. [1]")
         useGradleProjectNameCheckBox =
             JCheckBox("Use Gradle root project name instead of folder name. [1]")
+        globalGradleFilesCheckBox = JCheckBox("Global Gradle Files")
 
         splitGradleAndOtherComboBox =
             ComboBox(DefaultComboBoxModel(SplitMode.entries.toTypedArray()))
@@ -97,6 +99,7 @@ class PluginPreferenceConfigurable : Configurable {
             addComponent(unGroupCommonMainCheckBox)
             addComponent(separateBuildsCheckBox)
             addComponent(useGradleProjectNameCheckBox)
+            addComponent(globalGradleFilesCheckBox)
             addComponent(JLabel("Note [1]: Only applicable for composite builds with included projects."))
 
             addLabeledComponent(
@@ -171,6 +174,7 @@ class PluginPreferenceConfigurable : Configurable {
                 unGroupCommonMainCheckBox.isSelected != settings.unGroupCommonMain ||
                 separateBuildsCheckBox.isSelected != settings.separateNodeForSubstitutedProject ||
                 useGradleProjectNameCheckBox.isSelected != settings.useGradleProjectNameForSubstitutedProject ||
+                globalGradleFilesCheckBox.isSelected != settings.globalGradleFiles ||
                 splitGradleAndOtherComboBox.selectedItem != settings.splitGradleAndOther ||
                 moduleSortingOrderComboBox.selectedItem != settings.moduleSortingOrder ||
                 kmpKeywordsField.text != settings.kmpKeywords ||
@@ -207,6 +211,7 @@ class PluginPreferenceConfigurable : Configurable {
                 unGroupCommonMain = unGroupCommonMainCheckBox.isSelected
                 separateNodeForSubstitutedProject = separateBuildsCheckBox.isSelected
                 useGradleProjectNameForSubstitutedProject = useGradleProjectNameCheckBox.isSelected
+                globalGradleFiles = globalGradleFilesCheckBox.isSelected
                 splitGradleAndOther = splitGradleAndOtherComboBox.selectedItem as? SplitMode
                     ?: SplitMode.PROJECT_LEVEL
                 moduleSortingOrder = moduleSortingOrderComboBox.selectedItem as? ModuleSortingOrder
@@ -262,6 +267,7 @@ class PluginPreferenceConfigurable : Configurable {
         unGroupCommonMainCheckBox.isSelected = settings.unGroupCommonMain
         separateBuildsCheckBox.isSelected = settings.separateNodeForSubstitutedProject
         useGradleProjectNameCheckBox.isSelected = settings.useGradleProjectNameForSubstitutedProject
+        globalGradleFilesCheckBox.isSelected = settings.globalGradleFiles
         splitGradleAndOtherComboBox.selectedItem = settings.splitGradleAndOther
         moduleSortingOrderComboBox.selectedItem = settings.moduleSortingOrder
         kmpKeywordsField.text = settings.kmpKeywords

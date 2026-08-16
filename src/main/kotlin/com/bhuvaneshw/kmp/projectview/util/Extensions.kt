@@ -32,7 +32,8 @@ fun PsiFile.canBeSkipped(config: Config): Boolean {
 }
 
 fun PsiFile.isGradleFile(): Boolean {
-    return name.lowercase() in listOf(
+    val name = name.lowercase()
+    return name in listOf(
         "build.gradle.kts",
         "build.gradle",
         "gradlew",
@@ -40,7 +41,9 @@ fun PsiFile.isGradleFile(): Boolean {
         "settings.gradle.kts",
         "settings.gradle",
         "gradle.properties",
-    )
+        "local.properties",
+        "gradle-wrapper.properties",
+    ) || name.endsWith(".versions.toml") || name.endsWith(".pro")
 }
 
 fun PsiDirectory.findSrcDirectory(): PsiDirectory? {

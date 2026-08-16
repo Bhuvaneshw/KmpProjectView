@@ -21,6 +21,13 @@ class KmpTreeStructure(
         })
     }
 
+    override fun getChildElements(element: Any): Array<Any> {
+        if (element is AbstractTreeNode<*> && element.value == "Global-Gradle") {
+            return element.children.toTypedArray()
+        }
+        return super.getChildElements(element)
+    }
+
     override fun isShowExcludedFiles(): Boolean {
         return ProjectView.getInstance(myProject).isShowExcludedFiles(id)
     }
